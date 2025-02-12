@@ -11,5 +11,6 @@ namespace SolutionsTech.Business.Entity
         public string? Size { get; set; }
         public DateTime DtCreate { get; set; } = DateTime .Now;
 		public bool Active { get; set; }
+
 	}
 }
