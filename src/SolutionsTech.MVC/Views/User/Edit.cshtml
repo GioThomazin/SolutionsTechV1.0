@@ -1,0 +1,115 @@
+﻿@model SolutionsTech.Business.Entity.User
+
+@{
+	ViewData["Title"] = "Edit";
+}
+<link href="~/datatable/datatable.css" rel="stylesheet" />
+
+<style>
+	body {
+		font-size: 18px;
+	}
+
+	.page-title {
+		font-size: 24px;
+	}
+
+	table {
+		font-size: 18px;
+	}
+
+	.btn {
+		font-size: 18px;
+	}
+
+	th, td:not(.sorting_1) {
+		text-align: center !important;
+		vertical-align: middle !important;
+	}
+
+	a.text-body {
+		font-size: 18px;
+	}
+</style>
+
+<hr />
+<div class="row">
+	<div class="col-12">
+		<div class="page-title-box">
+			<div class="page-title-right">
+				<ol class="breadcrumb m-0">
+					<li class=""> <a href="javascript: void(0);">Listagem > Clientes</a></li>
+				</ol>
+			</div>
+			<h4 class="page-title">Cadastro de Cliente</h4>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-body">
+				<form asp-action="Edit">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<input type="hidden" asp-for="IdUser" />
+					<div class="form-group">
+						<label asp-for="Name" class="control-label">Nome</label>
+						<input asp-for="Name" class="form-control" />
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Cel" class="control-label">Celular</label>
+						<input asp-for="Cel" class="form-control" />
+						<span asp-validation-for="Cel" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Email" class="control-label">Celular</label>
+						<input asp-for="Email" class="form-control" />
+						<span asp-validation-for="Email" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="Address" class="control-label">Bairro</label>
+						<input asp-for="Address" class="form-control" />
+						<span asp-validation-for="Address" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="DtCreate" class="control-label">Data de Criação</label>
+						<input asp-for="DtCreate" class="form-control" />
+						<span asp-validation-for="DtCreate" class="text-danger"></span>
+					</div>
+					<div class="form-group form-check">
+						<label class="form-check-label">
+							<input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+						</label>
+					</div>
+					<div class="form-group">
+						<label asp-for="DtDeactivation" class="control-label">Data de Desativação</label>
+						<input asp-for="DtDeactivation" class="form-control" />
+						<span asp-validation-for="DtDeactivation" class="text-danger"></span>
+					</div>
+					<div class="form-group">
+						<label asp-for="IdUserType" class="control-label">IdUsuario</label>
+						<input asp-for="IdUserType" class="form-control" />
+						<span asp-validation-for="IdUserType" class="text-danger"></span>
+					</div><br />
+					<div class="form-group">
+						<input type="submit" value="Salvar" class="btn btn-primary" />
+						<a asp-action="Index" class="btn btn-primary">Voltar</a>
+
+					</div>
+				</form>
+			</div>
+		</div>
+
+		@section Scripts {
+			<script src="~/datatable/datatable.js"></script>
+			<script>
+				$(document).ready(function () {
+					new DataTable('#example');
+				});
+			</script>
+			@{
+				await Html.RenderPartialAsync("_ValidationScriptsPartial");
+			}
+		}

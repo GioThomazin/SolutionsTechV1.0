@@ -1,0 +1,41 @@
+Pastas de build e debug
+bin/
+obj/
+out/
+TestResults/
+*.log
+
+Configurações do Visual Studio
+.vscode/
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+Arquivos temporários do sistema
+*.tmp
+*.cache
+*.lock
+*.pid
+*.seed
+*.old
+
+Logs e dumps
+logs/
+*.log
+*.dmp
+
+Dependências (caso deseje ignorar pacotes restauráveis)
+node_modules/
+packages/
+dist/
+
+Arquivos do Docker (se aplicável)
+.dockerignore
+docker-compose.override.yml
+.env
+
+Outras configurações do .NET
+project.lock.json
+project.assets.json

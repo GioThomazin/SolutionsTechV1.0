@@ -1,0 +1,68 @@
+﻿@model IEnumerable<SolutionsTech.Business.Entity.Scheduling>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1></h1>
+
+<p>
+    <form asp-action="Create" method="post">
+        <button class="input-group-text btn btn-primary" type="submit">
+            Criar Agendamento
+        </button>
+    </form>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                Data
+            </th>
+            <th>
+                proc
+            </th>
+            <th>
+               Cliente
+            </th>
+            <th>
+              Forma De Pagamento
+            </th>
+            <th>
+                Observação
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+            <tr class="sorting_3 text-center">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DtCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TotalValue)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Observation)
+            </td>
+@*             <td>
+                @Html.DisplayFor(modelItem => item.User.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FormPayment.Name)
+            </td> *@
+            <td>
+                    <a asp-action="Details" class="input-group-text btn btn-warning" asp-route-id="@item.IdScheduling">Editar</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdScheduling">Deletar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,56 @@
+﻿@model SolutionsTech.Business.Entity.Scheduling
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<h4>Criar Agendamento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Nome</label>
+                <input asp-for="Name" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DtCreate" class="control-label">Data Criação</label>
+                <input asp-for="DtCreate" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="IdUser" class="control-label">IdUsuario</label>
+                <input asp-for="IdUser" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="IdFormPayment" class="control-label">IdForma De Pagamento</label>
+                <input asp-for="IdFormPayment" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="TotalValue" class="control-label">Valor Total</label>
+                <input asp-for="TotalValue" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Observation" class="control-label">Observação</label>
+                <input asp-for="Observation" class="form-control" />
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Criar" class="btn btn-primary" />
+                <form asp-action="Index" method="post">
+                    <button class="input-group-text btn btn-primary" type="submit">
+                        Voltar
+                    </button>
+                </form>
+            </div>
+        </form>
+    </div>
+</div>
+<p>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

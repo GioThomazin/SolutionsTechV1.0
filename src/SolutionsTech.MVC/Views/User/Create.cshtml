@@ -1,0 +1,77 @@
+﻿@model SolutionsTech.Business.Entity.User
+
+@{
+	ViewData["Title"] = "Create";
+}
+<link href="~/datatable/datatable.css" rel="stylesheet" />
+
+
+<div class="row">
+	<div class="col-12">
+		<div class="page-title-box">
+			<div class="page-title-right">
+			</div>
+			<h4 class="page-title">Cadastro de Cliente</h4>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-body">
+				<form asp-action="Create">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="form-group">
+						<label asp-for="Name" class="control-label">Nome</label>
+						<input asp-for="Name" class="form-control" />
+					</div>
+					
+					<div class="form-group">
+						<label asp-for="Cel" class="control-label">Celular</label>
+						<input asp-for="Cel" class="form-control" />
+					</div>	
+					<div class="form-group">
+						<label asp-for="Email" class="control-label">Email</label>
+						<input asp-for="Email" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label asp-for="Address" class="control-label">Bairro</label>
+						<input asp-for="Address" class="form-control" />
+					</div>                  
+
+					<div class="form-group">
+						<label asp-for="DtCreate" class="control-label">Data de Criação</label>
+						<input asp-for="DtCreate" class="form-control" />
+					</div>
+
+					<div class="form-group">
+						<label asp-for="DtCreate" class="control-label">Tipo Do Cliente</label>
+						<input asp-for="DtCreate" class="form-control" />
+					</div>
+					<div class="form-group form-check">
+						<label class="form-check-label">
+							<input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+						</label>
+					</div>
+					<div class="form-group mt-3">
+						<input type="submit" value="Criar" class="btn btn-primary" />
+						<a asp-action="Index" class="btn btn-secondary">Voltar</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	<script src="~/datatable/datatable.js"></script>
+	<script>
+		$(document).ready(function () {
+			new DataTable('#example');
+		});
+	</script>
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

@@ -1,0 +1,106 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<p>
+    <form asp-action="Index" method="post">
+</form>
+</p>
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <div class="page-title-right">
+                <form class="d-flex">
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-light" id="dash-daterange">
+                        <span class="input-group-text bg-primary border-primary text-white">
+                            <i class="ri-calendar-2-line" font-13></i>
+                        </span>
+                    </div>
+                    <a href="javascript: void(0);" class="btn btn-primary ms-2">
+                        <i class="ri-refresh-line"></i>
+                    </a>
+
+                </form>
+            </div>
+            <h1 class="page-title"> Painel Geral </h1>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12 col-lg-6">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card widget-flat">
+                    <div class="card-body">
+                        <div class="float-end">
+                            <i class="ri-survey-line widget-icon"></i>
+
+                        </div>
+                        <h5 class="text-muted fw-normal mt-0" title="Number of Customers">Ganho Diário </h5>
+                        <h3 class="mt-3 mb-3">R$650,00</h3>
+                        <p class="mb-0 text-muted">
+                            <span class="text-success me-2"><i class="ri-arrow-up-long-line"></i> 5.27%</span>
+                            <span class="text-nowrap">Segunda Feira</span>
+                        </p>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col-->
+
+            <div class="col-sm-12">
+                <div class="card widget-flat">
+                    <div class="card-body">
+                        <div class="float-end">
+                            <i class="ri-survey-line widget-icon"></i>
+
+                        </div>
+                        <h5 class="text-muted fw-normal mt-0" title="Number of Orders">Ganho Mensal</h5>
+                        <h3 class="mt-3 mb-3">7.000,00</h3>
+                        <p class="mb-0 text-muted">
+                            <span class="text-success me-2"><i class="ri-arrow-up-long-line"></i> 1.08%</span>
+                            <span class="text-nowrap"></span>
+                        </p>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col-->
+        </div> <!-- end row -->
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card widget-flat">
+                    <div class="card-body">
+                        <div class="float-end">
+                            <i class="ri-group-3-fill widget-icon"></i>
+
+                        </div>
+                        <h5 class="text-muted fw-normal mt-0" title="Average Revenue">Clientes Atendidas (Diário)</h5>
+                        <h3 class="mt-3 mb-3">5</h3>
+                        <p class="mb-0 text-muted">
+                            <span class="text-success me-2"><i class="ri-arrow-up-long-line"></i> 7.00%</span>
+                        </p>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col-->
+
+            <div class="col-sm-12">
+                <div class="card widget-flat">
+                    <div class="card-body">
+                        <div class="float-end">
+                            <i class="ri-group-3-fill widget-icon"></i>
+                        </div>
+                        <h5 class="text-muted fw-normal mt-0" title="Growth">Clientes Atendidas (Mensal)</h5>
+                        <h3 class="mt-3 mb-3">42</h3>
+                        <p class="mb-0 text-muted">
+                            <span class="text-success me-2"><i class="ri-arrow-up-long-line"></i> 4.87%</span>
+                            <span class="text-nowrap">02/2025</span>
+                        </p>
+                    </div> <!-- end card-body-->
+                </div> <!-- end card-->
+            </div> <!-- end col-->
+        </div> <!-- end row -->
+
+    </div> <!-- end col -->
+
+</div>
+<!-- end row -->

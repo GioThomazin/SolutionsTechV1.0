@@ -1,0 +1,60 @@
+﻿@model SolutionsTech.Business.Entity.TypeProcedure
+
+@{
+	ViewData["Title"] = "Create";
+}
+
+<div class="col-12">
+	<div class="page-title-box">
+		<div class="page-title-right">
+			<ol class="breadcrumb m-0">
+			</ol>
+		</div>
+		<h4 class="page-title">Criar Procedimento</h4>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="header-title">Preencha o formulário</h4>
+				<p class="text-muted font-14">
+					Os dados cadastrados podem ser acessados em Relatórios
+				</p>
+
+				<div class="tab-content">
+					<div class="tab-pane active show" id="input-types-preview" role="tabpanel">
+						<div class="row">
+							<div class="col-lg-12">
+								<form asp-action="Create" method="post" class="needs-validation">
+
+									<div class="mb-3">
+										<label asp-for="Name" class="form-label">Nome</label>
+										<input asp-for="Name" class="form-control" required>
+									</div>
+
+									<div class="form-group">
+										<label asp-for="Value" class="control-label">Valor</label>
+										<input asp-for="Value" class="form-control" />
+										<br />
+									</div>
+									<div class="form-group">
+										<input type="submit" value="Criar" class="btn btn-primary" />
+										<a asp-action="Index" class="btn btn-primary">Voltar</a>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

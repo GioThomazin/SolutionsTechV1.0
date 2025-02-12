@@ -1,0 +1,133 @@
+﻿@model IEnumerable<SolutionsTech.Business.Entity.FormPayment>
+
+@{
+	ViewData["Title"] = "Index";
+}
+
+@{
+	ViewData["Title"] = "Formularios";
+}
+
+<link href="~/datatable/datatable.css" rel="stylesheet" />
+
+<style>
+	body {
+		font-size: 18px; /* Aumenta a fonte geral da página */
+	}
+
+	.page-title {
+		font-size: 24px; /* Aumenta o título */
+	}
+
+	table {
+		font-size: 18px; /* Aumenta a fonte dentro da tabela */
+	}
+
+	.btn {
+		font-size: 18px; /* Aumenta os botões */
+	}
+
+	table {
+		font-size: 18px; /* Aumenta o tamanho da fonte */
+	}
+
+	th, td:not(.sorting_1) {
+		text-align: center !important;
+		vertical-align: middle !important;
+	}
+
+	a.text-body {
+		font-size: 18px; /* Aumenta os botões */
+	}
+
+</style>
+
+<div class="row">
+	<div class="col-12">
+		<div class="page-title-box">
+			<div class="page-title-right">
+			</div>
+			<h4 class="page-title">Pagamentos</h4>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<div class="row mb-2">
+					<div class="col-sm-5">
+
+						<form asp-action="Create" method="post">
+							<button class="btn btn-danger mb-2" type="submit">
+								<i class="ri-add-circle-fill me-2"></i> Cadastrar Forma de Pagamento
+							</button>
+						</form>
+
+					</div>
+					<div class="col-sm-7">
+						<div class="text-sm-end">
+							<button type="button" class="btn btn-success mb-2 me-1">Exportar Dados</button>
+						</div>
+					</div>
+				</div>
+				<table id="example" class="table" style="width:100%">
+					<thead class="table-light">
+						<tr>
+							<th>Nome</th>
+							<th>Data de Criação</th>
+							<th>Ativo</th>
+							<th>Opções</th>
+						</tr>
+					</thead>
+					@foreach (var item in Model)
+					{
+						<tr class="sorting_3 text-center">
+							
+							<td class="sorting_1">
+								<p class="m-0 d-inline-block align-middle font-16">
+									<a href="apps-ecommerce-products-details.html" class="text-body">@Html.DisplayFor(modelItem => item.Name)</a>
+								</p>
+							</td>
+							<td>
+								@Html.DisplayFor(modelItem => item.DtCreate)
+							</td>
+														
+							<td>
+								@Html.DisplayFor(modelItem => item.Active)
+							</td>						
+							<td class="table-action">
+
+								<a asp-action="Edit" asp-route-id="@item.IdFormPayment" class="action-icon">
+									<i class="ri-edit-box-line"></i>
+								</a>
+
+								<a asp-action="Delete" asp-route-id="@item.IdFormPayment" class="action-icon">
+									<i class="ri-delete-bin-line"></i>
+								</a>
+
+							</td>
+						</tr>
+					}
+					</tbody>
+
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+@section Scripts {
+
+	<script src="~/datatable/datatable.js"></script>
+
+	<script>
+
+		$(document).ready(function () {
+			new DataTable('#example');
+		});
+
+	</script>
+}
+
