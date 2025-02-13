@@ -48,7 +48,7 @@ namespace SolutionsTech.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdUser,Name,Cel,Email,Address,DtCreate,Active,DtDeactivation,IdUserType")] User user)
+        public async Task<IActionResult> Create([Bind("IdUser,Name,Cel,Email,Address,DataNascimento,DtCreate,Active,DtDeactivation,IdUserType")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -77,7 +77,7 @@ namespace SolutionsTech.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("IdUser,Name,Cel,Email,Address,DtCreate,Active,DtDeactivation,IdUserType")] User user)
+        public async Task<IActionResult> Edit(long id, [Bind("IdUser,Name,Cel,Email,Address,DataNascimento,DtCreate,Active,DtDeactivation,IdUserType")] User user)
         {
             if (id != user.IdUser)
             {
@@ -134,6 +134,7 @@ namespace SolutionsTech.MVC.Controllers
             }
 
             var user = await _context.Users.FindAsync(id);
+
             if (user == null)
             {
                 return NotFound();

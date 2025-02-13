@@ -37,9 +37,6 @@
 	<div class="col-12">
 		<div class="page-title-box">
 			<div class="page-title-right">
-				<ol class="breadcrumb m-0">
-					<li class=""> <a href="javascript: void(0);">Listagem > Clientes</a></li>
-				</ol>
 			</div>
 			<h4 class="page-title">Cadastro de Cliente</h4>
 		</div>
@@ -74,6 +71,11 @@
 						<span asp-validation-for="Address" class="text-danger"></span>
 					</div>
 					<div class="form-group">
+						<label asp-for="DataNacimento" class="control-label">Data de Nascimento</label>
+						<input asp-for="DataNacimento" class="form-control" />
+						<span asp-validation-for="DataNacimento" class="text-danger"></span>
+					</div>
+					<div class="form-group">
 						<label asp-for="DtCreate" class="control-label">Data de Criação</label>
 						<input asp-for="DtCreate" class="form-control" />
 						<span asp-validation-for="DtCreate" class="text-danger"></span>
@@ -101,15 +103,15 @@
 				</form>
 			</div>
 		</div>
+	</div>
+</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-		@section Scripts {
-			<script src="~/datatable/datatable.js"></script>
-			<script>
-				$(document).ready(function () {
-					new DataTable('#example');
-				});
-			</script>
-			@{
-				await Html.RenderPartialAsync("_ValidationScriptsPartial");
-			}
-		}
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

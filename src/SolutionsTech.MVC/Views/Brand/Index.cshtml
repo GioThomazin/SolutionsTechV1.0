@@ -57,7 +57,7 @@
 				<div class="row mb-2">
 					<div class="col-sm-5">
 
-						<form asp-action="Create" method="post">
+						<form asp-action="Create" method="get">
 							<button class="btn btn-danger mb-2" type="submit">
 								<i class="ri-add-circle-fill me-2"></i> Cadastrar Marca
 							</button>
@@ -74,9 +74,7 @@
 					<thead class="table-light">
 						<tr>
 							<th>Nome</th>
-							<th>Tamanho</th>
 							<th>Data De Criação</th>
-							<th>Ativo</th>
 							<th>Opções</th>
 						</tr>
 					</thead>
@@ -89,15 +87,8 @@
 									@Html.DisplayFor(modelItem => item.Name)
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.Size)
-								</td>
-								<td>
 									@Html.DisplayFor(modelItem => item.DtCreate)
 								</td>
-								<td>
-									@Html.DisplayFor(modelItem => item.Active)
-								</td>
-
 								<td class="table-action">
 									<a asp-action="Edit" asp-route-id="@item.IdBrand" class="action-icon">
 										<i class="ri-edit-box-line"></i>

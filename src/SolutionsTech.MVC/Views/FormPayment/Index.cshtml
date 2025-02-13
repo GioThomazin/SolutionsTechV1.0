@@ -77,7 +77,6 @@
 						<tr>
 							<th>Nome</th>
 							<th>Data de Criação</th>
-							<th>Ativo</th>
 							<th>Opções</th>
 						</tr>
 					</thead>
@@ -93,10 +92,6 @@
 							<td>
 								@Html.DisplayFor(modelItem => item.DtCreate)
 							</td>
-														
-							<td>
-								@Html.DisplayFor(modelItem => item.Active)
-							</td>						
 							<td class="table-action">
 
 								<a asp-action="Edit" asp-route-id="@item.IdFormPayment" class="action-icon">

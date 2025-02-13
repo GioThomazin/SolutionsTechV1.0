@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolutionsTech.Data.Context;
 
@@ -11,9 +12,11 @@ using SolutionsTech.Data.Context;
 namespace SolutionsTech.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250212155312_ajuste entidades")]
+    partial class ajusteentidades
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -421,9 +424,6 @@ namespace SolutionsTech.Data.Migrations
                     b.Property<string>("Cel")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DataNacimento")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("DtCreate")
                         .HasColumnType("datetime2");

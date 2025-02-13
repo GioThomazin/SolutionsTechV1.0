@@ -11,10 +11,10 @@ namespace SolutionsTech.Business.Entity
         public string Name { get; set; }
         public string Size { get; set; }
         public DateTime DtCreate { get; set; } = DateTime.Now;
-        public bool Active { get; set; }
-        public long IdBrand { get; set; }
+		public DateTime? DtDesativation { get; set; }
+		public bool Active { get; set; }
 
-        [NotMapped]
-        public List<Brand?>? Brands { get; set; }
+        [ForeignKey("IdBrand")]
+        public long IdBrand { get; set; }
     }
 }

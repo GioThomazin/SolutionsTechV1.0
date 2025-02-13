@@ -129,11 +129,13 @@ namespace SolutionsTech.MVC.Controllers
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
             var userType = await _context.UserType.FindAsync(id);
+          
             if (userType == null)
             {
-                _context.UserType.Remove(userType);
-            }
+                return NotFound();
 
+            }
+            _context.UserType.Remove(userType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

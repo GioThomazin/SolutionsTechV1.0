@@ -6,7 +6,7 @@ namespace SolutionsTech.Business.Entity
     {
         [Key]
         public long IdTypeProcedure { get; set; }
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public decimal Value { get; set; }
     }
 }

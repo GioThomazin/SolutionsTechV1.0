@@ -15,11 +15,11 @@ namespace SolutionsTech.MVC.Controllers
             _context = context;
         }
         //menu configurações com forma de pagamento,castrado de user, tipo de user
-        //procedimento adicionais
+        //procedimento adicionais -NAO VAI PRECISAR, PORQUE O PROCEDIMENTO, VAI TER DROPDOWN
         // fluxo financeiro, custo fixo criar controller crud
         //inseirr data nascimento
         //tenant
-        //inserir campo email no client
+        //inserir campo email no client - DONE
         public async Task<IActionResult> Index()
         {
             var applicationDbContext = _context.Scheduling.Include(s => s.IdFormPayment).Include(s => s.IdUser);

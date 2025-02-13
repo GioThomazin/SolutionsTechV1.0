@@ -58,7 +58,7 @@
 				<div class="row mb-2">
 					<div class="col-sm-5">
 
-						<form asp-action="Create" method="post">
+						<form asp-action="Create" method="get">
 							<button class="btn btn-danger mb-2" type="submit">
 								<i class="ri-add-circle-fill me-2"></i> Cadastrar Cliente
 							</button>
@@ -78,10 +78,10 @@
 							<th>Celular</th>
 							<th>Email</th>
 							<th>Bairro</th>
+							<th>Data De Nascimento</th>
 							<th>Data De Criação</th>
-							<th>Ativo</th>
 							<th>Data De Desativação</th>
-							<th>IdUserType</th>
+							<th>Tipo de Usuario</th>
 							<th>Opções</th>
 						</tr>
 					</thead>
@@ -103,10 +103,10 @@
 									@Html.DisplayFor(modelItem => item.Address)
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.DtCreate)
+									@Html.DisplayFor(modelItem => item.DataNacimento)
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.Active)
+									@Html.DisplayFor(modelItem => item.DtCreate)
 								</td>
 								<td>
 									@Html.DisplayFor(modelItem => item.DtDeactivation)

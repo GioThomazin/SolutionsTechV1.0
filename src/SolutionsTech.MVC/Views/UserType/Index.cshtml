@@ -43,7 +43,7 @@
 		<div class="page-title-box">
 			<div class="page-title-right">
 			</div>
-			<h4 class="page-title">Usuarios</h4>
+			<h4 class="page-title">Tipo De Usuarios</h4>
 		</div>
 	</div>
 </div>
@@ -57,7 +57,7 @@
 
 						<form asp-action="Create" method="post">
 							<button class="btn btn-danger mb-2" type="submit">
-								<i class="ri-add-circle-fill me-2"></i> Cadastrar Usuarios
+								<i class="ri-add-circle-fill me-2"></i> Cadastrar Tipo De Usuario
 							</button>
 						</form>
 
@@ -87,7 +87,6 @@
 								<td>
 									@Html.DisplayFor(modelItem => item.Active)
 								</td>
-
 								<td class="table-action">
 									<a asp-action="Edit" asp-route-id="@item.IdUserType" class="action-icon">
 										<i class="ri-edit-box-line"></i>

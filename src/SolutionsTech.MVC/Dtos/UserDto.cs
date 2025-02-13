@@ -10,7 +10,8 @@ namespace SolutionsTech.MVC.Dto
 		public string Name { get; set; }
 		public string Cel { get; set; }
 		public string Address { get; set; }
-		public DateTime DtCreate { get; set; } = DateTime.Now;
+        public DateTime DataNacimento { get; set; }
+        public DateTime DtCreate { get; set; } = DateTime.Now;
 		public bool Active { get; set; } = true;
 		public DateTime? DtDeactivation { get; set; }
 		public long IdUserType { get; set; }
