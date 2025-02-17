@@ -78,6 +78,7 @@
 						<tr>
 							<th>Nome</th>
 							<th>Valor</th>
+							<th>Duração</th>
 							<th>Opções</th>
 						</tr>
 					</thead>
@@ -93,7 +94,9 @@
 								<td>
 									@Html.DisplayFor(modelItem => item.Value)
 								</td>
-								
+								<td>
+									@Html.DisplayFor(modelItem => item.Duration)
+								</td>
 								<td class="table-action">
 									<a asp-action="Edit" asp-route-id="@item.IdTypeProcedure" class="action-icon">
 										<i class="ri-edit-box-line"></i>

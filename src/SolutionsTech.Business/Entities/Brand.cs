@@ -9,6 +9,6 @@ namespace SolutionsTech.Business.Entity
 		public string Name { get; set; } = string.Empty;
 		public DateTime DtCreate { get; set; } = DateTime.Now;
 		public DateTime? DtDesativation { get; set; }
-		public bool Active { get; set; }
+		public bool Active { get; set; } = true;
 	}
 }

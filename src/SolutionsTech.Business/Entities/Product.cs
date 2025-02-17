@@ -12,7 +12,7 @@ namespace SolutionsTech.Business.Entity
         public string Size { get; set; }
         public DateTime DtCreate { get; set; } = DateTime.Now;
 		public DateTime? DtDesativation { get; set; }
-		public bool Active { get; set; }
+		public bool Active { get; set; } = true;
 
         [ForeignKey("IdBrand")]
         public long IdBrand { get; set; }

@@ -47,7 +47,7 @@ namespace SolutionsTech.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTypeProcedure,Name,Value")] TypeProcedure typeProcedure)
+        public async Task<IActionResult> Create([Bind("IdTypeProcedure,Name,Value,Duration")] TypeProcedure typeProcedure)
         {
             if (ModelState.IsValid)
             {
@@ -75,7 +75,7 @@ namespace SolutionsTech.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("IdTypeProcedure,Name,Value")] TypeProcedure typeProcedure)
+        public async Task<IActionResult> Edit(long id, [Bind("IdTypeProcedure,Name,Value,Duration")] TypeProcedure typeProcedure)
         {
             if (id != typeProcedure.IdTypeProcedure)
             {

@@ -7,5 +7,6 @@ namespace SolutionsTech.MVC.Dto
 		public long IdTypeProcedure { get; set; }
 		public string Name { get; set; }
 		public decimal Value { get; set; }
-	}
+        public TimeSpan Duration { get; set; }
+    }
 }

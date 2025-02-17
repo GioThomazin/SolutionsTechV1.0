@@ -13,7 +13,7 @@ namespace SolutionsTech.Business.Entity
         public string Address { get; set; } = string.Empty;
         public DateTime DataNacimento { get; set; }
 		public DateTime DtCreate { get; set; } = DateTime.Now;
-		public bool Active { get; set; } = false;
+		public bool Active { get; set; } = true;
         public DateTime? DtDeactivation { get; set; }
 
 		[ForeignKey("IdUserType")]

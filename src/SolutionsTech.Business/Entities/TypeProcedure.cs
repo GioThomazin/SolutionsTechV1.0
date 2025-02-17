@@ -8,5 +8,7 @@ namespace SolutionsTech.Business.Entity
         public long IdTypeProcedure { get; set; }
         public string Name { get; set; } = string.Empty;
         public decimal Value { get; set; }
+        public TimeSpan Duration { get; set; }
     }
+
 }

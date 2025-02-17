@@ -14,10 +14,10 @@ namespace SolutionsTech.MVC.Controllers
         {
             _context = context;
         }
-        //menu configurações com forma de pagamento,castrado de user, tipo de user
+        //menu configurações com forma de pagamento,castrado de user, tipo de user - DONE
         //procedimento adicionais -NAO VAI PRECISAR, PORQUE O PROCEDIMENTO, VAI TER DROPDOWN
         // fluxo financeiro, custo fixo criar controller crud
-        //inseirr data nascimento
+        //inseirr data nascimento - DONE
         //tenant
         //inserir campo email no client - DONE
         public async Task<IActionResult> Index()
