@@ -3,7 +3,62 @@
 @{
     ViewData["Title"] = "Edit";
 }
+<div class="col-12">
+    <div class="page-title-box">
+        <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+            </ol>
+        </div>
+        <h4 class="page-title">Editar Marca</h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">Preencha o formulário</h4>
+                <p class="text-muted font-14">
+                    Os dados cadastrados podem ser acessados em Relatórios
+                </p>
 
+                <div class="tab-content">
+                    <div class="tab-pane active show" id="input-types-preview" role="tabpanel">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form asp-action="Edit" method="post" class="needs-validation">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <input type="hidden" asp-for="IdBrand" />
+                                    <div class="mb-3">
+                                        <label asp-for="Name" class="control-label">Nome</label>
+                                        <input asp-for="Name" class="form-control" />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="DtCreate" class="control-label">Data De Criação</label>
+                                        <input asp-for="DtCreate" class="form-control" />
+                                        <span asp-validation-for="DtCreate" class="text-danger"></span>
+                                        <br />
+                                    </div>
+                                    <br />
+                                    <button class="btn btn-primary" type="submit">Editar</button>
+                                    <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+
+@* 
 <h4>Editar Marca</h4>
 <hr />
 <div class="row">
@@ -42,3 +97,4 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
+ *@
