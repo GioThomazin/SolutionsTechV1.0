@@ -33,12 +33,6 @@
                                         <input asp-for="Name" class="form-control" />
                                         <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
-                                    <div class="form-group">
-                                        <label asp-for="DtCreate" class="control-label">Data De Criação</label>
-                                        <input asp-for="DtCreate" class="form-control" />
-                                        <span asp-validation-for="DtCreate" class="text-danger"></span>
-                                        <br />
-                                    </div>
                                     <br />
                                     <button class="btn btn-primary" type="submit">Editar</button>
                                     <a asp-action="Index" class="btn btn-secondary">Voltar</a>
@@ -57,44 +51,3 @@
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 }
-
-@* 
-<h4>Editar Marca</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IdBrand" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label">Nome</label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DtCreate" class="control-label">Data de Criação</label>
-                <input asp-for="DtCreate" class="form-control" />
-                <span asp-validation-for="DtCreate" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-primary">Voltar</a>
-
-            </div>
-        </form>
-    </div>
-</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
- *@

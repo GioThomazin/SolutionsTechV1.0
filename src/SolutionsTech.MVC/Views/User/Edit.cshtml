@@ -9,7 +9,7 @@
 		<div class="page-title-box">
 			<div class="page-title-right">
 			</div>
-			<h4 class="page-title">Cadastro de Cliente</h4>
+			<h4 class="page-title">Cadastro do Cliente</h4>
 		</div>
 	</div>
 </div>
@@ -55,7 +55,14 @@
 						<label asp-for="IdUserType" class="control-label">IdUsuario</label>
 						<input asp-for="IdUserType" class="form-control" />
 						<span asp-validation-for="IdUserType" class="text-danger"></span>
-					</div><br />
+					</div>
+
+					<br />
+					<div class="form-group form-check">
+						<label class="form-check-label">
+							<input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+						</label>
+					</div>
 					<div class="form-group">
 						<input type="submit" value="Salvar" class="btn btn-primary" />
 						<a asp-action="Index" class="btn btn-primary">Voltar</a>
