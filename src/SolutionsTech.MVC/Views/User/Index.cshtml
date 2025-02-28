@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SolutionsTech.Business.Entity.User>
+﻿@model IEnumerable<SolutionsTech.MVC.Dto.UserDto>
 
 @{
 	ViewData["Title"] = "Usuario";
@@ -103,7 +103,7 @@
 									@Html.DisplayFor(modelItem => item.Address)
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.DataNacimento)
+									@Html.DisplayFor(modelItem => item.DtBorn)
 								</td>
 								<td>
 									@Html.DisplayFor(modelItem => item.DtCreate)
@@ -112,7 +112,7 @@
 									@Html.DisplayFor(modelItem => item.DtDeactivation)
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.IdUserType)
+									@Html.DisplayFor(modelItem => item.UserType.Name)
 								</td>
 
 								<td class="table-action">

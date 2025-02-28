@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SolutionsTech.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AjustedeEntidadesparadeixariguaisaodiagrama : Migration
+    public partial class AjusteUser : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,8 +18,8 @@ namespace SolutionsTech.Data.Migrations
                     IdBrand = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Size = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DtCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DtDesativation = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -35,6 +35,7 @@ namespace SolutionsTech.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DtCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DtDesativation = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -51,6 +52,7 @@ namespace SolutionsTech.Data.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Size = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DtCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DtDesativation = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     IdBrand = table.Column<long>(type: "bigint", nullable: false)
                 },
@@ -67,6 +69,7 @@ namespace SolutionsTech.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DtCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DtDesativation = table.Column<DateTime>(type: "datetime2", nullable: true),
                     TotalValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Observation = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdUser = table.Column<long>(type: "bigint", nullable: false),
@@ -112,7 +115,8 @@ namespace SolutionsTech.Data.Migrations
                     IdTypeProcedure = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Duration = table.Column<TimeSpan>(type: "time", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -127,11 +131,13 @@ namespace SolutionsTech.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Cel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DtBorn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DtCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     DtDeactivation = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IdUserType = table.Column<long>(type: "bigint", nullable: true)
+                    IdUserType = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {

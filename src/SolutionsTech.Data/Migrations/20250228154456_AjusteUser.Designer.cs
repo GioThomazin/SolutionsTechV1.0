@@ -12,8 +12,8 @@ using SolutionsTech.Data.Context;
 namespace SolutionsTech.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250207163741_Ajuste de Entidades, para deixar iguais ao diagrama")]
-    partial class AjustedeEntidadesparadeixariguaisaodiagrama
+    [Migration("20250228154456_AjusteUser")]
+    partial class AjusteUser
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,11 +39,11 @@ namespace SolutionsTech.Data.Migrations
                     b.Property<DateTime>("DtCreate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("DtDesativation")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Size")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdBrand");
@@ -63,6 +63,9 @@ namespace SolutionsTech.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("DtCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DtDesativation")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -86,6 +89,9 @@ namespace SolutionsTech.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("DtCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DtDesativation")
                         .HasColumnType("datetime2");
 
                     b.Property<long>("IdBrand")
@@ -113,6 +119,9 @@ namespace SolutionsTech.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("IdScheduling"));
 
                     b.Property<DateTime>("DtCreate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DtDesativation")
                         .HasColumnType("datetime2");
 
                     b.Property<long>("IdFormPayment")
@@ -183,6 +192,9 @@ namespace SolutionsTech.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("IdTypeProcedure"));
 
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("time");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -214,13 +226,20 @@ namespace SolutionsTech.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("DtBorn")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DtCreate")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DtDeactivation")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("IdUserType")
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("IdUserType")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Name")

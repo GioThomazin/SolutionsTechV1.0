@@ -1,4 +1,4 @@
-﻿@model SolutionsTech.Business.Entity.User
+﻿@model SolutionsTech.MVC.Dto.UserDto
 
 @{
 	ViewData["Title"] = "Edit";
@@ -9,7 +9,7 @@
 		<div class="page-title-box">
 			<div class="page-title-right">
 			</div>
-			<h4 class="page-title">Cadastro do Cliente</h4>
+			<h4 class="page-title">Editar do Cliente</h4>
 		</div>
 	</div>
 </div>
@@ -42,19 +42,20 @@
 						<span asp-validation-for="Address" class="text-danger"></span>
 					</div>
 					<div class="form-group">
-						<label asp-for="DataNacimento" class="control-label">Data de Nascimento</label>
-						<input asp-for="DataNacimento" class="form-control" />
-						<span asp-validation-for="DataNacimento" class="text-danger"></span>
+						<label asp-for="DtBorn" class="control-label">Data de Nascimento</label>
+						<input asp-for="DtBorn" class="form-control" />
+						<span asp-validation-for="DtBorn" class="text-danger"></span>
 					</div>
 					<div class="form-group">
 						<label asp-for="DtDeactivation" class="control-label">Data de Desativação</label>
 						<input asp-for="DtDeactivation" class="form-control" />
 						<span asp-validation-for="DtDeactivation" class="text-danger"></span>
 					</div>
+
 					<div class="form-group">
-						<label asp-for="IdUserType" class="control-label">IdUsuario</label>
-						<input asp-for="IdUserType" class="form-control" />
-						<span asp-validation-for="IdUserType" class="text-danger"></span>
+						<select asp-for="IdUserType" id="IdUserType" class="form-control" required asp-items="@(new SelectList(Model.UserTypes, "IdUserType", "Name"))">
+							<option value="">Selecione o perfil</option>
+						</select>
 					</div>
 
 					<br />
