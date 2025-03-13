@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SolutionsTech.Business.Entity.Product>
+﻿@model IEnumerable<SolutionsTech.MVC.Dto.ProductDto>
 
 @{
 	ViewData["Title"] = "Index";
@@ -74,6 +74,7 @@
 							<th>Nome</th>
 							<th>Tamanho</th>
 							<th>Data De Criação</th>
+							<th>Marca</th>
 							<th>Opções</th>
 						</tr>
 					</thead>
@@ -90,6 +91,9 @@
 								</td>
 								<td>
 									@Html.DisplayFor(modelItem => item.DtCreate)
+								</td>
+								<td>
+									@Html.DisplayFor(modelItem => item.Brand.Name)
 								</td>
 								<td class="table-action">
 									<a asp-action="Edit" asp-route-id="@item.IdProduct" class="action-icon">

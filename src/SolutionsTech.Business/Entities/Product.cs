@@ -16,5 +16,8 @@ namespace SolutionsTech.Business.Entity
 
         [ForeignKey("IdBrand")]
         public long IdBrand { get; set; }
-    }
+
+		[NotMapped]
+		public virtual Brand Brand { get; set; }
+	}
 }

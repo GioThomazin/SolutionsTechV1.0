@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SolutionsTech.Business.Entity;
 using SolutionsTech.Data.Context;
+using SolutionsTech.MVC.Dto;
 
 namespace SolutionsTech.MVC.Controllers
 {
@@ -18,10 +19,18 @@ namespace SolutionsTech.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var products = await _context.Product.ToListAsync();
-            var productDto = _mapper.Map<List<Product>>(products);
-            return View(productDto);
-        }
+			var products = await _context.Product.Where(x => x.Active).ToListAsync();
+
+			if (products is not null && products.Any())
+			{
+				foreach (var item in products)
+				{
+					item.Brand = await _context.Brand.Where(x => x.IdBrand == item.IdBrand).FirstOrDefaultAsync();
+				}
+			}
+
+			return View(_mapper.Map<List<ProductDto>>(products));
+		}
 
         public async Task<IActionResult> Details(long? id)
         {
@@ -40,44 +49,59 @@ namespace SolutionsTech.MVC.Controllers
             return View(product);
         }
 
-        public IActionResult Create()
-        {
-            return View();
-        }
+		public async Task<IActionResult> Create()
+		{
+			var productDto = new ProductDto();
 
-        [HttpPost]
+			var brands = await _context.Brand.ToListAsync();
+			var brandsDto = _mapper.Map<List<BrandDto>>(brands);
+
+			productDto.Brands = brandsDto;
+
+			return View(productDto);
+		}
+
+		[HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdProduct,Name,Size,DtCreate,Active")] Product product)
+        public async Task<IActionResult> Create(ProductDto productDto)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(product);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(product);
+				_context.Add(_mapper.Map<Product>(productDto));
+				await _context.SaveChangesAsync();
+				return RedirectToAction(nameof(Index));
+			}
+			var brands = await _context.Brand.ToListAsync();
+			productDto.Brands = _mapper.Map<List<BrandDto>>(brands);
+
+			return View(productDto);
         }
 
         public async Task<IActionResult> Edit(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
-        }
+			var user = _mapper.Map<ProductDto>(await _context.Product.FindAsync(id));
+
+			if (user == null)
+			{
+				return NotFound();
+			}
+
+			var brands = _mapper.Map<List<BrandDto>>(await _context.Brand.ToListAsync());
+			user.Brands = brands;
+
+			return View(user);
+		}
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("IdProduct,Name,Size,DtCreate,Active")] Product product)
+        public async Task<IActionResult> Edit(long id, ProductDto productDto)
         {
-            if (id != product.IdProduct)
+            if (id != productDto.IdProduct)
             {
                 return NotFound();
             }
@@ -86,13 +110,12 @@ namespace SolutionsTech.MVC.Controllers
             {
                 try
                 {
-
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
-                }
+					_context.Update(_mapper.Map<Product>(productDto));
+					await _context.SaveChangesAsync();
+				}
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.IdProduct))
+                    if (!ProductExists(productDto.IdProduct))
                     {
                         return NotFound();
                     }
@@ -103,7 +126,7 @@ namespace SolutionsTech.MVC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(productDto);
         }
         public async Task<IActionResult> Delete(long? id)
         {

@@ -1,4 +1,4 @@
-﻿@model SolutionsTech.Business.Entity.Product
+﻿@model SolutionsTech.MVC.Dto.ProductDto
 
 @{
     ViewData["Title"] = "Edit";
@@ -38,6 +38,12 @@
                                         <input asp-for="Size" class="form-control" />
                                         <span asp-validation-for="Size" class="text-danger"></span>
                                         <br />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <select asp-for="IdBrand" id="IdBrand" class="form-control" required asp-items="@(new SelectList(Model.Brands, "IdBrand", "Nome"))">
+                                            <option value="">Selecione o perfil</option>
+                                        </select>
                                     </div>
                                     <br />
                                     <div class="form-group form-check">

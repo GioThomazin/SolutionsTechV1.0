@@ -49,7 +49,7 @@ namespace SolutionsTech.MVC.Controllers
 			return View(user);
 		}
 
-		public async Task<IActionResult> Create() //=> View(_mapper.Map<List<UserTypeDto>>(await _context.UserType.Where(x => x.Active).ToListAsync()));
+		public async Task<IActionResult> Create() 
 		{
 			var userDto = new UserDto();
 
