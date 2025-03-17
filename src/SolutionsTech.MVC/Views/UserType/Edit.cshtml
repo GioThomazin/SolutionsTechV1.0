@@ -1,22 +1,22 @@
 ﻿@model SolutionsTech.Business.Entity.UserType
 
 @{
-    ViewData["Title"] = "Edit";
+	ViewData["Title"] = "Edit";
 }
 <div class="row">
-    <div class="col-12">
-        <div class="page-title-box">
-            <div class="page-title-right">
-            </div>
-            <h4 class="page-title">Editar Tipo de Usuario</h4>
-        </div>
-    </div>
+	<div class="col-12">
+		<div class="page-title-box">
+			<div class="page-title-right">
+			</div>
+			<h4 class="page-title">Editar Tipo de Usuario</h4>
+		</div>
+	</div>
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-body">
 				<form asp-action="Edit">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<input type="hidden" asp-for="IdUserType" />
@@ -26,20 +26,17 @@
 						<span asp-validation-for="Name" class="text-danger"></span>
 					</div>
 					<br />
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
-                        </label>
-                    </div>
-
+					<div class="form-group form-check">
+						<label class="form-check-label">
+							<input class="form-check-input" asp-for="Active" /> Ativo
+						</label>
+					</div>
 					<br />
 					<div class="form-group">
 						<input type="submit" value="Salvar" class="btn btn-primary" />
 						<a asp-action="Index" class="btn btn-primary">Voltar</a>
-
 					</div>
 				</form>
-
 			</div>
 		</div>
 	</div>
