@@ -354,7 +354,7 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarConfiguracoesGestao" aria-expanded="false" aria-controls="sidebarConfiguracoesGestao" class="side-nav-link">
                             <i class="ri-settings-2-line"></i>
-                            <span> Gestão De Agendamentos</span> <!-- Nome ajustado -->
+                            <span> Agendamentos</span> <!-- Nome ajustado -->
                         </a>
                     </li>
 
@@ -379,7 +379,7 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#sidebarConfiguracoes" aria-expanded="false" aria-controls="sidebarConfiguracoes" class="side-nav-link">
                             <i class="ri-settings-2-line"></i>
-                            <span> Admin </span>
+                            <span> Configurações </span>
                         </a>
                     </li>
 
@@ -388,41 +388,54 @@
                             <li>
                                 <a class="side-nav-link" asp-controller="FormPayment" asp-action="Index">
                                     <i class="ri-file-chart-line"></i>
-
-                                    <span> Formas do Pagamento </span>
+                                    <span> Formas de Pagamento </span>
                                 </a>
                             </li>
                             <li>
                                 <a class="side-nav-link" asp-controller="User" asp-action="Index">
                                     <i class="ri-file-chart-line"></i>
-
-                                    <span> Gestão de Clientes </span>
+                                    <span> Clientes </span>
                                 </a>
                             </li>
                             <li>
                                 <a class="side-nav-link" asp-controller="UserType" asp-action="Index">
                                     <i class="ri-file-chart-line"></i>
-
-                                    <span> Tipos de Usuários </span>
+                                    <span> Perfis de Usuário </span>
                                 </a>
                             </li>
                             <li>
                                 <a class="side-nav-link" asp-controller="Product" asp-action="Index">
                                     <i class="ri-file-chart-line"></i>
-
                                     <span> Produtos </span>
                                 </a>
                             </li>
                             <li>
                                 <a class="side-nav-link" asp-controller="Brand" asp-action="Index">
                                     <i class="ri-file-chart-line"></i>
-
                                     <span> Marcas </span>
                                 </a>
                             </li>
                             <!-- Adicione mais itens aqui, se necessário -->
                         </ul>
                     </div>
+
+                    <style>
+                        /* Ajusta o alinhamento do menu dentro da sidebar */
+                        .side-nav-item, .side-nav-link {
+                            padding-left: 10px; /* Ajuste a distância do lado esquerdo conforme necessário */
+                        }
+
+                        /* Ajuste a largura do submenu */
+                        .collapse .side-nav-second-level {
+                            padding-left: 0; /* Remove qualquer indentação do submenu */
+                        }
+
+                        /* Ajusta o padding da lista de itens */
+                        .side-nav-second-level li {
+                            padding-left: 10px; /* Ajuste para alinhar mais à esquerda */
+                        }
+                    </style>
+
 
                     <li class="side-nav-item">
                         <a class="side-nav-link" asp-controller="Brand" asp-action="Index">
