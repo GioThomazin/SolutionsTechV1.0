@@ -70,7 +70,7 @@ namespace SolutionsTech.MVC.Controllers
 			{
 				if (userDto.DtBorn == default)
 				{
-					userDto.DtBorn = DateTime.Now;
+					userDto.DtBorn = DateTime.Now.Date;
 				}
 				_context.Add(_mapper.Map<User>(userDto));
 				await _context.SaveChangesAsync();

@@ -103,8 +103,9 @@
 									@Html.DisplayFor(modelItem => item.Address)
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.DtBorn)
+									@item.DtBorn.ToString("dd/MM/yyyy")
 								</td>
+
 								<td>
 									@Html.DisplayFor(modelItem => item.DtCreate)
 								</td>
