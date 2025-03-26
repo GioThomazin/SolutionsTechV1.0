@@ -9,7 +9,7 @@
 		<div class="page-title-box">
 			<div class="page-title-right">
 			</div>
-			<h4 class="page-title">Editar do Cliente</h4>
+			<h4 class="page-title">Editar Cliente</h4>
 		</div>
 	</div>
 </div>
@@ -51,8 +51,8 @@
 						<input asp-for="DtDeactivation" class="form-control" />
 						<span asp-validation-for="DtDeactivation" class="text-danger"></span>
 					</div>
-					<br />
 					<div class="form-group">
+						<label asp-for="Name" class="control-label">Perfil</label>
 						<select asp-for="IdUserType" id="IdUserType" class="form-control" required asp-items="@(new SelectList(Model.UserTypes, "IdUserType", "Name"))">
 							<option value="">Selecione o perfil</option>
 						</select>

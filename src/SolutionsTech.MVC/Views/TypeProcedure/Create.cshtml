@@ -3,61 +3,57 @@
 @{
 	ViewData["Title"] = "Create";
 }
+<link href="~/datatable/datatable.css" rel="stylesheet" />
 
-<div class="col-12">
-	<div class="page-title-box">
-		<div class="page-title-right">
-			<ol class="breadcrumb m-0">
-			</ol>
+
+<div class="row">
+	<div class="col-12">
+		<div class="page-title-box">
+			<div class="page-title-right">
+			</div>
+			<h4 class="page-title">Cadastro do Cliente</h4>
 		</div>
-		<h4 class="page-title">Criar Procedimento</h4>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-12">
+	<div class="col-md-12">
 		<div class="card">
 			<div class="card-body">
-				<h4 class="header-title">Preencha o formulário</h4>
-				<p class="text-muted font-14">
-					Os dados cadastrados podem ser acessados em Relatórios
-				</p>
 
-				<div class="tab-content">
-					<div class="tab-pane active show" id="input-types-preview" role="tabpanel">
-						<div class="row">
-							<div class="col-lg-12">
-								<form asp-action="Create" method="post" class="needs-validation">
-
-									<div class="mb-3">
-										<label asp-for="Name" class="form-label">Nome</label>
-										<input asp-for="Name" class="form-control" required>
-									</div>
-
-									<div class="form-group">
-										<label asp-for="Value" class="control-label">Valor</label>
-										<input asp-for="Value" class="form-control" />
-										
-									</div>
-									<div class="mb-3">
-										<label asp-for="Duration" class="form-label">Duração</label>
-										<input asp-for="Duration" class="form-control">
-									</div><br />
-									<div class="form-group">
-										<input type="submit" value="Criar" class="btn btn-primary" />
-										<a asp-action="Index" class="btn btn-primary">Voltar</a>
-									</div>
-								</form>
-							</div>
-						</div>
+				<form asp-action="Create">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="form-group">
+						<label asp-for="Name" class="control-label">Nome</label>
+						<input asp-for="Name" class="form-control" />
 					</div>
-				</div>
+
+					<div class="form-group">
+						<label asp-for="Value" class="control-label">Valor</label>
+						<input asp-for="Value" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label asp-for="Duration" class="control-label">Duração</label>
+						<input asp-for="Duration" class="form-control" />
+					</div>
+					<div class="form-group mt-3">
+						<input type="submit" value="Criar" class="btn btn-primary" />
+						<a asp-action="Index" class="btn btn-secondary">Voltar</a>
+					</div>
+				</form>
+
 			</div>
 		</div>
 	</div>
 </div>
 
 @section Scripts {
+	<script src="~/datatable/datatable.js"></script>
+	<script>
+		$(document).ready(function () {
+			new DataTable('#example');
+		});
+	</script>
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}

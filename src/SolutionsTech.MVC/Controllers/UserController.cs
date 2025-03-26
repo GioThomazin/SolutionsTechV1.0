@@ -68,11 +68,14 @@ namespace SolutionsTech.MVC.Controllers
 		{
 			if (ModelState.IsValid)
 			{
+				if (userDto.DtBorn == default)
+				{
+					userDto.DtBorn = DateTime.Now;
+				}
 				_context.Add(_mapper.Map<User>(userDto));
 				await _context.SaveChangesAsync();
 				return RedirectToAction(nameof(Index));
 			}
-
 			return View(userDto);
 		}
 

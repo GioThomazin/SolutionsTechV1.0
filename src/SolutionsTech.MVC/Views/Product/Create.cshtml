@@ -28,8 +28,9 @@
 					<div class="form-group">
                         <label asp-for="Size" class="control-label">Tamanho</label>
                         <input asp-for="Size" class="form-control" />
-                    </div> <br />
+                    </div>
                     <div class="form-group">
+                        <label asp-for="Brand" class="control-label">Marca</label>
                         <select asp-for="IdBrand" id="IdBrand" class="form-control" required asp-items="@(new SelectList(Model.Brands, "IdBrand", "Name"))">
                             <option value="">Selecione a Marca</option>
                         </select>
