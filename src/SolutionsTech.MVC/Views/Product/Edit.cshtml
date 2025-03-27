@@ -8,7 +8,7 @@
 		<div class="page-title-box">
 			<div class="page-title-right">
 			</div>
-			<h4 class="page-title">Editar Cliente</h4>
+			<h4 class="page-title">Editar Produto</h4>
 		</div>
 	</div>
 </div>
@@ -17,7 +17,7 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-body">
-				<form asp-action="Edit" method="post" class="needs-validation">
+				<form asp-action="Edit">
 					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 					<input type="hidden" asp-for="IdProduct" />
 					<div class="mb-1">
@@ -43,8 +43,11 @@
 						</label>
 					</div>
 					<br />
-					<button class="btn btn-primary" type="submit">Editar</button>
-					<a asp-action="Index" class="btn btn-secondary">Voltar</a>
+					<div class="form-group">
+						<input type="submit" value="Salvar" class="btn btn-primary" />
+						<a asp-action="Index" class="btn btn-primary">Voltar</a>
+
+					</div>
 				</form>
 			</div>
 		</div>

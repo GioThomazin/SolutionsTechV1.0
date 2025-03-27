@@ -3,7 +3,6 @@
 @{
 	ViewData["Title"] = "Edit";
 }
-<hr />
 <div class="row">
 	<div class="col-12">
 		<div class="page-title-box">
@@ -43,7 +42,7 @@
 					</div>
 					<div class="form-group">
 						<label asp-for="DtBorn" class="control-label">Data de Nascimento</label>
-						<input asp-for="DtBorn" class="form-control" />
+						<input asp-for="DtBorn" class="form-control" type="date" />
 						<span asp-validation-for="DtBorn" class="text-danger"></span>
 					</div>
 					<div class="form-group">
@@ -59,7 +58,7 @@
 							<input class="form-check-input" asp-for="Active" /> Ativo
 						</label>
 					</div>
-						<br />
+					<br />
 					<div class="form-group">
 						<input type="submit" value="Salvar" class="btn btn-primary" />
 						<a asp-action="Index" class="btn btn-primary">Voltar</a>

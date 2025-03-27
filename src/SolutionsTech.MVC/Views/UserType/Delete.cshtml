@@ -4,42 +4,50 @@
 	ViewData["Title"] = "Delete";
 }
 
-<div class="row">
-	<div class="col-12">
-		<div class="page-title-box">
-			<div class="page-title-right">
-			</div>
-			<h4 class="page-title">Deletar Produto</h4>
+<div class="col-12">
+	<div class="page-title-box">
+		<div class="page-title-right">
+			<ol class="breadcrumb m-0">
+			</ol>
 		</div>
+		<h4 class="page-title">Deletar Perfil</h4>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-12">
 		<div class="card">
 			<div class="card-body">
+				<h4 class="header-title">Preencha o formulário</h4>
+				<p class="text-muted font-14">
+					Os dados cadastrados podem ser acessados em Relatórios
+				</p>
+
+				<div class="tab-content">
+					<div class="tab-pane active show" id="input-types-preview" role="tabpanel">
+						<div class="row">
+							<div class="col-lg-12">
 				<form asp-action="Delete" method="post" class="needs-validation">
 
 					<div class="mb-3">
+						<label asp-for="Name" class="control-label">Nome</label>
 						<input class="form-control" asp-for="Name" />
 					</div>
 
 					<input type="hidden" asp-for="IdUserType" />
 					<button class="btn btn-danger" value="Delete" type="submit">Delete</button>
 					<a asp-action="Index" class="btn btn-secondary">Voltar</a>
-				</form>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
 @section Scripts {
-	<script src="~/datatable/datatable.js"></script>
-	<script>
-		$(document).ready(function () {
-			new DataTable('#example');
-		});
-	</script>
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}
