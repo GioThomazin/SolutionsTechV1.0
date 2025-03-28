@@ -66,19 +66,21 @@ namespace SolutionsTech.MVC.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(UserDto userDto)
 		{
-			if (ModelState.IsValid)
+			if (!ModelState.IsValid)
 			{
-				if (userDto.DtBorn == default)
-				{
-					userDto.DtBorn = DateTime.Now.Date;
-				}
-				_context.Add(_mapper.Map<User>(userDto));
-				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
+				userDto.UserTypes = _mapper.Map<List<UserTypeDto>>(await _context.UserType.ToListAsync());
+				return View(userDto);
 			}
-			return View(userDto);
-		}
 
+			if (userDto.DtBorn == default)
+			{
+				userDto.DtBorn = DateTime.Now.Date;
+			}
+
+			_context.Add(_mapper.Map<User>(userDto));
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
 		public async Task<IActionResult> Edit(long? id)
 		{
 			if (id == null)

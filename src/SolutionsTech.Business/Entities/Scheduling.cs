@@ -15,8 +15,11 @@ namespace SolutionsTech.Business.Entity
 
 		[ForeignKey("IdUser")]
 		public long IdUser { get; set; }
+		public virtual User User { get; set; }
 
 		[ForeignKey("IdFormPayment")]
 		public long IdFormPayment { get; set; }
+
+		public virtual FormPayment FormPayment { get; set; }
 	}
 }

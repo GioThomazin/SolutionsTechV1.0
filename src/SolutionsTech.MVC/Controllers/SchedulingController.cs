@@ -1,18 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SolutionsTech.Business.Entity;
 using SolutionsTech.Data.Context;
+using SolutionsTech.MVC.Dto;
 
 namespace SolutionsTech.MVC.Controllers
 {
 	public class SchedulingController : Controller
     {
         private readonly ApplicationDbContext _context;
+		private readonly IMapper _mapper;
 
-        public SchedulingController(ApplicationDbContext context)
+		public SchedulingController(ApplicationDbContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
         //menu configurações com forma de pagamento,castrado de user, tipo de user - DONE
         //procedimento adicionais -NAO VAI PRECISAR, PORQUE O PROCEDIMENTO, VAI TER DROPDOWN
@@ -21,13 +25,21 @@ namespace SolutionsTech.MVC.Controllers
         //tenant
         //inserir campo email no client - DONE
         public async Task<IActionResult> Index()
-        {
-            var applicationDbContext = _context.Scheduling.Include(s => s.IdFormPayment).Include(s => s.IdUser);
-            return View(await applicationDbContext.ToListAsync());
-        }
+		{
+			// Carrega todos os agendamentos com os dados relacionados (User e FormPayment)
+			var schedulings = await _context.Scheduling
+				.Include(s => s.User)          // Carrega os dados do usuário relacionado
+				.Include(s => s.FormPayment)    // Carrega os dados da forma de pagamento relacionada
+				.Where(s => s.User.Active && s.FormPayment.Active) // Filtra apenas ativos
+				.OrderByDescending(s => s.DtCreate) // Ordena por data mais recente
+				.ToListAsync();
 
-        // GET: Scheduling/Details/5
-        public async Task<IActionResult> Details(long? id)
+			// Mapeia para o DTO e retorna para a view
+			return View(_mapper.Map<List<SchedulingDto>>(schedulings));
+		}
+
+		// GET: Scheduling/Details/5
+		public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
             {

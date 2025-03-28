@@ -1,9 +1,11 @@
 
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SolutionsTech.Data.Context;
 using SolutionsTech.MVC.AutoMapper;
+using SolutionsTech.MVC.Validations.UserValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,9 +17,13 @@ builder.Services.AddRazorPages().AddRazorRuntimeCompilation();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 	options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
 
-//builder.Services.AddControllersWithViews();
+builder.Services.AddControllers()
+	.AddFluentValidation(fv =>
+	{
+		fv.RegisterValidatorsFromAssemblyContaining<UserValidation>();
+	});
 
-	//feita a validação de token em todas as views
+//feita a validação de token em todas as views
 builder.Services.AddControllersWithViews(options =>
 {								
 	options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());

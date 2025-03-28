@@ -13,5 +13,11 @@ namespace SolutionsTech.MVC.Dto
 		public string Observation { get; set; }
 		public long IdUser { get; set; }
 		public long IdFormPayment { get; set; }
+		public UserDto? User { get; set; }
+		public IEnumerable<UserDto?> Users { get; set; } = new List<UserDto?>();
+
+		public FormPaymentDto? FormPayment { get; set; }
+
+		public IEnumerable<FormPaymentDto?> FormPayments { get; set; } = new List<FormPaymentDto?>();
 	}
 }
