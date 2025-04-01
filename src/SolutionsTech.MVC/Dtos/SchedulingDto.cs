@@ -13,6 +13,7 @@ namespace SolutionsTech.MVC.Dto
 		public string Observation { get; set; }
 		public long IdUser { get; set; }
 		public long IdFormPayment { get; set; }
+		public long IdTypeProcedure { get; set; }
 		public UserDto? User { get; set; }
 		public IEnumerable<UserDto?> Users { get; set; } = new List<UserDto?>();
 
@@ -20,5 +21,8 @@ namespace SolutionsTech.MVC.Dto
 
 		public IEnumerable<FormPaymentDto?> FormPayments { get; set; } = new List<FormPaymentDto?>();
 
+		public TypeProcedureDto? TypeProcedure { get; set; }
+
+		public IEnumerable<TypeProcedureDto?> TypeProcesdures { get; set; } = new List<TypeProcedureDto?>();
 	}
 }
