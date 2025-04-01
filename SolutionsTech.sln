@@ -8,9 +8,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolutionsTech.Data", "src\SolutionsTech.Data\SolutionsTech.Data.csproj", "{6DC376D5-27C2-42D2-B8C1-A550EFEC1024}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01 - SolutionsTech.Application", "01 - SolutionsTech.Application", "{774E27AF-DF24-4F30-B0F1-A33A9AC6C1D5}"
-	ProjectSection(SolutionItems) = preProject
-		src\SolutionsTech.Business\Entities\Brand.cs = src\SolutionsTech.Business\Entities\Brand.cs
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02 - SolutionsTech.Business", "02 - SolutionsTech.Business", "{9E890DE9-4684-4215-A317-DFB3CF783997}"
 EndProject

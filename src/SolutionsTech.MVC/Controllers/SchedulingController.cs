@@ -71,40 +71,19 @@ namespace SolutionsTech.MVC.Controllers
 		// GET: Scheduling/Create
 		public async Task<IActionResult> Create()
 		{
-		var users = await _context.Users.Where(x => x.Active).ToListAsync();
-			var formPayments = await _context.Scheduling.ToListAsync();
-			var typeProcedures = await _context.Scheduling.ToListAsync();
+			var users = await _context.Users.Where(x => x.Active).ToListAsync();
+			var formPayments = await _context.FormPayment.ToListAsync();
+			var typeProcedures = await _context.TypeProcedure.ToListAsync();
 
 			var viewModel = new SchedulingView
 			{
+				Schedulings = new List<SchedulingDto>(), // pode ficar vazio nesse contexto
 				Users = _mapper.Map<List<UserDto>>(users),
 				FormPayments = _mapper.Map<List<FormPaymentDto>>(formPayments),
 				TypeProcedures = _mapper.Map<List<TypeProcedureDto>>(typeProcedures)
 			};
 
-			if (users is not null && users.Any())
-			{
-				foreach (var item in users)
-				{
-					item.UserType = await _context.UserType.Where(x => x.IdUserType == item.IdUserType).FirstOrDefaultAsync();
-				}
-			}
-
-			if (formPayments is not null && formPayments.Any())
-			{
-				foreach (var form in formPayments)
-				{
-					form.FormPayment = await _context.FormPayment.Where(x => x.IdFormPayment == form.IdFormPayment).FirstOrDefaultAsync();
-				}
-			}
-			if (typeProcedures is not null && typeProcedures.Any())
-			{
-				foreach (var type in typeProcedures)
-				{
-					type.TypeProcedure = await _context.TypeProcedure.Where(x => x.IdTypeProcedure == type.IdTypeProcedure).FirstOrDefaultAsync();
-				}
-			}
-			return View(_mapper.Map<List<SchedulingView>>(Index));
+			return View(viewModel);
 		}
 
 		// POST: Scheduling/Create
@@ -114,15 +93,24 @@ namespace SolutionsTech.MVC.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(SchedulingDto schedulingDto)
 		{
+			ModelState.Remove("Observation");
+
 			if (!ModelState.IsValid)
 			{
-				schedulingDto.Users = _mapper.Map<List<UserDto>>(await _context.Users.ToListAsync());
-				schedulingDto.FormPayments = _mapper.Map<List<FormPaymentDto>>(await _context.FormPayment.ToListAsync());
-				return View(schedulingDto);
+				var viewModel = new SchedulingView
+				{
+					Users = _mapper.Map<List<UserDto>>(await _context.Users.ToListAsync()),
+					FormPayments = _mapper.Map<List<FormPaymentDto>>(await _context.FormPayment.ToListAsync()),
+					TypeProcedures = _mapper.Map<List<TypeProcedureDto>>(await _context.TypeProcedure.ToListAsync()),
+					Scheduling = schedulingDto
+				};
+				return View(viewModel);
 			}
 
-			_context.Add(_mapper.Map<User>(schedulingDto));
-			_context.Add(_mapper.Map<FormPayment>(schedulingDto));
+			// Corrigido: usar schedulingDto em vez de viewModel
+			var scheduling = _mapper.Map<Scheduling>(schedulingDto);
+			_context.Add(scheduling);
+		
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));
 		}

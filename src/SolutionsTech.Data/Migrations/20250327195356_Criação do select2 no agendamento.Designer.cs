@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SolutionsTech.Data.Context;
 
@@ -11,9 +12,11 @@ using SolutionsTech.Data.Context;
 namespace SolutionsTech.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250327195356_Criação do select2 no agendamento")]
+    partial class Criaçãodoselect2noagendamento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,10 +124,10 @@ namespace SolutionsTech.Data.Migrations
                     b.Property<DateTime?>("DtDesativation")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("IdFormPayment")
+                    b.Property<long>("FormPaymentIdFormPayment")
                         .HasColumnType("bigint");
 
-                    b.Property<long>("IdTypeProcedure")
+                    b.Property<long>("IdFormPayment")
                         .HasColumnType("bigint");
 
                     b.Property<long>("IdUser")
@@ -141,7 +144,14 @@ namespace SolutionsTech.Data.Migrations
                     b.Property<decimal>("TotalValue")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<long>("UserIdUser")
+                        .HasColumnType("bigint");
+
                     b.HasKey("IdScheduling");
+
+                    b.HasIndex("FormPaymentIdFormPayment");
+
+                    b.HasIndex("UserIdUser");
 
                     b.ToTable("Scheduling");
                 });
@@ -269,6 +279,25 @@ namespace SolutionsTech.Data.Migrations
                     b.HasKey("IdUserType");
 
                     b.ToTable("UserType");
+                });
+
+            modelBuilder.Entity("SolutionsTech.Business.Entity.Scheduling", b =>
+                {
+                    b.HasOne("SolutionsTech.Business.Entity.FormPayment", "FormPayment")
+                        .WithMany()
+                        .HasForeignKey("FormPaymentIdFormPayment")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SolutionsTech.Business.Entity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserIdUser")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FormPayment");
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

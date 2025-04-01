@@ -9,5 +9,6 @@ namespace SolutionsTech.MVC.Dtos.ViewModel
 		public List<SchedulingDto> Schedulings { get; set; }
 		public List<FormPaymentDto> FormPayments { get; set; }
 		public List<TypeProcedureDto> TypeProcedures { get; set; }
+		public SchedulingDto Scheduling { get; set; }
 	}
 }
