@@ -18,7 +18,7 @@ namespace SolutionsTech.MVC.Controllers
             _context = context;
             _mapper = mapper;
         }
-        //menu configurações com forma de pagamento,castrado de user, tipo de user - DONE
+        //menu configurações com forma de pagamento,castrado de user, tipo de user - DONEx
         //procedimento adicionais -NAO VAI PRECISAR, PORQUE O PROCEDIMENTO, VAI TER DROPDOWN
         // fluxo financeiro, custo fixo criar controller crud
         //inseirr data nascimento - DONE
@@ -59,30 +59,42 @@ namespace SolutionsTech.MVC.Controllers
         }
 
         // GET: Scheduling/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["IdFormPayment"] = new SelectList(_context.FormPayment, "IdFormPayment", "Name");
-            ViewData["IdUser"] = new SelectList(_context.Users, "IdUser", "Address");
-            return View();
-        }
+			var schedulingDto = new SchedulingDto();
+
+			var users = await _context.Users.ToListAsync();
+			var usersDto = _mapper.Map<List<UserDto>>(users);
+
+			schedulingDto.Users = usersDto;
+
+            var formPayments = await _context.FormPayment.ToListAsync();
+            var formPaymentsDto = _mapper.Map<List<FormPaymentDto>>(formPayments);
+
+            schedulingDto.FormPayments = formPaymentsDto;
+
+			return View(schedulingDto);
+		}
 
         // POST: Scheduling/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdScheduling,Name,DtCreate,TotalValue,Observation,IdUser,IdFormPayment")] Scheduling scheduling)
+        public async Task<IActionResult> Create(SchedulingDto schedulingDto)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(scheduling);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdFormPayment"] = new SelectList(_context.FormPayment, "IdFormPayment", "Name", scheduling.IdFormPayment);
-            ViewData["IdUser"] = new SelectList(_context.Users, "IdUser", "Address", scheduling.IdUser);
-            return View(scheduling);
-        }
+			if (!ModelState.IsValid)
+			{
+				schedulingDto.Users = _mapper.Map<List<UserDto>>(await _context.Users.ToListAsync());
+				schedulingDto.FormPayments = _mapper.Map<List<FormPaymentDto>>(await _context.FormPayment.ToListAsync());
+				return View(schedulingDto);
+			}
+
+			_context.Add(_mapper.Map<User>(schedulingDto));
+			_context.Add(_mapper.Map<FormPayment>(schedulingDto));
+			await _context.SaveChangesAsync();
+			return RedirectToAction(nameof(Index));
+		}
 
         // GET: Scheduling/Edit/5
         public async Task<IActionResult> Edit(long? id)

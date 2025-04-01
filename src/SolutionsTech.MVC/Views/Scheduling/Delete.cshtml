@@ -1,57 +1,71 @@
 ﻿@model SolutionsTech.Business.Entity.Scheduling
 
 @{
-    ViewData["Title"] = "Delete";
+	ViewData["Title"] = "Delete";
 }
-
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Scheduling</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DtCreate)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DtCreate)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TotalValue)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TotalValue)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Observation)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Observation)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdUser)
-        </dt>
-@*         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.Address)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FormPayment)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FormPayment.Name)
-        </dd> *@
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdScheduling" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+<div class="col-12">
+	<div class="page-title-box">
+		<div class="page-title-right">
+			<ol class="breadcrumb m-0">
+			</ol>
+		</div>
+		<h4 class="page-title">Deletar Agendamento</h4>
+	</div>
 </div>
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="header-title">Preencha o formulário</h4>
+				<p class="text-muted font-14">
+					Os dados cadastrados podem ser acessados em Relatórios
+				</p>
+
+				<div class="tab-content">
+					<div class="tab-pane active show" id="input-types-preview" role="tabpanel">
+						<div class="row">
+							<div class="col-lg-12">
+								<form asp-action="Delete" method="post" class="needs-validation">
+
+									<div class="mb-1">
+										<label asp-for="Name" class="control-label">Nome</label>
+										<input class="form-control" asp-for="Name" />
+									</div>
+									<div class="mb-1">
+										<label asp-for="IdUser" class="control-label">Cliente</label>
+										<input class="form-control" asp-for="IdUser" />
+									</div>
+									<div class="mb-1">
+										<label asp-for="IdFormPayment" class="control-label">Pagamento</label>
+										<input class="form-control" asp-for="IdFormPayment" />
+									</div>
+									<div class="mb-1">
+										<label asp-for="TotalValue" class="control-label">Valor Total</label>
+										<input class="form-control" asp-for="TotalValue" />
+									</div>
+									<div class="mb-1">
+										<label asp-for="Observation" class="control-label">Observação</label>
+										<input asp-for="Observation" class="form-control" />
+									</div>
+									<br />
+									<input type="hidden" asp-for="IdScheduling" />
+									<button class="btn btn-danger" value="Delete" type="submit">Delete</button>
+									<a asp-action="Index" class="btn btn-secondary">Voltar</a>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				@section Scripts {
+					<script src="~/datatable/datatable.js"></script>
+					<script>
+						$(document).ready(function () {
+							new DataTable('#example');
+						});
+					</script>
+					@{
+						await Html.RenderPartialAsync("_ValidationScriptsPartial");
+					}
+				}

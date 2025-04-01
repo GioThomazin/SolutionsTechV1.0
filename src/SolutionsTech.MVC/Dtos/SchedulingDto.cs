@@ -19,5 +19,6 @@ namespace SolutionsTech.MVC.Dto
 		public FormPaymentDto? FormPayment { get; set; }
 
 		public IEnumerable<FormPaymentDto?> FormPayments { get; set; } = new List<FormPaymentDto?>();
+
 	}
 }
