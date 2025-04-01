@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SolutionsTech.MVC.Dto.SchedulingDto>
+﻿@model SolutionsTech.MVC.Dtos.ViewModel.SchedulingView
 
 @{
     ViewData["Title"] = "Index";
@@ -79,19 +79,18 @@
 							<th>Observação</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        	@foreach (var item in Model)
+					<tbody>
+						@foreach (var item in Model.Schedulings)
 						{
-							<tr
-							 class="sorting_3 text-center">
+							<tr class="sorting_3 text-center">
 								<td>
-									@Html.DisplayFor(modelItem => item.Name)
+									@Html.DisplayFor(modelItem => item.TypeProcedure.Name)
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.IdUser)
+									@Html.DisplayFor(modelItem => item.User.Name)
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.IdFormPayment)
+									@Html.DisplayFor(modelItem => item.FormPayment.Name)
 								</td>
 								<td>
 									@Html.DisplayFor(modelItem => item.TotalValue)
@@ -99,20 +98,18 @@
 								<td>
 									@Html.DisplayFor(modelItem => item.Observation)
 								</td>
-                                <td class="table-action">
-                                    <a asp-action="Edit" asp-route-id="@item.IdUser" class="action-icon">
-                                        <i class="ri-edit-box-line"></i>
-                                    </a>
+								<td class="table-action">
+									<a asp-action="Edit" asp-route-id="@item.IdScheduling" class="action-icon">
+										<i class="ri-edit-box-line"></i>
+									</a>
 
-                                    <a asp-action="Delete" asp-route-id="@item.IdUser" class="action-icon">
-                                        <i class="ri-delete-bin-line"></i>
-                                    </a>
-
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-
+									<a asp-action="Delete" asp-route-id="@item.IdScheduling" class="action-icon">
+										<i class="ri-delete-bin-line"></i>
+									</a>
+								</td>
+							</tr>
+						}
+					</tbody>
                 </table>
             </div>
         </div>

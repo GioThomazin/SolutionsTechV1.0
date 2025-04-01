@@ -1,25 +1,36 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SolutionsTech.Business.Entity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SolutionsTech.Business.Entity
 {
-    public class Scheduling
-    {
-        [Key]
-        public long IdScheduling { get; set; }
-        public string Name { get; set; }
-        public DateTime DtCreate { get; set; } = DateTime.Now;
+	public class Scheduling
+	{
+		[Key]
+		public long IdScheduling { get; set; }
+
+		public string Name { get; set; }
+		public DateTime DtCreate { get; set; } = DateTime.Now;
 		public DateTime? DtDesativation { get; set; }
 		public decimal TotalValue { get; set; }
-        public string Observation { get; set; } = string.Empty;
+		public string Observation { get; set; } = string.Empty;
+
+		public long IdUser { get; set; }
 
 		[ForeignKey("IdUser")]
-		public long IdUser { get; set; }
 		public virtual User User { get; set; }
 
-		[ForeignKey("IdFormPayment")]
 		public long IdFormPayment { get; set; }
 
+		[ForeignKey("IdFormPayment")]
 		public virtual FormPayment FormPayment { get; set; }
+
+		public long IdTypeProcedure { get; set; }
+
+		[ForeignKey("IdTypeProcedure")]
+		public virtual TypeProcedure TypeProcedure { get; set; }
 	}
+
+
 }
+
