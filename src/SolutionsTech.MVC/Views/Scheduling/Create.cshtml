@@ -1,88 +1,73 @@
 ﻿@model SolutionsTech.MVC.Dtos.ViewModel.SchedulingView
 @{
-    ViewData["Title"] = "Create";
+	ViewData["Title"] = "Create";
 }
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 
-<div class="row">
-    <div class="col-12">
-        <div class="page-title-box">
-            <h4 class="page-title">Criar Agendamento</h4>
-        </div>
-    </div>
+<div class="col-12">
+	<div class="page-title-box">
+		<div class="page-title-right">
+			<ol class="breadcrumb m-0">
+			</ol>
+		</div>
+		<h4 class="page-title">Criar Forma de Pagamento</h4>
+	</div>
 </div>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="card">
-            <div class="card-body">
-                <form asp-action="Create">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="Scheduling.Name" class="control-label">Procedimento</label>
-                        <select asp-for="TypeProcedures" id="IdTypeProcedure" class="form-control select2-multiple" multiple="multiple" required
-                                asp-items="@(new SelectList(Model.TypeProcedures, "IdTypeProcedure", "Name"))">
-                        </select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="control-label">Cliente</label>
-                        <select asp-for="Users" id="IdUser" class="form-control select2-single" required
-                                asp-items="@(new SelectList(Model.Users, "IdUser", "Name"))">
-                            <option value="">Selecione o Cliente</option>
-                        </select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label class="control-label">Forma de Pagamento</label>
-                        <select asp-for="FormPayments" id="IdFormPayment" class="form-control select2-single" required
-                                asp-items="@(new SelectList(Model.FormPayments, "IdFormPayment", "Name"))">
-                            <option value="">Selecione o Pagamento</option>
-                        </select>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="Scheduling.TotalValue" class="control-label">Valor Total</label>
-                        <input asp-for="Scheduling.TotalValue" class="form-control" />
-                    </div>
-                    <div class="form-group mb-3">
-                        <label asp-for="Scheduling.Observation" class="control-label">Observação</label>
-                        <input asp-for="Scheduling.Observation" class="form-control" />
-                    </div>
-                    <div class="form-group mt-4">
-                        <input type="submit" value="Criar" class="btn btn-primary" />
-                        <a asp-action="Index" class="btn btn-secondary">Voltar</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+	<div class="col-12">
+		<div class="card">
+			<div class="card-body">
+				<h4 class="header-title">Preencha o formulário</h4>
+				<p class="text-muted font-14">
+					Os dados cadastrados podem ser acessados em Relatórios
+				</p>
+
+				<div class="tab-content">
+					<div class="tab-pane active show" id="input-types-preview" role="tabpanel">
+						<div class="row">
+							<div class="col-lg-12">
+								<form asp-action="Create">
+									<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+									<div class="form-group">
+										<label class="control-label">Selecione múltiplos Usuários</label>
+										<select asp-for="TypeProcedures" id="TypeProcedures" class="select2 form-control select2-multiple"
+												data-toggle="select2" multiple="multiple"
+												data-placeholder="Selecione os procedimentos"
+												asp-items="@(new SelectList(Model.TypeProcedures, "IdTypeProcedure", "Name"))">
+										</select>
+									</div>
+									<div class="form-group">
+										<label class="control-label">Selecione a Forma de Pagamento</label>
+										<select asp-for="FormPayments" id="MultiUsers" class="select2 form-control select2-multiple"
+												data-toggle="select2" multiple="multiple"
+												data-placeholder="Forma de Pagamento"
+												asp-items="@(new SelectList(Model.FormPayments, "IdFormPayment", "Name"))">
+										</select>
+									</div>
+									<div class="form-group mb-3">
+										<label asp-for="Scheduling.TotalValue" class="control-label">Valor Total</label>
+										<input asp-for="Scheduling.TotalValue" class="form-control" />
+									</div>
+									<div class="form-group mb-3">
+										<label asp-for="Scheduling.Observation" class="control-label">Observação</label>
+										<input asp-for="Scheduling.Observation" class="form-control" />
+									</div>
+									<div class="form-group mt-4">
+										<input type="submit" value="Criar" class="btn btn-primary" />
+										<a asp-action="Index" class="btn btn-secondary">Voltar</a>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 @section Scripts {
-    <!-- jQuery + Select2 CSS/JS -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/i18n/pt-BR.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            // Select2 MÚLTIPLO (Procedimento)
-            $('.select2-multiple').select2({
-                placeholder: "Selecione um ou mais procedimentos",
-                allowClear: true,
-                language: "pt-BR",
-                width: '100%'
-            });
-
-            // Select2 SIMPLES (Cliente)
-            $('.select2-single').select2({
-                placeholder: "Selecione o Cliente",
-                allowClear: true,
-                language: "pt-BR",
-                width: '100%'
-            });
-        });
-    </script>
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
 }

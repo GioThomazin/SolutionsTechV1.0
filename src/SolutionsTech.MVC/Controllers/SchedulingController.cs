@@ -19,12 +19,8 @@ namespace SolutionsTech.MVC.Controllers
 			_context = context;
 			_mapper = mapper;
 		}
-		//menu configurações com forma de pagamento,castrado de user, tipo de user - DONEx
-		//procedimento adicionais -NAO VAI PRECISAR, PORQUE O PROCEDIMENTO, VAI TER DROPDOWN
 		// fluxo financeiro, custo fixo criar controller crud
-		//inseirr data nascimento - DONE
-		//tenant
-		//inserir campo email no client - DONE
+		//tenant por segmentação de cliente, salao de beleza, venda de produtos etc
 		public async Task<IActionResult> Index()
 		{
 			var schedulings = await _context.Scheduling
@@ -71,13 +67,13 @@ namespace SolutionsTech.MVC.Controllers
 		// GET: Scheduling/Create
 		public async Task<IActionResult> Create()
 		{
-			var users = await _context.Users.Where(x => x.Active).ToListAsync();
+			var users = await _context.Users.ToListAsync();
 			var formPayments = await _context.FormPayment.ToListAsync();
 			var typeProcedures = await _context.TypeProcedure.ToListAsync();
 
 			var viewModel = new SchedulingView
 			{
-				Schedulings = new List<SchedulingDto>(), // pode ficar vazio nesse contexto
+				Schedulings = new List<SchedulingDto>(),
 				Users = _mapper.Map<List<UserDto>>(users),
 				FormPayments = _mapper.Map<List<FormPaymentDto>>(formPayments),
 				TypeProcedures = _mapper.Map<List<TypeProcedureDto>>(typeProcedures)
@@ -107,10 +103,7 @@ namespace SolutionsTech.MVC.Controllers
 				return View(viewModel);
 			}
 
-			// Corrigido: usar schedulingDto em vez de viewModel
-			var scheduling = _mapper.Map<Scheduling>(schedulingDto);
-			_context.Add(scheduling);
-		
+			_context.Add(_mapper.Map<Scheduling>(schedulingDto));
 			await _context.SaveChangesAsync();
 			return RedirectToAction(nameof(Index));
 		}
