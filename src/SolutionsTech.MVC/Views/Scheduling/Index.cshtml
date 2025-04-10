@@ -72,7 +72,7 @@
                 <table id="example" class="table" style="width:100%">
                     <thead class="table-light">
                         <tr>
-                            <th>Nome</th>
+                            <th>Procedimento</th>
                             <th>Cliente</th>
                             <th>Forma de Pagamento</th>
 							<th>Valor Total</th>
@@ -84,13 +84,13 @@
 						{
 							<tr class="sorting_3 text-center">
 								<td>
-									@Html.DisplayFor(modelItem => item.TypeProcedure.Name)
+									@Html.DisplayFor(modelItem => item.TypeProcedure)
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.User.Name)
+									@Html.DisplayFor(modelItem => item.User)
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.FormPayment.Name)
+									@Html.DisplayFor(modelItem => item.FormPayment)
 								</td>
 								<td>
 									@Html.DisplayFor(modelItem => item.TotalValue)
