@@ -33,7 +33,7 @@
 										<select asp-for="Scheduling.IdUser" id="IdUser"
 												class="select2 form-control" required
 												asp-items="@(new SelectList(Model.Users, "IdUser", "Name"))">
-											<option value="">Selecione o perfil</option>
+											<option value="">Selecione...</option>
 										</select>
 									</div>
 
@@ -48,11 +48,12 @@
 									</div>
 									<div class="form-group">
 										<label class="control-label">Selecione a Forma de Pagamento</label>
-										<select asp-for="FormPayments" id="MultiUsers" class="select2 form-control select2-multiple"
-												data-toggle="select2" multiple="multiple"
-												data-placeholder="Forma de Pagamento"
+										<select asp-for="Scheduling.IdFormPayment" class="form-control select2-single"
+												data-placeholder="Selecione a forma de pagamento"
 												asp-items="@(new SelectList(Model.FormPayments, "IdFormPayment", "Name"))">
+											<option value="">Selecione...</option>
 										</select>
+										<span asp-validation-for="Scheduling.IdFormPayment" class="text-danger"></span>
 									</div>
 									<div class="form-group mb-1">
 										<label asp-for="Scheduling.TotalValue" class="control-label">Valor Total</label>

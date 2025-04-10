@@ -1,6 +1,14 @@
-﻿namespace SolutionsTech.Data.Repository
+﻿using SolutionsTech.Data.Context;
+
+namespace SolutionsTech.Data.Repository
 {
-    class UserRepository
+    class UserRepository //: ApplicationDbContext
     {
+        //private readonly ApplicationDbContext _applicationDbContext;
+        //testes
+        //public UserRepository(ApplicationDbContext applicationDbContext)
+        //{
+        //    applicationDbContext = _applicationDbContext;
+        //}
     }
 }

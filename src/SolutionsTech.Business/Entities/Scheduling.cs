@@ -9,11 +9,10 @@ namespace SolutionsTech.Business.Entity
 		[Key]
 		public long IdScheduling { get; set; }
 
-		public string Name { get; set; }
 		public DateTime DtCreate { get; set; } = DateTime.Now;
 		public DateTime? DtDesativation { get; set; }
 		public decimal TotalValue { get; set; }
-		public string Observation { get; set; } = string.Empty;
+		public string? Observation { get; set; } = string.Empty;
 
 		public long IdUser { get; set; }
 
