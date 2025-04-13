@@ -1,4 +1,5 @@
-﻿@model SolutionsTech.MVC.Dtos.ViewModel.SchedulingView
+﻿@model SolutionsTech.MVC.Dto.SchedulingDto
+
 @{
     ViewData["Title"] = "Create";
 }
@@ -31,7 +32,7 @@
 
                                     <div class="form-group">
                                         <label asp-for="Users" class="control-label">Perfil</label>
-                                        <select asp-for="Scheduling.IdUser" id="IdUser"
+                                        <select asp-for="IdUser" id="IdUser"
                                                 class="select2 form-control" required
                                                 asp-items="@(new SelectList(Model.Users, "IdUser", "Name"))">
                                             <option value="">Selecione...</option>
@@ -39,7 +40,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Selecione múltiplos Procedimentos</label>
-                                        <select asp-for="TypeProcedures" id="TypeProcedures"
+                                        <select asp-for="IdTypeProcedure" id="TypeProcedures"
                                                 class="select2 form-control select2-multiple"
                                                 data-toggle="select2"
                                                 multiple="multiple"
@@ -55,27 +56,27 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label">Selecione a Forma de Pagamento</label>
-                                        <select asp-for="Scheduling.IdFormPayment" class="form-control select2-single"
+                                        <select asp-for="IdFormPayment" class="form-control select2-single"
                                                 data-placeholder="Selecione a forma de pagamento"
                                                 asp-items="@(new SelectList(Model.FormPayments, "IdFormPayment", "Name"))">
                                             <option value="">Selecione...</option>
                                         </select>
-                                        <span asp-validation-for="Scheduling.IdFormPayment" class="text-danger"></span>
+                                        <span asp-validation-for="IdFormPayment" class="text-danger"></span>
                                     </div>
 
                                     <div class="form-group mb-1">
-                                        <label asp-for="Scheduling.TotalValue" class="control-label">Valor Total</label>
-                                        <input asp-for="Scheduling.TotalValue" class="form-control" id="TotalValue" readonly />
+                                        <label asp-for="TotalValue" class="control-label">Valor Total</label>
+                                        <input asp-for="TotalValue" class="form-control" id="TotalValue" readonly />
                                     </div>
 
                                     <div class="form-group mb-1">
-                                        <label asp-for="Scheduling.DtCreate" class="control-label">Data</label>
-                                        <input asp-for="Scheduling.DtCreate" class="form-control" />
+                                        <label asp-for="DtCreate" class="control-label">Data</label>
+                                        <input asp-for="DtCreate" class="form-control" />
                                     </div>
 
                                     <div class="form-group mb-1">
-                                        <label asp-for="Scheduling.Observation" class="control-label">Observação</label>
-                                        <input asp-for="Scheduling.Observation" class="form-control" />
+                                        <label asp-for="Observation" class="control-label">Observação</label>
+                                        <input asp-for="Observation" class="form-control" />
                                     </div>
 
                                     <div class="form-group mt-1">
@@ -115,7 +116,7 @@
             }
 
             $('#TypeProcedures').on('change', calcularTotal);
-            calcularTotal(); 
+            calcularTotal();
         });
     </script>
 }

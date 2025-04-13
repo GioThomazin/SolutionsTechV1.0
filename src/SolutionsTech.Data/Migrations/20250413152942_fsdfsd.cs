@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SolutionsTech.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AjusteUser : Migration
+    public partial class fsdfsd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -62,25 +62,6 @@ namespace SolutionsTech.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Scheduling",
-                columns: table => new
-                {
-                    IdScheduling = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DtCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DtDesativation = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    TotalValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Observation = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdUser = table.Column<long>(type: "bigint", nullable: false),
-                    IdFormPayment = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Scheduling", x => x.IdScheduling);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SchedulingProcedure",
                 columns: table => new
                 {
@@ -124,6 +105,20 @@ namespace SolutionsTech.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UserType",
+                columns: table => new
+                {
+                    IdUserType = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Active = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserType", x => x.IdUserType);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -142,21 +137,58 @@ namespace SolutionsTech.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.IdUser);
+                    table.ForeignKey(
+                        name: "FK_Users_UserType_IdUserType",
+                        column: x => x.IdUserType,
+                        principalTable: "UserType",
+                        principalColumn: "IdUserType",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserType",
+                name: "Scheduling",
                 columns: table => new
                 {
-                    IdUserType = table.Column<long>(type: "bigint", nullable: false)
+                    IdScheduling = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Active = table.Column<bool>(type: "bit", nullable: false)
+                    DtCreate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DtDesativation = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    TotalValue = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Observation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdUser = table.Column<long>(type: "bigint", nullable: false),
+                    IdFormPayment = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserType", x => x.IdUserType);
+                    table.PrimaryKey("PK_Scheduling", x => x.IdScheduling);
+                    table.ForeignKey(
+                        name: "FK_Scheduling_FormPayment_IdFormPayment",
+                        column: x => x.IdFormPayment,
+                        principalTable: "FormPayment",
+                        principalColumn: "IdFormPayment",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Scheduling_Users_IdUser",
+                        column: x => x.IdUser,
+                        principalTable: "Users",
+                        principalColumn: "IdUser",
+                        onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Scheduling_IdFormPayment",
+                table: "Scheduling",
+                column: "IdFormPayment");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Scheduling_IdUser",
+                table: "Scheduling",
+                column: "IdUser");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_IdUserType",
+                table: "Users",
+                column: "IdUserType");
         }
 
         /// <inheritdoc />
@@ -164,9 +196,6 @@ namespace SolutionsTech.Data.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Brand");
-
-            migrationBuilder.DropTable(
-                name: "FormPayment");
 
             migrationBuilder.DropTable(
                 name: "Product");
@@ -182,6 +211,9 @@ namespace SolutionsTech.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "TypeProcedure");
+
+            migrationBuilder.DropTable(
+                name: "FormPayment");
 
             migrationBuilder.DropTable(
                 name: "Users");

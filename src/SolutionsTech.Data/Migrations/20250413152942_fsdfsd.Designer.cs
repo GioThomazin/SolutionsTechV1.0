@@ -12,8 +12,8 @@ using SolutionsTech.Data.Context;
 namespace SolutionsTech.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250327143722_Ajustes no agendamento")]
-    partial class Ajustesnoagendamento
+    [Migration("20250413152942_fsdfsd")]
+    partial class fsdfsd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -124,34 +124,23 @@ namespace SolutionsTech.Data.Migrations
                     b.Property<DateTime?>("DtDesativation")
                         .HasColumnType("datetime2");
 
-                    b.Property<long>("FormPaymentIdFormPayment")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("IdFormPayment")
                         .HasColumnType("bigint");
 
                     b.Property<long>("IdUser")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Observation")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalValue")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<long>("UserIdUser")
-                        .HasColumnType("bigint");
-
                     b.HasKey("IdScheduling");
 
-                    b.HasIndex("FormPaymentIdFormPayment");
+                    b.HasIndex("IdFormPayment");
 
-                    b.HasIndex("UserIdUser");
+                    b.HasIndex("IdUser");
 
                     b.ToTable("Scheduling");
                 });
@@ -258,6 +247,8 @@ namespace SolutionsTech.Data.Migrations
 
                     b.HasKey("IdUser");
 
+                    b.HasIndex("IdUserType");
+
                     b.ToTable("Users");
                 });
 
@@ -285,19 +276,30 @@ namespace SolutionsTech.Data.Migrations
                 {
                     b.HasOne("SolutionsTech.Business.Entity.FormPayment", "FormPayment")
                         .WithMany()
-                        .HasForeignKey("FormPaymentIdFormPayment")
+                        .HasForeignKey("IdFormPayment")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SolutionsTech.Business.Entity.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserIdUser")
+                        .HasForeignKey("IdUser")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("FormPayment");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SolutionsTech.Business.Entity.User", b =>
+                {
+                    b.HasOne("SolutionsTech.Business.Entity.UserType", "UserType")
+                        .WithMany()
+                        .HasForeignKey("IdUserType")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserType");
                 });
 #pragma warning restore 612, 618
         }
