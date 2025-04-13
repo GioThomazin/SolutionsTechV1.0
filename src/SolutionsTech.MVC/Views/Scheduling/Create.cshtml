@@ -1,84 +1,121 @@
 ﻿@model SolutionsTech.MVC.Dtos.ViewModel.SchedulingView
 @{
-	ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create";
 }
 
 <div class="col-12">
-	<div class="page-title-box">
-		<div class="page-title-right">
-			<ol class="breadcrumb m-0">
-			</ol>
-		</div>
-		<h4 class="page-title">Criar Forma de Pagamento</h4>
-	</div>
+    <div class="page-title-box">
+        <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+            </ol>
+        </div>
+        <h4 class="page-title">Criar Forma de Pagamento</h4>
+    </div>
 </div>
 
 <div class="row">
-	<div class="col-12">
-		<div class="card">
-			<div class="card-body">
-				<h4 class="header-title">Preencha o formulário</h4>
-				<p class="text-muted font-14">
-					Os dados cadastrados podem ser acessados em Relatórios
-				</p>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">Preencha o formulário</h4>
+                <p class="text-muted font-14">
+                    Os dados cadastrados podem ser acessados em Relatórios
+                </p>
 
-				<div class="tab-content">
-					<div class="tab-pane active show" id="input-types-preview" role="tabpanel">
-						<div class="row">
-							<div class="col-lg-12">
-								<form asp-action="Create">
-									<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-									<div class="form-group">
-										<label asp-for="Users" class="control-label">Perfil</label>
-										<select asp-for="Scheduling.IdUser" id="IdUser"
-												class="select2 form-control" required
-												asp-items="@(new SelectList(Model.Users, "IdUser", "Name"))">
-											<option value="">Selecione...</option>
-										</select>
-									</div>
+                <div class="tab-content">
+                    <div class="tab-pane active show" id="input-types-preview" role="tabpanel">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form asp-action="Create">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-									<div class="form-group">
-										<label class="control-label">Selecione múltiplos Procedimentos</label>
-										<select asp-for="TypeProcedures" id="TypeProcedures"
-												class="select2 form-control select2-multiple"
-												data-toggle="select2" multiple="multiple"
-												data-placeholder="Procedimentos"
-												asp-items="@(new SelectList(Model.TypeProcedures, "IdTypeProcedure", "Name"))">
-										</select>
-									</div>
-									<div class="form-group">
-										<label class="control-label">Selecione a Forma de Pagamento</label>
-										<select asp-for="Scheduling.IdFormPayment" class="form-control select2-single"
-												data-placeholder="Selecione a forma de pagamento"
-												asp-items="@(new SelectList(Model.FormPayments, "IdFormPayment", "Name"))">
-											<option value="">Selecione...</option>
-										</select>
-										<span asp-validation-for="Scheduling.IdFormPayment" class="text-danger"></span>
-									</div>
-									<div class="form-group mb-1">
-										<label asp-for="Scheduling.TotalValue" class="control-label">Valor Total</label>
-										<input asp-for="Scheduling.TotalValue" class="form-control" />
-									</div>
-									<div class="form-group mb-1">
-										<label asp-for="Scheduling.Observation" class="control-label">Observação</label>
-										<input asp-for="Scheduling.Observation" class="form-control" />
-									</div>
-									<div class="form-group mt-1">
-										<input type="submit" value="Criar" class="btn btn-primary" />
-										<a asp-action="Index" class="btn btn-secondary">Voltar</a>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                    <div class="form-group">
+                                        <label asp-for="Users" class="control-label">Perfil</label>
+                                        <select asp-for="Scheduling.IdUser" id="IdUser"
+                                                class="select2 form-control" required
+                                                asp-items="@(new SelectList(Model.Users, "IdUser", "Name"))">
+                                            <option value="">Selecione...</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Selecione múltiplos Procedimentos</label>
+                                        <select asp-for="TypeProcedures" id="TypeProcedures"
+                                                class="select2 form-control select2-multiple"
+                                                data-toggle="select2"
+                                                multiple="multiple"
+                                                data-placeholder="Selecione...">
+                                            @foreach (var proc in Model.TypeProcedures)
+                                            {
+                                                <option value="@proc.IdTypeProcedure"
+                                                        data-valor="@proc.Value.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)">
+                                                    @proc.Name
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label">Selecione a Forma de Pagamento</label>
+                                        <select asp-for="Scheduling.IdFormPayment" class="form-control select2-single"
+                                                data-placeholder="Selecione a forma de pagamento"
+                                                asp-items="@(new SelectList(Model.FormPayments, "IdFormPayment", "Name"))">
+                                            <option value="">Selecione...</option>
+                                        </select>
+                                        <span asp-validation-for="Scheduling.IdFormPayment" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group mb-1">
+                                        <label asp-for="Scheduling.TotalValue" class="control-label">Valor Total</label>
+                                        <input asp-for="Scheduling.TotalValue" class="form-control" id="TotalValue" readonly />
+                                    </div>
+
+                                    <div class="form-group mb-1">
+                                        <label asp-for="Scheduling.DtCreate" class="control-label">Data</label>
+                                        <input asp-for="Scheduling.DtCreate" class="form-control" />
+                                    </div>
+
+                                    <div class="form-group mb-1">
+                                        <label asp-for="Scheduling.Observation" class="control-label">Observação</label>
+                                        <input asp-for="Scheduling.Observation" class="form-control" />
+                                    </div>
+
+                                    <div class="form-group mt-1">
+                                        <input type="submit" value="Criar" class="btn btn-primary" />
+                                        <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
-	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-	}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            $('#TypeProcedures').select2({
+                placeholder: "Selecione...",
+                width: '100%',
+                allowClear: true
+            });
+
+            function calcularTotal() {
+                let total = 0;
+                $('#TypeProcedures option:selected').each(function() {
+                    const valor = parseFloat($(this).data('valor'));
+                    if (!isNaN(valor)) total += valor;
+                });
+                $('#TotalValue').val(total.toFixed(2));
+            }
+
+            $('#TypeProcedures').on('change', calcularTotal);
+            calcularTotal(); 
+        });
+    </script>
 }
