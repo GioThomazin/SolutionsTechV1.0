@@ -1,51 +1,41 @@
 ﻿@model SolutionsTech.MVC.Dtos.ViewModel.SchedulingView
 
 @{
-    ViewData["Title"] = "Index";
-}
-@{
-	ViewData["Title"] = "Formularios";
+	ViewData["Title"] = "Formulários";
 }
 
 <link href="~/datatable/datatable.css" rel="stylesheet" />
 
 <style>
 	body {
-		font-size: 18px; /* Aumenta a fonte geral da página */
+	font-size: 18px;
 	}
 
 	.page-title {
-		font-size: 24px; /* Aumenta o título */
+	font-size: 24px;
 	}
 
 	table {
-		font-size: 18px; /* Aumenta a fonte dentro da tabela */
+	font-size: 18px;
 	}
 
 	.btn {
-		font-size: 18px; /* Aumenta os botões */
-	}
-
-	table {
-		font-size: 18px; /* Aumenta o tamanho da fonte */
+	font-size: 18px;
 	}
 
 	th, td:not(.sorting_1) {
-		text-align: center !important;
-		vertical-align: middle !important;
+	text-align: center !important;
+	vertical-align: middle !important;
 	}
 
 	a.text-body {
-		font-size: 18px; /* Aumenta os botões */
+	font-size: 18px;
 	}
-
 </style>
 
 <div class="row">
 	<div class="col-12">
 		<div class="page-title-box">
-			<div class="page-title-right">
-			</div>
 			<h4 class="page-title">Agendamentos</h4>
 		</div>
 	</div>
@@ -57,52 +47,56 @@
 			<div class="card-body">
 				<div class="row mb-2">
 					<div class="col-sm-5">
-                        <form asp-action="Create" method="get">
-                            <button class="btn btn-danger mb-2" type="submit">
-                                <i class="ri-add-circle-fill me-2"></i> Criar Agendamento
-                            </button>
-                        </form>
-                    </div>
-                    <div class="col-sm-7">
-                        <div class="text-sm-end">
-                            <button type="button" class="btn btn-success mb-2 me-1">Exportar Dados</button>
-                        </div>
-                    </div>
-                </div>
-                <table id="example" class="table" style="width:100%">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Procedimento</th>
-                            <th>Cliente</th>
-                            <th>Forma de Pagamento</th>
+						<form asp-action="Create" method="get">
+							<button class="btn btn-danger mb-2" type="submit">
+								<i class="ri-add-circle-fill me-2"></i> Criar Agendamento
+							</button>
+						</form>
+					</div>
+					<div class="col-sm-7">
+						<div class="text-sm-end">
+							<button type="button" class="btn btn-success mb-2 me-1">Exportar Dados</button>
+						</div>
+					</div>
+				</div>
+
+				<table id="example" class="table" style="width:100%">
+					<thead class="table-light">
+						<tr>
+							<th>Procedimento</th>
+							<th>Cliente</th>
+							<th>Forma de Pagamento</th>
 							<th>Valor Total</th>
 							<th>Observação</th>
-                        </tr>
-                    </thead>
+							<th>Ações</th> <!-- Coluna adicionada -->
+						</tr>
+					</thead>
 					<tbody>
 						@foreach (var item in Model.Schedulings)
 						{
 							<tr class="sorting_3 text-center">
 								<td>
-									@Html.DisplayFor(modelItem => item.TypeProcedure)
+									@foreach (var proc in item.TypeProcedures)
+									{
+										<span class="badge bg-primary me-1">@proc.Name</span>
+									}
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.User)
+									@item.User?.Name <!-- Exibe o nome do cliente -->
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.FormPayment)
+									@item.FormPayment?.Name <!-- Exibe o nome da forma de pagamento -->
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.TotalValue)
+									@item.TotalValue.ToString("C") <!-- Exibe o valor formatado -->
 								</td>
 								<td>
-									@Html.DisplayFor(modelItem => item.Observation)
+									@item.Observation
 								</td>
 								<td class="table-action">
 									<a asp-action="Edit" asp-route-id="@item.IdScheduling" class="action-icon">
 										<i class="ri-edit-box-line"></i>
 									</a>
-
 									<a asp-action="Delete" asp-route-id="@item.IdScheduling" class="action-icon">
 										<i class="ri-delete-bin-line"></i>
 									</a>
@@ -110,20 +104,19 @@
 							</tr>
 						}
 					</tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 
 @section Scripts {
-    <script src="~/datatable/datatable.js"></script>
+	<script src="~/datatable/datatable.js"></script>
 
-    <script>
-
-        $(document).ready(function () {
-            new DataTable('#example');
-        });
-
-    </script>
+	<script>
+		$(document).ready(function () {
+			new DataTable('#example');
+		});
+	</script>
 }
