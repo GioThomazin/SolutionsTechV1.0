@@ -26,17 +26,21 @@ namespace SolutionsTech.MVC.Controllers
             var schedulings = await _context.Scheduling
                 .Include(s => s.User)
                 .Include(s => s.FormPayment)
+                .Include(s => s.SchedulingProcedures)
+                .Include(s => s.SchedulingProducts)
                 .ToListAsync();
 
             var users = await _context.Users.Where(x => x.Active).ToListAsync();
             var formPayments = await _context.FormPayment.ToListAsync();
             var typeProcedures = await _context.TypeProcedure.ToListAsync();
+            var schedulingProduct = await _context.SchedulingProduct.ToListAsync();
 
             var viewModel = new SchedulingView
             {
                 Schedulings = _mapper.Map<List<SchedulingDto>>(schedulings),
                 Users = _mapper.Map<List<UserDto>>(users),
-                FormPayments = _mapper.Map<List<FormPaymentDto>>(formPayments)
+                FormPayments = _mapper.Map<List<FormPaymentDto>>(formPayments),
+                SchedulingProducts = _mapper.Map<List<SchedulingProductDto>>(schedulingProduct)
             };
 
             return View(viewModel);
@@ -62,23 +66,31 @@ namespace SolutionsTech.MVC.Controllers
             return View(scheduling);
         }
 
-        public async Task<IActionResult> Create()
-        {
-            var users = await _context.Users.ToListAsync();
-            var formPayments = await _context.FormPayment.ToListAsync();
-            var typeProcedures = await _context.TypeProcedure.ToListAsync();
+		public async Task<IActionResult> Create()
+		{
+			// Buscar dados necessários para preencher o viewModel
+			var users = await _context.Users.ToListAsync();
+			var formPayments = await _context.FormPayment.ToListAsync();
+			var typeProcedures = await _context.TypeProcedure.ToListAsync();
+			var schedulingProcedure = await _context.SchedulingProcedure.ToListAsync();
+			var schedulingProduct = await _context.SchedulingProduct.ToListAsync();
 
-            var viewModel = new SchedulingDto
-            {
-                Users = _mapper.Map<List<UserDto>>(users),
-                FormPayments = _mapper.Map<List<FormPaymentDto>>(formPayments),
-                TypeProcedures = _mapper.Map<List<TypeProcedureDto>>(typeProcedures)
-            };
+			// Criar o viewModel e preencher os dados
+			var viewModel = new SchedulingDto
+			{
+				Users = _mapper.Map<List<UserDto>>(users),
+				FormPayments = _mapper.Map<List<FormPaymentDto>>(formPayments),
+				TypeProcedures = _mapper.Map<List<TypeProcedureDto>>(typeProcedures),
+				SchedulingProcedures = _mapper.Map<List<SchedulingProcedureDto>>(schedulingProcedure),
+				SchedulingProducts = _mapper.Map<List<SchedulingProductDto>>(schedulingProduct)
+			};
 
-            return View(viewModel);
-        }
+			// Retornar a view passando o viewModel
+			return View(viewModel);
+		}
 
-        [HttpPost]
+
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(SchedulingDto schedulingDto)
         {
@@ -86,14 +98,14 @@ namespace SolutionsTech.MVC.Controllers
 
             if (!ModelState.IsValid)
             {
-                var viewModel = new SchedulingView
-                {
-                    Users = _mapper.Map<List<UserDto>>(await _context.Users.ToListAsync()),
-                    FormPayments = _mapper.Map<List<FormPaymentDto>>(await _context.FormPayment.ToListAsync()),
-                    TypeProcedures = _mapper.Map<List<TypeProcedureDto>>(await _context.TypeProcedure.ToListAsync()),
-                    Scheduling = schedulingDto
-                };
-                return View(viewModel);
+				var viewModel = new SchedulingView
+				{
+					Users = _mapper.Map<List<UserDto>>(await _context.Users.ToListAsync()),
+					FormPayments = _mapper.Map<List<FormPaymentDto>>(await _context.FormPayment.ToListAsync()),
+					TypeProcedures = _mapper.Map<List<TypeProcedureDto>>(await _context.TypeProcedure.ToListAsync()),
+					SchedulingProducts = _mapper.Map<List<SchedulingProductDto>>(await _context.SchedulingProduct.ToListAsync()),
+};
+				return View("Create", viewModel);
             }
 
             _context.Add(_mapper.Map<Scheduling>(schedulingDto));

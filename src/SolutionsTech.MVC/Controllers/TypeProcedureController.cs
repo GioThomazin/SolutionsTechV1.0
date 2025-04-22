@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SolutionsTech.Business.Entity;
 using SolutionsTech.Data.Context;
+using SolutionsTech.MVC.Dto;
 
 namespace SolutionsTech.MVC.Controllers
 {
@@ -47,11 +48,11 @@ namespace SolutionsTech.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTypeProcedure,Name,Value,Duration")] TypeProcedure typeProcedure)
+        public async Task<IActionResult> Create(TypeProcedure typeProcedure)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(typeProcedure);
+				_context.Add(typeProcedure);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }

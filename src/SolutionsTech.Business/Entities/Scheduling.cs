@@ -13,26 +13,21 @@ namespace SolutionsTech.Business.Entity
         public DateTime? DtDesativation { get; set; }
         public decimal TotalValue { get; set; }
         public string? Observation { get; set; } = string.Empty;
-
         public long IdUser { get; set; }
+		public long IdFormPayment { get; set; }
 
-        [ForeignKey("IdUser")]
+		[ForeignKey("IdUser")]
         public virtual User User { get; set; }
-
-
-        public long IdFormPayment { get; set; }
 
         [ForeignKey("IdFormPayment")]
         public virtual FormPayment FormPayment { get; set; }
 
-
-        [NotMapped]
         [ForeignKey("IdScheduling")]
-        public virtual SchedulingProcedure SchedulingProcedure { get; set; }
+        public virtual List<SchedulingProcedure> SchedulingProcedures { get; set; }
 
-        [NotMapped]
         [ForeignKey("IdScheduling")]
-        public virtual SchedulingProduct SchedulingProduct { get; set; }
+        public virtual List<SchedulingProduct> SchedulingProducts { get; set; }
     }
 }
+
 

@@ -1,4 +1,6 @@
-﻿namespace SolutionsTech.MVC.Dto
+﻿using SolutionsTech.Business.Entity;
+
+namespace SolutionsTech.MVC.Dto
 {
     public class SchedulingDto
     {
@@ -9,12 +11,21 @@
         public long IdUser { get; set; }
         public long IdFormPayment { get; set; }
         public long IdTypeProcedure { get; set; }
-        public UserDto? User { get; set; }
+		public long IdSchedulingProcedure { get; set; }
+		public long IdSchedulingProduct { get; set; }
+		public UserDto? User { get; set; }
 
-        public IEnumerable<UserDto?> Users { get; set; } = new List<UserDto?>();
+        public List<UserDto?> Users { get; set; } = new List<UserDto?>();
         public FormPaymentDto? FormPayment { get; set; }
-        public IEnumerable<FormPaymentDto?> FormPayments { get; set; } = new List<FormPaymentDto?>();
+        public List<FormPaymentDto?> FormPayments { get; set; } = new List<FormPaymentDto?>();
         public TypeProcedureDto? TypeProcedure { get; set; }
-        public IEnumerable<TypeProcedureDto?> TypeProcedures { get; set; } = new List<TypeProcedureDto?>();
-    }
+        public List<TypeProcedureDto?> TypeProcedures { get; set; } = new List<TypeProcedureDto?>();
+
+		public SchedulingProcedureDto? SchedulingProcedure { get; set; }
+		public List<SchedulingProcedureDto?> SchedulingProcedures { get; set; } = new List<SchedulingProcedureDto?>();
+
+		public SchedulingProductDto? SchedulingProduct { get; set; }
+		public List<SchedulingProductDto?> SchedulingProducts { get; set; } = new List<SchedulingProductDto?>();
+
+	}
 }
