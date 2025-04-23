@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using SolutionsTech.Business.Entities;
 using SolutionsTech.Business.Entity;
 
 namespace SolutionsTech.Data.Context
@@ -9,7 +10,6 @@ namespace SolutionsTech.Data.Context
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
 		{
 		}
-
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=SolutionsTechDB;Trusted_Connection=True;TrustServerCertificate=True");
@@ -23,5 +23,6 @@ namespace SolutionsTech.Data.Context
 		public DbSet<TypeProcedure> TypeProcedure { get; set; }
 		public DbSet<User> Users { get; set; }
 		public DbSet<UserType> UserType { get; set; }
+		public DbSet<Invoicing> Invoicing { get; set; }
 	}
 }

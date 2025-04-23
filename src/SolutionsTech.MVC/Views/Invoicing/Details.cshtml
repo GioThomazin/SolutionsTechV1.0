@@ -1,0 +1,48 @@
+﻿@model SolutionsTech.Business.Entities.Invoicing
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Invoicing</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TotalValue)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TotalValue)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Desconto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Desconto)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ValorFinal)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ValorFinal)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DataFaturamento)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DataFaturamento)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Observation)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Observation)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdInvoicing">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

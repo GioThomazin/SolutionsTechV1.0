@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using SolutionsTech.Business.Entities;
 using SolutionsTech.Business.Entity;
 using SolutionsTech.MVC.Dto;
+using SolutionsTech.MVC.Dtos;
 using SolutionsTech.MVC.Dtos.ViewModel;
 
 namespace SolutionsTech.MVC.AutoMapper
@@ -38,6 +40,9 @@ namespace SolutionsTech.MVC.AutoMapper
 
 			CreateMap<UserType, UserTypeDto>();
 			CreateMap<UserTypeDto, UserType>();
+
+			CreateMap<Invoicing, InvoicingDto>();
+			CreateMap<InvoicingDto, Invoicing>();
 		}
 	}
 }
