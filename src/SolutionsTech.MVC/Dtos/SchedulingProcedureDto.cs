@@ -7,6 +7,6 @@ namespace SolutionsTech.MVC.Dto
     public class SchedulingProcedureDto
     {
         public long IdTypeProcedure { get; set; }
-        public TypeProcedure TypeProcedure { get; set; }
+        public TypeProcedure? TypeProcedure { get; set; }
     }
 }
