@@ -9,6 +9,7 @@ namespace SolutionsTech.Business.Interfaces.Repository
 {
     public interface ISchedulingRepository
     {
+        Task<List<Scheduling>> GetListRepository(string properties);
         Task SalvarAgendamentoRepository(Scheduling scheduling);
     }
 }

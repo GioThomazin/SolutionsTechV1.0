@@ -13,8 +13,10 @@ namespace SolutionsTech.Business.Services
         public async Task CriarAgendamento(Scheduling scheduling)
         {
             scheduling.CriarAgendamento(scheduling);
-
             await _schedulingRepository.SalvarAgendamentoRepository(scheduling);
         }
+
+        public async Task<List<Scheduling>> GetListIndex() =>
+            await _schedulingRepository.GetListRepository("User,FormPayment,SchedulingProcedures,SchedulingProcedures.TypeProcedure,SchedulingProducts");
     }
 }

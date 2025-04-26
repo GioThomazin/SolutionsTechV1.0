@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
-using SolutionsTech.Business.Services;
 using SolutionsTech.Data.Context;
 using SolutionsTech.MVC.Dto;
 using SolutionsTech.MVC.Dtos.ViewModel;
@@ -23,31 +22,11 @@ namespace SolutionsTech.MVC.Controllers
             _mapper = mapper;
             _schedulingService = schedulingService;
         }
-        // fluxo financeiro, custo fixo criar controller crud
-        //tenant por segmentação de cliente, salao de beleza, venda de produtos etc
+
         public async Task<IActionResult> Index()
         {
-            var schedulings = await _context.Scheduling
-                .Include(s => s.User)
-                .Include(s => s.FormPayment)
-                .Include(s => s.SchedulingProcedures)
-                .Include(s => s.SchedulingProducts)
-                .ToListAsync();
-
-            var users = await _context.Users.Where(x => x.Active).ToListAsync();
-            var formPayments = await _context.FormPayment.ToListAsync();
-            var typeProcedures = await _context.TypeProcedure.ToListAsync();
-            var schedulingProduct = await _context.SchedulingProduct.ToListAsync();
-
-            var viewModel = new SchedulingView
-            {
-                Schedulings = _mapper.Map<List<SchedulingDto>>(schedulings),
-                Users = _mapper.Map<List<UserDto>>(users),
-                FormPayments = _mapper.Map<List<FormPaymentDto>>(formPayments),
-                SchedulingProducts = _mapper.Map<List<SchedulingProductDto>>(schedulingProduct)
-            };
-
-            return View(viewModel);
+            var list = await _schedulingService.GetListIndex();
+            return View(_mapper.Map<List<SchedulingDto>>(list));
         }
 
         // GET: Scheduling/Details/5
@@ -95,7 +74,6 @@ namespace SolutionsTech.MVC.Controllers
 
             if (!ModelState.IsValid)
             {
-                // Se a validação falhar, retorne novamente a view com dados necessários
                 var users = await _context.Users.ToListAsync();
                 var formPayments = await _context.FormPayment.ToListAsync();
                 var typeProcedures = await _context.TypeProcedure.ToListAsync();
@@ -104,7 +82,7 @@ namespace SolutionsTech.MVC.Controllers
                 schedulingDto.FormPayments = _mapper.Map<List<FormPaymentDto>>(formPayments);
                 schedulingDto.TypeProcedures = _mapper.Map<List<TypeProcedureDto>>(typeProcedures);
 
-                return View(schedulingDto); // Retorne a view com o viewModel corrigido
+                return View(schedulingDto);
             }
 
             await _schedulingService.CriarAgendamento(_mapper.Map<Scheduling>(schedulingDto));
