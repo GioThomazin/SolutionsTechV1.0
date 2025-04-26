@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03 - SolutionsTech.Data", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SolutionsTech.MVC", "src\SolutionsTech.MVC\SolutionsTech.MVC.csproj", "{2B336D1B-E83B-48E1-AE3E-FC44371C9B69}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04 - SolutionsTech.CrossCutting", "04 - SolutionsTech.CrossCutting", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolutionsTech.CrossCutting", "src\SolutionsTech.CrossCutting\SolutionsTech.CrossCutting.csproj", "{6CD6719C-D15B-4DFF-86FF-159567DF6D0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,10 @@ Global
 		{2B336D1B-E83B-48E1-AE3E-FC44371C9B69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B336D1B-E83B-48E1-AE3E-FC44371C9B69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B336D1B-E83B-48E1-AE3E-FC44371C9B69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CD6719C-D15B-4DFF-86FF-159567DF6D0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CD6719C-D15B-4DFF-86FF-159567DF6D0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CD6719C-D15B-4DFF-86FF-159567DF6D0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CD6719C-D15B-4DFF-86FF-159567DF6D0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,6 +49,7 @@ Global
 		{A2FA0D2D-EFAD-4848-B3AE-27B6045FD8CF} = {9E890DE9-4684-4215-A317-DFB3CF783997}
 		{6DC376D5-27C2-42D2-B8C1-A550EFEC1024} = {DFE56158-EF0C-4D1E-91B1-584998964459}
 		{2B336D1B-E83B-48E1-AE3E-FC44371C9B69} = {774E27AF-DF24-4F30-B0F1-A33A9AC6C1D5}
+		{6CD6719C-D15B-4DFF-86FF-159567DF6D0D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {182B9225-4597-4503-9A74-39943554829A}

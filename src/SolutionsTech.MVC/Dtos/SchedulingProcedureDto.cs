@@ -1,12 +1,12 @@
 ﻿
+using SolutionsTech.Business.Entity;
 using System.ComponentModel.DataAnnotations;
 
 namespace SolutionsTech.MVC.Dto
 {
-	public class SchedulingProcedureDto
-	{
-		public long IdSchedulingProcedure { get; set; }
-		public SchedulingDto Scheduling { get; set; }
-		public TypeProcedureDto TypeProcedure { get; set; }
-	}
+    public class SchedulingProcedureDto
+    {
+        public long IdTypeProcedure { get; set; }
+        public TypeProcedure? TypeProcedure { get; set; }
+    }
 }
