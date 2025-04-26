@@ -14,9 +14,9 @@ namespace SolutionsTech.Business.Entity
         public decimal TotalValue { get; set; }
         public string? Observation { get; set; } = string.Empty;
         public long IdUser { get; set; }
-		public long IdFormPayment { get; set; }
+        public long IdFormPayment { get; set; }
 
-		[ForeignKey("IdUser")]
+        [ForeignKey("IdUser")]
         public virtual User User { get; set; }
 
         [ForeignKey("IdFormPayment")]
@@ -27,6 +27,11 @@ namespace SolutionsTech.Business.Entity
 
         [ForeignKey("IdScheduling")]
         public virtual List<SchedulingProduct> SchedulingProducts { get; set; }
+
+        public void CriarAgendamento(Scheduling schedulingValores)
+        {
+
+        }
     }
 }
 

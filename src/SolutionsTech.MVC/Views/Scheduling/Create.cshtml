@@ -37,22 +37,17 @@
                                         </select>
                                         <span asp-validation-for="IdUser" class="text-danger"></span>
                                     </div>
+
                                     <div class="form-group">
                                         <label class="control-label">Selecione múltiplos Procedimentos</label>
-                                        <select asp-for="TypeProcedures" id="TypeProcedures"
-                                                class="select2 form-control select2-multiple"
-                                                data-toggle="select2"
-                                                multiple="multiple"
-                                                data-placeholder="Selecione...">
-                                            @foreach (var proc in Model.TypeProcedures)
-                                            {
-                                                <option value="@proc.IdTypeProcedure"
-                                                        data-valor="@proc.Value.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)">
-                                                    @proc.Name
-                                                </option>
-                                            }
+                                        <select id="selectProcedures" class="select2 form-control select2-multiple" data-toggle="select2" multiple="multiple" data-placeholder="Selecione ..."
+                                                asp-items="@(new SelectList(Model.TypeProcedures, "IdTypeProcedure", "Name"))" required>
+                                            <option value="">Selecione os procedimentos</option>
                                         </select>
                                     </div>
+
+                                    <div id="selectedProceduresContainer"></div>
+
                                     <div class="form-group">
                                         <label asp-for="IdFormPayment" class="control-label">Forma de Pagamento</label>
                                         <select asp-for="IdFormPayment" class="form-control select2-single"
@@ -62,23 +57,6 @@
                                         </select>
                                         <span asp-validation-for="IdFormPayment" class="text-danger"></span>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="control-label">Selecione múltiplos Procedimentos</label>
-                                        <select asp-for="IdTypeProcedure" id="TypeProcedures"
-                                                class="select2 form-control select2-multiple"
-                                                data-toggle="select2"
-                                                multiple="multiple"
-                                                data-placeholder="Selecione...">
-                                            @foreach (var proc in Model.TypeProcedures)
-                                            {
-                                                <option value="@proc.IdTypeProcedure"
-                                                        data-valor="@proc.Value.ToString("F2", System.Globalization.CultureInfo.InvariantCulture)">
-                                                    @proc.Name
-                                                </option>
-                                            }
-                                        </select>
-                                    </div>
-
                                     <div class="form-group mb-1">
                                         <label asp-for="TotalValue" class="control-label">Valor Total</label>
                                         <input asp-for="TotalValue" class="form-control" id="TotalValue" readonly />
@@ -111,6 +89,7 @@
     </div>
 </div>
 
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -118,23 +97,30 @@
 
     <script>
         $(document).ready(function () {
-            $('#TypeProcedures').select2({
-                placeholder: "Selecione...",
-                width: '100%',
-                allowClear: true
+
+            $('form').on('submit', function () {
+            $('#selectedProceduresContainer').empty();
+
+            $('#selectProcedures option:selected').each(function (index) {
+                var id = $(this).val();
+
+                $('#selectedProceduresContainer').append(
+                    `<input type="hidden" name="SchedulingProcedures[${index}].IdTypeProcedure" value="${id}" />`
+                );
             });
 
             function calcularTotal() {
                 let total = 0;
-                $('#TypeProcedures option:selected').each(function() {
+                $('#selectProcedures option:selected').each(function() {
                     const valor = parseFloat($(this).data('valor'));
                     if (!isNaN(valor)) total += valor;
                 });
                 $('#TotalValue').val(total.toFixed(2));
             }
 
-            $('#TypeProcedures').on('change', calcularTotal);
+            $('#selectProcedures').on('change', calcularTotal);
             calcularTotal();
+        })
         });
     </script>
 }

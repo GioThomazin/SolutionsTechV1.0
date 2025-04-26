@@ -37,7 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SolutionsTech.Business\SolutionsTech.Business.csproj" />
     <ProjectReference Include="..\SolutionsTech.Data\SolutionsTech.Data.csproj" />
   </ItemGroup>
 
