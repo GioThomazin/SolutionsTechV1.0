@@ -1,15 +1,11 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SolutionsTech.Business.Entity;
-using SolutionsTech.Business.Interfaces.Repository;
-using SolutionsTech.Business.Interfaces;
-using SolutionsTech.Business.Services;
-using SolutionsTech.Data.Context;
-using SolutionsTech.Data.Repository;
-using SolutionsTech.MVC.AutoMapper;
-using Microsoft.AspNetCore.Identity;
 using SolutionsTech.CrossCutting;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using SolutionsTech.CrossCutting.Extensions;
+using SolutionsTech.Data.Context;
+using SolutionsTech.MVC.AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -65,12 +61,7 @@ builder.Services.AddControllersWithViews(options =>
 	options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
 });
 
-//Repo
-builder.Services.AddScoped<IRepositoryBase<Scheduling>, RepositoryBase<Scheduling>>();
-builder.Services.AddScoped<ISchedulingRepository, SchedulingRepository>();
-
-//Service
-builder.Services.AddScoped<ISchedulingService, SchedulingService>();
+builder.Services.RegisterServices();
 
 var app = builder.Build();
 

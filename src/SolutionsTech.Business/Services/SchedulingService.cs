@@ -10,9 +10,9 @@ namespace SolutionsTech.Business.Services
 
         public SchedulingService(ISchedulingRepository schedulingRepository) => _schedulingRepository = schedulingRepository;
 
-        public async Task CriarAgendamento(Scheduling scheduling)
+        public async Task CreateScheduling(Scheduling scheduling)
         {
-            scheduling.CriarAgendamento(scheduling);
+            scheduling.CreateScheduling(scheduling);
             await _schedulingRepository.AddAsync(scheduling);
         }
 

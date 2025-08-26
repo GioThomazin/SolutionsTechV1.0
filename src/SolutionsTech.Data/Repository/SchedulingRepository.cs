@@ -2,7 +2,7 @@
 using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces.Repository;
 using SolutionsTech.Data.Context;
-
+    
 namespace SolutionsTech.Data.Repository
 {
     public class SchedulingRepository : RepositoryBase<Scheduling>, ISchedulingRepository

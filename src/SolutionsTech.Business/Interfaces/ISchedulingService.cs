@@ -5,7 +5,7 @@ namespace SolutionsTech.Business.Interfaces
 {
     public interface ISchedulingService
     {
-        Task CriarAgendamento(Scheduling scheduling);
+        Task CreateScheduling(Scheduling scheduling);
         Task<List<Scheduling>> GetListIndex();
     }
 }

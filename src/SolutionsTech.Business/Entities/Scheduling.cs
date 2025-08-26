@@ -28,7 +28,7 @@ namespace SolutionsTech.Business.Entity
         [ForeignKey("IdScheduling")]
         public virtual List<SchedulingProduct> SchedulingProducts { get; set; }
 
-        public void CriarAgendamento(Scheduling schedulingValores)
+        public void CreateScheduling(Scheduling schedulingValores)
         {
 
         }

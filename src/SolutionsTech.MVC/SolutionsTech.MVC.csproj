@@ -36,6 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SolutionsTech.CrossCutting\SolutionsTech.CrossCutting.csproj" />
     <ProjectReference Include="..\SolutionsTech.Data\SolutionsTech.Data.csproj" />
   </ItemGroup>
 

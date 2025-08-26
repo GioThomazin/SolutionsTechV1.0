@@ -85,7 +85,7 @@ namespace SolutionsTech.MVC.Controllers
                 return View(schedulingDto);
             }
 
-            await _schedulingService.CriarAgendamento(_mapper.Map<Scheduling>(schedulingDto));
+            await _schedulingService.CreateScheduling(_mapper.Map<Scheduling>(schedulingDto));
 
             return RedirectToAction(nameof(Index));
         }

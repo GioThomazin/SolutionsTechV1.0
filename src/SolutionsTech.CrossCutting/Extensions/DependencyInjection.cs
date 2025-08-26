@@ -16,9 +16,14 @@ namespace SolutionsTech.CrossCutting.Extensions
             services.AddScoped<ISchedulingRepository, SchedulingRepository>();
             services.AddScoped<IRepositoryBase<Scheduling>, RepositoryBase<Scheduling>>();
 
+            services.AddScoped<IBrandRepository, BrandRepository>();
+            services.AddScoped<IRepositoryBase<Brand>, RepositoryBase<Brand>>();
+		
+            
             //Service
 
-            services.AddScoped<ISchedulingService, SchedulingService>();
-        }
+			services.AddScoped<ISchedulingService, SchedulingService>();
+            services.AddScoped<IBrandService, BrandService>();
+		}
     }
 }
