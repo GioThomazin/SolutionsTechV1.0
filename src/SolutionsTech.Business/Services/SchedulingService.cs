@@ -16,7 +16,6 @@ namespace SolutionsTech.Business.Services
             await _schedulingRepository.AddAsync(scheduling);
         }
 
-
         public async Task<List<Scheduling>> GetListIndex() =>
             await _schedulingRepository.GetListRepository("User,FormPayment,SchedulingProcedures,SchedulingProcedures.TypeProcedure,SchedulingProducts");
     }

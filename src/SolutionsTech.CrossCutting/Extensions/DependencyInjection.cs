@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using SolutionsTech.Business.Entities;
 using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Business.Interfaces.Repository;
@@ -22,11 +23,16 @@ namespace SolutionsTech.CrossCutting.Extensions
 			services.AddScoped<IFormPaymentRepository, FormPaymentRepository>();
 			services.AddScoped<IRepositoryBase<FormPayment>, RepositoryBase<FormPayment>>();
 
+            services.AddScoped<IInvoicingRepository, InvoicingRepository>();
+            services.AddScoped<IRepositoryBase<Invoicing>, RepositoryBase<Invoicing>>();
+
+
 			//Service
 
 			services.AddScoped<ISchedulingService, SchedulingService>();
             services.AddScoped<IBrandService, BrandService>();
 			services.AddScoped<IFormPaymentService, FormPaymentService>();
+		    services.AddScoped<IInvoicingService, InvoicingService>();
 		}
     }
 }

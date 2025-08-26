@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SolutionsTech.Business.Entities;
+using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Data.Context;
+using SolutionsTech.MVC.Dtos;
 
 namespace SolutionsTech.MVC.Controllers
 {
     public class InvoicingController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IInvoicingService _invoicingService;
+		private readonly ApplicationDbContext _context;
 		private readonly IMapper _mapper;
 
-		public InvoicingController(ApplicationDbContext context, IMapper mapper)
+		public InvoicingController(IInvoicingService invoicingService, ApplicationDbContext context, IMapper mapper)
         {
+			_invoicingService = invoicingService;
 			_context = context;
 			_mapper = mapper;
 		}
@@ -25,8 +24,9 @@ namespace SolutionsTech.MVC.Controllers
         // GET: Invoicing
         public async Task<IActionResult> Index()
         {
-					return View(await _context.Invoicing.ToListAsync());
-        }
+            var listInvoicing = await _invoicingService.GetListIndex();
+			return View(_mapper.Map<List<InvoicingDto>>(listInvoicing));
+		}
 
         // GET: Invoicing/Details/5
         public async Task<IActionResult> Details(int? id)

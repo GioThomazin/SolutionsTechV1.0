@@ -1,10 +1,4 @@
-﻿using SolutionsTech.Business.Entity;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SolutionsTech.Business.Entities
 {
@@ -19,5 +13,8 @@ namespace SolutionsTech.Business.Entities
 		public string FormPayment { get; set; }
 		public DateTime DataFaturamento { get; set; } = DateTime.Now;
 		public string Observation { get; set; }
+		public void CreateInvoicing(Invoicing invoicingValores)
+		{
+		}	
 	}
 }
