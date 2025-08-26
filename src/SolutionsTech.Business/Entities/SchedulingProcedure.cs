@@ -12,5 +12,9 @@ namespace SolutionsTech.Business.Entity
 
         [ForeignKey("IdTypeProcedure")]
         public virtual TypeProcedure TypeProcedure { get; set; }
-    }
+        
+        public void CreateSchedulingProcedures(SchedulingProcedure schedulingProcedure)
+		{
+		}
+	}
 }
