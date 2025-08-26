@@ -2,26 +2,32 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SolutionsTech.Business.Entity;
+using SolutionsTech.Business.Interfaces;
+using SolutionsTech.Business.Services;
 using SolutionsTech.Data.Context;
+using SolutionsTech.Data.Repository;
+using SolutionsTech.MVC.Dto;
 
 namespace SolutionsTech.MVC.Controllers
 {
 	public class FormPaymentController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IFormPaymentService _formPaymentService;
+		private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public FormPaymentController(ApplicationDbContext context, IMapper mapper)
+
+        public FormPaymentController(IFormPaymentService formPaymentService, ApplicationDbContext context, IMapper mapper)
         {
-            _context = context;
+			_formPaymentService = formPaymentService;
+			_context = context;
             _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
-            var formPayments = await _context.FormPayment.ToListAsync();
-            var formPaymentDto = _mapper.Map<List<FormPayment>>(formPayments);
-            return View(formPaymentDto);
+            var listFormPayments = await _formPaymentService.GetListIndex();
+			return View(_mapper.Map<List<FormPaymentDto>>(listFormPayments));
         }
 
         public async Task<IActionResult> Details(long? id)

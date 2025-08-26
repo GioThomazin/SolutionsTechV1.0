@@ -18,12 +18,15 @@ namespace SolutionsTech.CrossCutting.Extensions
 
             services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<IRepositoryBase<Brand>, RepositoryBase<Brand>>();
-		
-            
-            //Service
+			
+			services.AddScoped<IFormPaymentRepository, FormPaymentRepository>();
+			services.AddScoped<IRepositoryBase<FormPayment>, RepositoryBase<FormPayment>>();
+
+			//Service
 
 			services.AddScoped<ISchedulingService, SchedulingService>();
             services.AddScoped<IBrandService, BrandService>();
+			services.AddScoped<IFormPaymentService, FormPaymentService>();
 		}
     }
 }
