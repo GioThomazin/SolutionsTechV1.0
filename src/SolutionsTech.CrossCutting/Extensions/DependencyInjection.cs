@@ -26,6 +26,8 @@ namespace SolutionsTech.CrossCutting.Extensions
             services.AddScoped<IInvoicingRepository, InvoicingRepository>();
             services.AddScoped<IRepositoryBase<Invoicing>, RepositoryBase<Invoicing>>();
 
+            services.AddScoped<IProductRepository, ProductRepository>();
+			services.AddScoped<IRepositoryBase<Product>, RepositoryBase<Product>>();
 
 			//Service
 
@@ -33,6 +35,7 @@ namespace SolutionsTech.CrossCutting.Extensions
             services.AddScoped<IBrandService, BrandService>();
 			services.AddScoped<IFormPaymentService, FormPaymentService>();
 		    services.AddScoped<IInvoicingService, InvoicingService>();
+			services.AddScoped<IProductService, ProductService>();
 		}
     }
 }

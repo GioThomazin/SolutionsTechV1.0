@@ -19,5 +19,8 @@ namespace SolutionsTech.Business.Entity
 
 		[NotMapped]
 		public virtual Brand Brand { get; set; }
+		public void CreateProduct(Product product)
+		{
+		}
 	}
 }

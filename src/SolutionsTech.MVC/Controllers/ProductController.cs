@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SolutionsTech.Business.Entity;
+using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Data.Context;
 using SolutionsTech.MVC.Dto;
 
@@ -9,11 +10,13 @@ namespace SolutionsTech.MVC.Controllers
 {
 	public class ProductController : Controller
     {
+        private readonly IProductService _productService;
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        public ProductController(ApplicationDbContext context, IMapper mapper)
+        public ProductController(IProductService productService, ApplicationDbContext context, IMapper mapper)
         {
-            _context = context;
+			_productService = productService;
+			_context = context;
             _mapper = mapper;
         }
 
