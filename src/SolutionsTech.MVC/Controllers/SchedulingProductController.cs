@@ -1,24 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SolutionsTech.Business.Entity;
+using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Data.Context;
+using SolutionsTech.MVC.Dto;
 
 namespace SolutionsTech.MVC.Controllers
 {
 	public class SchedulingProductController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public SchedulingProductController(ApplicationDbContext context)
+        private readonly ISchedulingProductService _schedulingProductService;
+        private readonly IMapper _mapper;
+		public SchedulingProductController(ApplicationDbContext context, ISchedulingProductService schedulingProductService, IMapper mapper)
         {
-            _context = context;
-        }
+			_schedulingProductService = schedulingProductService;
+			_context = context;
+			_mapper = mapper;
+		}
 
         // GET: SchedulingProduct
         public async Task<IActionResult> Index()
         {
-            return View(await _context.SchedulingProduct.ToListAsync());
-        }
+            var list = await _schedulingProductService.GetListByScheduling();
+			return View(_mapper.Map<List<SchedulingProductDto>>(list));
+		}
 
         // GET: SchedulingProduct/Details/5
         public async Task<IActionResult> Details(long? id)
