@@ -1,26 +1,22 @@
 ﻿using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Business.Interfaces.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SolutionsTech.Business.Services
 {
-	public class SchedulingProductService
+	public class SchedulingProductService : ISchedulingProductService
 	{
 		private readonly ISchedulingProductRepository _schedulingProductRepository;
+
 		public SchedulingProductService(ISchedulingProductRepository schedulingProductRepository)
 			=> _schedulingProductRepository = schedulingProductRepository;
 
-		public async Task CreateScheduling(SchedulingProduct schedulingProduct)
+		public async Task CreateSchedulingProduct(SchedulingProduct schedulingProduct)
 		{
 			schedulingProduct.CreateSchedulingProduct(schedulingProduct);
 			await _schedulingProductRepository.AddAsync(schedulingProduct);
 		}
-		public async Task<List<SchedulingProduct>> GetListScheduling() =>
+		public async Task<List<SchedulingProduct>> GetListByScheduling() =>
 			await _schedulingProductRepository.GetListScheduling("");
 	}
 }

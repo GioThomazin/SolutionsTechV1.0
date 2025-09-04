@@ -32,6 +32,12 @@ namespace SolutionsTech.CrossCutting.Extensions
             services.AddScoped<ISchedulingProcedureRepository, SchedulingProcedureRepository>();
 			services.AddScoped<IRepositoryBase<SchedulingProcedure>, RepositoryBase<SchedulingProcedure>>();
 
+            services.AddScoped<ISchedulingProductRepository, SchedulingProductRepository>();
+			services.AddScoped<IRepositoryBase<SchedulingProduct>, RepositoryBase<SchedulingProduct>>();
+
+            services.AddScoped<ITypeProcedureRepository, TypeProcedureRepository>();
+			services.AddScoped<IRepositoryBase<TypeProcedure>, RepositoryBase<TypeProcedure>>();
+
 			//Service
 
 			services.AddScoped<ISchedulingService, SchedulingService>();
@@ -40,7 +46,8 @@ namespace SolutionsTech.CrossCutting.Extensions
 		    services.AddScoped<IInvoicingService, InvoicingService>();
 			services.AddScoped<IProductService, ProductService>();
 		    services.AddScoped<ISchedulingProcedureService, SchedulingProcedureService>();
-
+            services.AddScoped<ISchedulingProductService, SchedulingProductService>();
+			services.AddScoped<ITypeProcedureService, TypeProcedureService>();
 		}
     }
 }

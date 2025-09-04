@@ -9,6 +9,9 @@ namespace SolutionsTech.Business.Entity
         public string Name { get; set; } = string.Empty;
         public decimal Value { get; set; }
         public TimeSpan Duration { get; set; }
-    }
+		public void CreateTypeProcedure(TypeProcedure typeProcedure)
+		{
+		}
+	}
 
 }
