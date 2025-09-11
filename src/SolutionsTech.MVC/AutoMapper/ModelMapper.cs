@@ -3,7 +3,6 @@ using SolutionsTech.Business.Entities;
 using SolutionsTech.Business.Entity;
 using SolutionsTech.MVC.Dto;
 using SolutionsTech.MVC.Dtos;
-using SolutionsTech.MVC.Dtos.ViewModel;
 
 namespace SolutionsTech.MVC.AutoMapper
 {
@@ -28,9 +27,6 @@ namespace SolutionsTech.MVC.AutoMapper
 
 			CreateMap<SchedulingProduct, SchedulingProductDto>();
 			CreateMap<SchedulingProductDto, SchedulingProduct>();
-
-			CreateMap<Scheduling, SchedulingView>();
-			CreateMap<SchedulingView, Scheduling>();
 
 			CreateMap<TypeProcedure, TypeProcedureDto>();
 			CreateMap<TypeProcedureDto, TypeProcedure>();
