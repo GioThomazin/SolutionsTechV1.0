@@ -6,7 +6,6 @@ using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Data.Context;
 using SolutionsTech.MVC.Dto;
-using SolutionsTech.MVC.Dtos.ViewModel;
 
 namespace SolutionsTech.MVC.Controllers
 {
@@ -66,32 +65,38 @@ namespace SolutionsTech.MVC.Controllers
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(SchedulingDto schedulingDto)
-        {
-            ModelState.Remove("Observation");
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create(SchedulingDto schedulingDto)
+		{
+			ModelState.Remove("Observation");
 
-            if (!ModelState.IsValid)
-            {
-                var users = await _context.Users.ToListAsync();
-                var formPayments = await _context.FormPayment.ToListAsync();
-                var typeProcedures = await _context.TypeProcedure.ToListAsync();
+			if (!ModelState.IsValid)
+			{
+				// Recarregar dados da View caso dê erro
+				var users  = await _context.Users.ToListAsync();
+				var formPayments = await _context.FormPayment.ToListAsync();
+				var typeProcedures = await _context.TypeProcedure.ToListAsync();
+				return View(schedulingDto);
+			}
 
-                schedulingDto.Users = _mapper.Map<List<UserDto>>(users);
-                schedulingDto.FormPayments = _mapper.Map<List<FormPaymentDto>>(formPayments);
-                schedulingDto.TypeProcedures = _mapper.Map<List<TypeProcedureDto>>(typeProcedures);
+			// Buscar os TypeProcedures escolhidos
+			var selectedProcedures = await _context.TypeProcedure
+				.Where(tp => schedulingDto.SelectedTypeProcedureIds.Contains(tp.IdTypeProcedure))
+				.ToListAsync();
 
-                return View(schedulingDto);
-            }
+			// Mapear para DTO
+			schedulingDto.TypeProcedures = _mapper.Map<List<TypeProcedureDto>>(selectedProcedures);
 
-            await _schedulingService.CreateScheduling(_mapper.Map<Scheduling>(schedulingDto));
+			// Criar agendamento
+			await _schedulingService.CreateScheduling(_mapper.Map<Scheduling>(schedulingDto));
 
-            return RedirectToAction(nameof(Index));
-        }
+			return RedirectToAction(nameof(Index));
+		}
 
-        // GET: Scheduling/Edit/5
-        public async Task<IActionResult> Edit(long? id)
+
+		// GET: Scheduling/Edit/5
+		public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
             {
@@ -153,16 +158,10 @@ namespace SolutionsTech.MVC.Controllers
                 return NotFound();
             }
 
-            var scheduling = await _context.Scheduling
-                .Include(s => s.IdFormPayment)
-                .Include(s => s.IdUser)
-                .FirstOrDefaultAsync(m => m.IdScheduling == id);
-            if (scheduling == null)
-            {
-                return NotFound();
-            }
+			var scheduling = new Scheduling();
+			await _schedulingService.DeleteScheduling(scheduling);
 
-            return View(scheduling);
+			return View(scheduling);
         }
 
         // POST: Scheduling/Delete/5

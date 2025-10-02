@@ -15,8 +15,16 @@ namespace SolutionsTech.Business.Services
             scheduling.CreateScheduling(scheduling);
             await _schedulingRepository.AddAsync(scheduling);
         }
+		public async Task DeleteScheduling(Scheduling scheduling)
+		{
+			await _schedulingRepository.DeleteAsync(scheduling);
+		}
+		public async Task EditScheduling(Scheduling scheduling)
+		{
+			await _schedulingRepository.DeleteAsync(scheduling);
+		}
 
-        public async Task<List<Scheduling>> GetListIndex() =>
+		public async Task<List<Scheduling>> GetListIndex() =>
             await _schedulingRepository.GetListRepository("User,FormPayment,SchedulingProcedures,SchedulingProcedures.TypeProcedure,SchedulingProducts");
     }
 }

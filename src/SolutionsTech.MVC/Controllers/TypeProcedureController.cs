@@ -7,6 +7,27 @@ using SolutionsTech.MVC.Dto;
 
 namespace SolutionsTech.MVC.Controllers
 {
+	/*/TODO: TUDO OK:
+        FormPayment - validado, ok
+        UserType -  validado, ok
+        Product - validado, ok
+        Brand - validado, ok
+   */
+
+
+
+	/*/TODO:
+     * - [Procedimento] - ajustar  valor [formatação/casas decimais, estão com mais numeros e estão com virgulas ex: era para ser 1.200, ficou = 112000,00] dos procedimentos
+     * - [Procedimento] - ajustar formatação de duração do procedimento, se voce coloca exemplo 1, ele nao permite, tem que ser somente assim 01:00
+     * - [Cliente] - ajustar data de nascimento, remover a hora
+     * - [Cliente] - remover da index o campo data de desativação
+     * - [Cliente] - ajustar tamplate do create
+     * 
+     * 
+     * 
+     * 
+     * 
+    */
 	public class TypeProcedureController : Controller
     {
         private readonly ApplicationDbContext _context;

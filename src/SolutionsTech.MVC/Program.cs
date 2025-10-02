@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SolutionsTech.CrossCutting.Extensions;
 using SolutionsTech.Data.Context;
 using SolutionsTech.MVC.AutoMapper;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,14 @@ builder.Services.AddControllersWithViews(options =>
 builder.Services.RegisterServices();
 
 var app = builder.Build();
+
+var cultureInfo = new CultureInfo("pt-BR");
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+	DefaultRequestCulture = new RequestCulture(cultureInfo),
+	SupportedCultures = new List<CultureInfo> { cultureInfo },
+	SupportedUICultures = new List<CultureInfo> { cultureInfo }
+});
 
 if (!app.Environment.IsDevelopment())
 {
