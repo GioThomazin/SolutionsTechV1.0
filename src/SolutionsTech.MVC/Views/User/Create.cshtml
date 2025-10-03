@@ -1,75 +1,91 @@
 ﻿@model SolutionsTech.MVC.Dto.UserDto
 
 @{
-	ViewData["Title"] = "Create";
+    ViewData["Title"] = "Create";
 }
 
 <div class="col-12">
-	<div class="page-title-box">
-		<div class="page-title-right">
-			<ol class="breadcrumb m-0">
-			</ol>
-		</div>
-		<h4 class="page-title">Criar Forma de Pagamento</h4>
-	</div>
+    <div class="page-title-box">
+        <div class="page-title-right">
+            <ol class="breadcrumb m-0">
+            </ol>
+        </div>
+        <h4 class="page-title">Criar Usuário</h4>
+    </div>
 </div>
 
 <div class="row">
-	<div class="col-12">
-		<div class="card">
-			<div class="card-body">
-				<h4 class="header-title">Preencha o formulário</h4>
-				<p class="text-muted font-14">
-					Os dados cadastrados podem ser acessados em Relatórios
-				</p>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">Preencha o formulário</h4>
+                <p class="text-muted font-14">
+                    Os dados cadastrados podem ser acessados em Relatórios
+                </p>
 
-				<div class="tab-content">
-					<div class="tab-pane active show" id="input-types-preview" role="tabpanel">
-						<div class="row">
-							<div class="col-lg-12">
-								<form asp-action="Create" method="post" class="needs-validation">
+                <div class="tab-content">
+                    <div class="tab-pane active show" id="input-types-preview" role="tabpanel">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form asp-action="Create" method="post" class="needs-validation">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-									<div class="mb-3">
-										<label asp-for="Name" class="form-label">Nome</label>
-										<input asp-for="Name" class="form-control" required>
-									</div>
-									<div class="mb-3">
-										<label asp-for="Cel" class="form-label">Celular</label>
-										<input asp-for="Cel" class="form-control" required>
-									</div>
-									<div class="mb-3">
-										<label asp-for="Email" class="form-label">Email</label>
-										<input asp-for="Email" class="form-control" required>
-									</div>
-									<div class="mb-3">
-										<label asp-for="Address" class="form-label">Bairro</label>
-										<input asp-for="Address" class="form-control" required>
-									</div>
-									<div class="mb-3">
-										<label asp-for="DtBorn" class="form-label">Data de Nascimento</label>
-										<input asp-for="DtBorn" class="form-control" required>
-									</div>
-									<div class="form-group">
-										<label asp-for="Name" class="control-label"> Perfil</label>
-										<select asp-for="IdUserType" id="IdUserType" class="form-control" required asp-items="@(new SelectList(Model.UserTypes, "IdUserType", "Name"))">
-											<option value="">Selecione o perfil</option>
-										</select>
-									</div>
+                                    <div class="form-group mb-2">
+                                        <label asp-for="Name" class="control-label">Nome</label>
+                                        <input asp-for="Name" class="form-control" required />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
 
-									<button class="btn btn-primary" type="submit">Criar</button>
-									<a asp-action="Index" class="btn btn-secondary">Voltar</a>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+                                    <div class="form-group mb-2">
+                                        <label asp-for="Cel" class="control-label">Celular</label>
+                                        <input asp-for="Cel" class="form-control" required />
+                                        <span asp-validation-for="Cel" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group mb-2">
+                                        <label asp-for="Email" class="control-label">Email</label>
+                                        <input asp-for="Email" class="form-control" required />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group mb-2">
+                                        <label asp-for="Address" class="control-label">Bairro</label>
+                                        <input asp-for="Address" class="form-control" required />
+                                        <span asp-validation-for="Address" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group mb-2">
+                                        <label asp-for="DtBorn" class="control-label">Data de Nascimento</label>
+                                        <input asp-for="DtBorn" class="form-control" type="date" required />
+                                        <span asp-validation-for="DtBorn" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group mb-2">
+                                        <label asp-for="IdUserType" class="control-label">Perfil</label>
+                                        <select asp-for="IdUserType" class="form-control select2-single"
+                                                data-placeholder="Selecione o perfil"
+                                                asp-items="@(new SelectList(Model.UserTypes, "IdUserType", "Name"))" required>
+                                            <option value="">Selecione o perfil</option>
+                                        </select>
+                                        <span asp-validation-for="IdUserType" class="text-danger"></span>
+                                    </div>
+
+                                    <div class="form-group mt-3">
+                                        <button class="btn btn-primary" type="submit">Criar</button>
+                                        <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section Scripts {
-	@{
-		await Html.RenderPartialAsync("_ValidationScriptsPartial");
-	}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
