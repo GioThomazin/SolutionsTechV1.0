@@ -1,30 +1,44 @@
-﻿using SolutionsTech.Business.Entity;
+﻿using Microsoft.EntityFrameworkCore;
+using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Business.Interfaces.Repository;
 
 namespace SolutionsTech.Business.Services
 {
-    public class SchedulingService : ISchedulingService
-    {
-        private readonly  ISchedulingRepository _schedulingRepository;
+	public class SchedulingService : ISchedulingService
+	{
+		private readonly ISchedulingRepository _schedulingRepository;
 
-        public SchedulingService(ISchedulingRepository schedulingRepository) => _schedulingRepository = schedulingRepository;
-
-        public async Task CreateScheduling(Scheduling scheduling)
-        {
-            scheduling.CreateScheduling(scheduling);
-            await _schedulingRepository.AddAsync(scheduling);
-        }
-		public async Task DeleteScheduling(Scheduling scheduling)
+		public SchedulingService(ISchedulingRepository schedulingRepository)
 		{
-			await _schedulingRepository.DeleteAsync(scheduling);
-		}
-		public async Task EditScheduling(Scheduling scheduling)
-		{
-			await _schedulingRepository.DeleteAsync(scheduling);
+			_schedulingRepository = schedulingRepository;
 		}
 
-		public async Task<List<Scheduling>> GetListIndex() =>
-            await _schedulingRepository.GetListRepository("User,FormPayment,SchedulingProcedures,SchedulingProcedures.TypeProcedure,SchedulingProducts");
-    }
+		public async Task CreateScheduling(Scheduling scheduling)
+		{
+			scheduling.CreateScheduling(scheduling);
+			await _schedulingRepository.AddAsync(scheduling);
+		}
+
+		public async Task UpdateScheduling(Scheduling scheduling)
+		{
+			await _schedulingRepository.UpdateAsync(scheduling);
+		}
+
+		public async Task DeleteScheduling(long id)
+		{
+			await _schedulingRepository.DeleteAsync(id);
+		}
+
+		public async Task<Scheduling> GetById(long id)
+		{
+			return await _schedulingRepository.GetById(id);
+		}
+		public async Task<List<Scheduling>> GetListIndex()
+		{
+			return await _schedulingRepository.GetListRepository(
+				"User,FormPayment,SchedulingProcedures,SchedulingProcedures.TypeProcedure,SchedulingProducts"
+			);
+		}
+	}
 }
