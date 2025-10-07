@@ -13,10 +13,7 @@ namespace SolutionsTech.Data.Repository
 		{
 			_context = applicationDbContext;
 		}
-		public async Task<Scheduling?> GetById(long id) =>
-			await FindByAsync(id);
-
-		public async Task<Scheduling?> GetByIdWithIncludesAsync(long id)
+		public async Task<Scheduling?> GetById(long id)
 		{
 			return await _context.Scheduling
 				.Include(x => x.User)

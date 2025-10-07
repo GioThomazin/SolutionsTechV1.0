@@ -10,6 +10,5 @@ namespace SolutionsTech.Business.Interfaces
 		Task DeleteScheduling(long id);
 		Task<Scheduling> GetById(long id);
 		Task<List<Scheduling>> GetListIndex();
-
 	}
 }

@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Humanizer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
+using SolutionsTech.Business.Services;
 using SolutionsTech.Data.Context;
 using SolutionsTech.MVC.Dto;
 
@@ -89,32 +91,33 @@ namespace SolutionsTech.MVC.Controllers
 
 		public async Task<IActionResult> Edit(long? id)
 		{
-			if (id == null)
-			{
-				return NotFound();
-			}
+			var schedulingEdit = await _schedulingService.GetById(id.Value);
+			var dto = _mapper.Map<SchedulingDto>(schedulingEdit);
 
-			var scheduling = await _context.Scheduling.FindAsync(id);
-			if (scheduling == null)
-			{
+			dto.Users = _mapper.Map<List<UserDto>>(await _schedulingService.GetListIndex());
+		//	dto.FormPayments = _mapper.Map<List<FormPaymentDto>>(await _schedulingService.CreateScheduling());
+		//	dto.TypeProcedures = _mapper.Map<List<TypeProcedureDto>>(await _schedulingService.GetAll());
+
+			if (schedulingEdit == null)
 				return NotFound();
-			}
-			ViewData["IdFormPayment"] = new SelectList(_context.FormPayment, "IdFormPayment", "Name", scheduling.IdFormPayment);
-			ViewData["IdUser"] = new SelectList(_context.Users, "IdUser", "Address", scheduling.IdUser);
-			return View(scheduling);
+
+			return View(_mapper.Map<SchedulingDto>(schedulingEdit));
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(long id, SchedulingDto scheduling)
+		public async Task<IActionResult> Edit(long id, SchedulingDto schedulingDto)
 		{
-			if (id != scheduling.IdScheduling)
+			if(!ModelState.IsValid)
+				return View(schedulingDto);
+
+			var schedulingEdit = await _schedulingService.GetById(id);
+			if (schedulingEdit == null)
 				return NotFound();
 
-			if (!ModelState.IsValid)
-				return View(scheduling);
-
-			await _schedulingService.UpdateScheduling(_mapper.Map<Scheduling>(scheduling));
+			_mapper.Map(schedulingDto, schedulingEdit); // pega as alterações da dto para entidade
+														// mapeamento para atualizar
+			await _schedulingService.UpdateScheduling(schedulingEdit); 
 
 			return RedirectToAction(nameof(Index));
 		}
@@ -135,9 +138,9 @@ namespace SolutionsTech.MVC.Controllers
 		public async Task<IActionResult> DeleteConfirmed(long id)
 		{
 			var scheduling = await _schedulingService.GetById(id);
+			
 			if (scheduling != null)
-
-			await _schedulingService.DeleteScheduling(id);
+				await _schedulingService.DeleteScheduling(id);
 
 			return RedirectToAction(nameof(Index));
 		}

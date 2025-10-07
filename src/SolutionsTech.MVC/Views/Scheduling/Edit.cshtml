@@ -3,64 +3,89 @@
 @{
 	ViewData["Title"] = "Edit";
 }
-<div class="row">
-	<div class="col-12">
-		<div class="page-title-box">
-			<div class="page-title-right">
-			</div>
-			<h4 class="page-title">Editar Cliente</h4>
+
+<div class="col-12">
+	<div class="page-title-box">
+		<div class="page-title-right">
+			<ol class="breadcrumb m-0">
+			</ol>
 		</div>
+		<h4 class="page-title">Editar Agendamento</h4>
 	</div>
 </div>
 
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-12">
 		<div class="card">
 			<div class="card-body">
-				<form asp-action="Edit">
-					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-					<input type="hidden" asp-for="IdUser" />
-					<div class="form-group">
-						<label asp-for="IdUser" class="control-label">Cliente</label>
-						<input asp-for="IdUser" class="form-control" />
+				<h4 class="header-title">Preencha o formulário</h4>
+				<p class="text-muted font-14">
+					Os dados cadastrados podem ser acessados em Relatórios
+				</p>
+
+				<div class="tab-content">
+					<div class="tab-pane active show" id="input-types-preview" role="tabpanel">
+						<div class="row">
+							<div class="col-lg-12">
+								<form asp-action="Edit">
+									<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+									<input type="hidden" asp-for="IdScheduling" />
+
+									<div class="form-group">
+										<label asp-for="IdUser" class="control-label">Cliente</label>
+										<input asp-for="IdUser" class="form-control" />
+										<span asp-validation-for="IdUser" class="text-danger"></span>
+									</div>
+
+									<div class="form-group">
+										<label asp-for="FormPayment.Name" class="control-label">Pagamento</label>
+										<input asp-for="FormPayment.Name" class="form-control" />
+										<span asp-validation-for="FormPayment.Name" class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label asp-for="TotalValue" class="control-label">Valor Total</label>
+										<input asp-for="TotalValue" class="form-control" type="text" />
+										<span asp-validation-for="TotalValue" class="text-danger"></span>
+									</div>
+									<div class="form-group">
+										<label asp-for="Observation" class="control-label">Observação</label>
+										<input asp-for="Observation" class="form-control" />
+										<span asp-validation-for="Observation" class="text-danger"></span>
+									</div>
+
+									<br />
+									<div class="form-group">
+										<input type="submit" value="Salvar" class="btn btn-primary" />
+										<a asp-action="Index" class="btn btn-primary">Voltar</a>
+									</div>
+								</form>
+							</div>
+						</div>
 					</div>
-					<div class="form-group">
-						<label asp-for="IdFormPayment" class="control-label">Pagamento</label>
-						<input asp-for="IdFormPayment" class="form-control" />
-					</div>
-					<div class="form-group">
-						<label asp-for="TotalValue" class="control-label">Valor Total</label>
-						<input asp-for="TotalValue" class="form-control" />
-					</div>
-					<div class="form-group">
-						<label asp-for="Observation" class="control-label">Observação</label>
-						<input asp-for="Observation" class="form-control" type="date" />
-					</div>
-					@* 					<div class="form-group">
-						<label asp-for="Name" class="control-label">Perfil</label>
-						<select asp-for="IdUserType" id="IdUserType" class="form-control" required asp-items="@(new SelectList(Model.UserTypes, "IdUserType", "Name"))">
-							<option value="">Selecione o perfil</option>
-						</select>
-					</div> *@
-					<br />
-					<div class="form-group">
-						<input type="submit" value="Salvar" class="btn btn-primary" />
-						<a asp-action="Index" class="btn btn-primary">Voltar</a>
-					</div>
-				</form>
+				</div>
+
 			</div>
 		</div>
 	</div>
 </div>
 
 @section Scripts {
-	<script src="~/datatable/datatable.js"></script>
-	<script>
-		$(document).ready(function () {
-			new DataTable('#example');
-		});
-	</script>
 	@{
 		await Html.RenderPartialAsync("_ValidationScriptsPartial");
 	}
+
+	<script>
+		// Configura validação para aceitar vírgula como separador decimal
+		$.validator.methods.number = function (value, element) {
+			return this.optional(element) || /^-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+		}
+
+		// Substitui vírgula por ponto antes de enviar o formulário
+		$('form').on('submit', function() {
+			var totalValue = $('#TotalValue').val();
+			if (totalValue) {
+				$('#TotalValue').val(totalValue.replace(',', '.'));
+			}
+		});
+	</script>
 }
