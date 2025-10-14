@@ -20,6 +20,10 @@ namespace SolutionsTech.Business.Entity
 
 		[ForeignKey("IdUserType")]
 		public virtual UserType UserType { get; set; }
+		public void CreateUser(User user)
+		{
+
+		}
 	}
 
 }

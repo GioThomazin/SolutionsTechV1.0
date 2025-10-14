@@ -14,14 +14,26 @@ namespace SolutionsTech.MVC.Controllers
 	public class SchedulingController : Controller
 	{
 		private readonly ISchedulingService _schedulingService;
+		private readonly IUserService _userService;
+		private readonly IFormPaymentService _formPaymentService;
+		private readonly ITypeProcedureService _typeProcedureService;
 		private readonly ApplicationDbContext _context;
 		private readonly IMapper _mapper;
 
-		public SchedulingController(ApplicationDbContext context, IMapper mapper, ISchedulingService schedulingService)
+		public SchedulingController(ApplicationDbContext context,
+			IMapper mapper,
+			ISchedulingService schedulingService,
+			IUserService userService,
+			IFormPaymentService formPaymentService,
+			ITypeProcedureService typeProcedureService
+			)
 		{
 			_context = context;
 			_mapper = mapper;
 			_schedulingService = schedulingService;
+			_userService = userService;
+			_formPaymentService = formPaymentService;
+			_typeProcedureService = typeProcedureService;
 		}
 
 		public async Task<IActionResult> Index()
@@ -94,9 +106,9 @@ namespace SolutionsTech.MVC.Controllers
 			var schedulingEdit = await _schedulingService.GetById(id.Value);
 			var dto = _mapper.Map<SchedulingDto>(schedulingEdit);
 
-			dto.Users = _mapper.Map<List<UserDto>>(await _schedulingService.GetListIndex());
-		//	dto.FormPayments = _mapper.Map<List<FormPaymentDto>>(await _schedulingService.CreateScheduling());
-		//	dto.TypeProcedures = _mapper.Map<List<TypeProcedureDto>>(await _schedulingService.GetAll());
+			dto.Users = _mapper.Map<List<UserDto?>>(await _userService.GetListIndex());
+			dto.FormPayments = _mapper.Map<List<FormPaymentDto?>>(await _formPaymentService.GetListIndex());
+			dto.TypeProcedures = _mapper.Map<List<TypeProcedureDto?>>(await _typeProcedureService.GetListIndex());
 
 			if (schedulingEdit == null)
 				return NotFound();
@@ -108,7 +120,7 @@ namespace SolutionsTech.MVC.Controllers
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(long id, SchedulingDto schedulingDto)
 		{
-			if(!ModelState.IsValid)
+			if (!ModelState.IsValid)
 				return View(schedulingDto);
 
 			var schedulingEdit = await _schedulingService.GetById(id);
@@ -117,10 +129,12 @@ namespace SolutionsTech.MVC.Controllers
 
 			_mapper.Map(schedulingDto, schedulingEdit); // pega as alterações da dto para entidade
 														// mapeamento para atualizar
-			await _schedulingService.UpdateScheduling(schedulingEdit); 
+			await _schedulingService.UpdateScheduling(schedulingEdit);
 
 			return RedirectToAction(nameof(Index));
 		}
+		//TODO:
+		//EDIT NAO TA FUNCIONANDO, AJUSTAR
 
 		// GET: Scheduling/Delete/5
 		public async Task<IActionResult> Delete(long id)
@@ -138,7 +152,7 @@ namespace SolutionsTech.MVC.Controllers
 		public async Task<IActionResult> DeleteConfirmed(long id)
 		{
 			var scheduling = await _schedulingService.GetById(id);
-			
+
 			if (scheduling != null)
 				await _schedulingService.DeleteScheduling(id);
 

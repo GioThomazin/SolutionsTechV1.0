@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Repository\**" />
+    <Content Remove="Repository\**" />
+    <EmbeddedResource Remove="Repository\**" />
+    <None Remove="Repository\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Notes\" />
-    <Folder Include="Repository\" />
-    <Folder Include="Service\" />
     <Folder Include="wwwroot\datatable\" />
     <Folder Include="wwwroot\theme\img\" />
   </ItemGroup>

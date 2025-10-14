@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SolutionsTech.Business.Entity;
+﻿using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Business.Interfaces.Repository;
 
@@ -22,6 +21,15 @@ namespace SolutionsTech.Business.Services
 
 		public async Task UpdateScheduling(Scheduling scheduling)
 		{
+			var schedulingExisting = await _schedulingRepository.GetById(scheduling.IdScheduling);
+
+			if (schedulingExisting == null)
+				throw new Exception("Agendamento não encontrado.");
+
+			// Impede que o IdFormPayment seja alterado
+			scheduling.IdFormPayment = schedulingExisting.IdFormPayment;
+
+			// Atualiza apenas os dados permitidos
 			await _schedulingRepository.UpdateAsync(scheduling);
 		}
 
