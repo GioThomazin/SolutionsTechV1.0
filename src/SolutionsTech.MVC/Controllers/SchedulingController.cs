@@ -127,16 +127,12 @@ namespace SolutionsTech.MVC.Controllers
 			if (schedulingEdit == null)
 				return NotFound();
 
-			_mapper.Map(schedulingDto, schedulingEdit); // pega as alterações da dto para entidade
-														// mapeamento para atualizar
+			_mapper.Map(schedulingDto, schedulingEdit);
 			await _schedulingService.UpdateScheduling(schedulingEdit);
 
 			return RedirectToAction(nameof(Index));
 		}
-		//TODO:
-		//EDIT NAO TA FUNCIONANDO, AJUSTAR
 
-		// GET: Scheduling/Delete/5
 		public async Task<IActionResult> Delete(long id)
 		{
 			var schedulingDelete = await _schedulingService.GetById(id);

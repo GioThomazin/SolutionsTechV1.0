@@ -7,24 +7,17 @@ namespace SolutionsTech.Data.Repository
 {
 	public class SchedulingRepository : RepositoryBase<Scheduling>, ISchedulingRepository
 	{
-		protected readonly ApplicationDbContext _context;
-		public SchedulingRepository(ApplicationDbContext applicationDbContext)
-			: base(applicationDbContext) 
+		private readonly RepositoryBase<Scheduling> repository;
+		public SchedulingRepository(ApplicationDbContext context) : base(context)
 		{
-			_context = applicationDbContext;
+			repository = new RepositoryBase<Scheduling>(context);
 		}
-		public async Task<Scheduling?> GetById(long id)
-		{
-			return await _context.Scheduling
-				.Include(x => x.User)
-				.Include(x => x.FormPayment)
-				.Include(x => x.SchedulingProcedures)
-				.Include(x => x.SchedulingProducts)
-				.FirstOrDefaultAsync(x => x.IdScheduling == id);
-		}
+
+		public async Task<Scheduling?> GetById(long id) =>
+			await repository.GetByIdAsync(id);
 
 		public async Task<List<Scheduling>> GetListRepository(string properties) =>
 			await GetAllAsyncWithProperties(properties);
-
+		public async Task Update(Scheduling scheduling) => await repository.UpdateAsync(scheduling);
 	}
 }
