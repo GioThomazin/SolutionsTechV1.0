@@ -103,31 +103,39 @@ namespace SolutionsTech.MVC.Controllers
 
 		public async Task<IActionResult> Edit(long? id)
 		{
+			if (id == null)
+				return NotFound();
+
 			var schedulingEdit = await _schedulingService.GetById(id.Value);
+
+			if (schedulingEdit == null)
+				return NotFound();
+
 			var dto = _mapper.Map<SchedulingDto>(schedulingEdit);
 
 			dto.Users = _mapper.Map<List<UserDto?>>(await _userService.GetListIndex());
 			dto.FormPayments = _mapper.Map<List<FormPaymentDto?>>(await _formPaymentService.GetListIndex());
 			dto.TypeProcedures = _mapper.Map<List<TypeProcedureDto?>>(await _typeProcedureService.GetListIndex());
 
-			if (schedulingEdit == null)
-				return NotFound();
-
-			return View(_mapper.Map<SchedulingDto>(schedulingEdit));
+			return View(dto);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Edit(long id, SchedulingDto schedulingDto)
 		{
+			ModelState.Remove("FormPayment.Name");
 			if (!ModelState.IsValid)
-				return View(schedulingDto);
-
-			var schedulingEdit = await _schedulingService.GetById(id);
-			if (schedulingEdit == null)
 				return NotFound();
+			var schedulingEdit = new Scheduling()
+			{
+				IdScheduling = schedulingDto.IdScheduling,
+				IdUser = schedulingDto.IdUser,
+				IdFormPayment = schedulingDto.IdFormPayment,
+				DtCreate = schedulingDto.DtCreate,
+				Observation = schedulingDto.Observation
+			};
 
-			_mapper.Map(schedulingDto, schedulingEdit);
 			await _schedulingService.UpdateScheduling(schedulingEdit);
 
 			return RedirectToAction(nameof(Index));

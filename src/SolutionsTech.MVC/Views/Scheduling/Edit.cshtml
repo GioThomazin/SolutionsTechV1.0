@@ -36,12 +36,21 @@
 										<input asp-for="IdUser" class="form-control" />
 										<span asp-validation-for="IdUser" class="text-danger"></span>
 									</div>
-
-									<div class="form-group">
+@* 									<div class="form-group">
 										<label asp-for="FormPayment.Name" class="control-label">Pagamento</label>
 										<input asp-for="FormPayment.Name" class="form-control" />
-										<span asp-validation-for="FormPayment.Name" class="text-danger"></span>
+										<!-- Remova esta linha: -->
+										<!-- <span asp-validation-for="FormPayment.Name" class="text-danger"></span> -->
+									</div> *@
+									<div class="form-group">
+										<label asp-for="IdFormPayment" class="control-label">Pagamento</label>
+										<select asp-for="IdFormPayment" class="select2 form-control"
+												asp-items="@(new SelectList(Model.FormPayments, "IdFormPayment", "Name"))">
+											<option value="">Selecione...</option>
+										</select>
+										<span asp-validation-for="IdFormPayment" class="text-danger"></span>
 									</div>
+
 									<div class="form-group">
 										<label asp-for="TotalValue" class="control-label">Valor Total</label>
 										<input asp-for="TotalValue" class="form-control" type="text" />
