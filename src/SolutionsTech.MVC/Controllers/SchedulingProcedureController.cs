@@ -8,153 +8,106 @@ using SolutionsTech.MVC.Dto;
 
 namespace SolutionsTech.MVC.Controllers
 {
-	public class SchedulingProcedureController : Controller
+    public class SchedulingProcedureController : Controller
     {
         private readonly ISchedulingProcedureService _schedulingProcedureService;
-		private readonly ApplicationDbContext _context;
-		private readonly IMapper _mapper;
+        private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
-		public SchedulingProcedureController(ISchedulingProcedureService schedulingProcedureService, ApplicationDbContext context, IMapper mapper)
+        public SchedulingProcedureController(ISchedulingProcedureService schedulingProcedureService, ApplicationDbContext context, IMapper mapper)
         {
-			_schedulingProcedureService = schedulingProcedureService;
-			_context = context;
-			_mapper = mapper;
-		}
+            _schedulingProcedureService = schedulingProcedureService;
+            _context = context;
+            _mapper = mapper;
+        }
 
-        // GET: SchedulingProcedure
         public async Task<IActionResult> Index()
         {
             var listSchedulingProcedure = await _schedulingProcedureService.GetListIndex();
-			return View(_mapper.Map<List<SchedulingProcedureDto>>(listSchedulingProcedure));
-		}
+            return View(_mapper.Map<List<SchedulingProcedureDto>>(listSchedulingProcedure));
+        }
 
-        // GET: SchedulingProcedure/Details/5
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var schedulingProcedure = await _context.SchedulingProcedure
-                .FirstOrDefaultAsync(m => m.IdSchedulingProcedure == id);
+            var schedulingProcedure = await _schedulingProcedureService.GetById(id.Value);
+
             if (schedulingProcedure == null)
-            {
                 return NotFound();
-            }
 
             return View(schedulingProcedure);
         }
 
-        // GET: SchedulingProcedure/Create
         public IActionResult Create()
         {
+            var schedulingProcedures = _schedulingProcedureService.GetListIndex();
             return View();
         }
 
-        // POST: SchedulingProcedure/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdSchedulingProcedure")] SchedulingProcedure schedulingProcedure)
+        public async Task<IActionResult> Create(SchedulingProcedureDto schedulingProcedureDto)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                _context.Add(schedulingProcedure);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var schedulingProcedure = await _schedulingProcedureService.GetListIndex();
+                return View(schedulingProcedureDto);
             }
-            return View(schedulingProcedure);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: SchedulingProcedure/Edit/5
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var schedulingProcedure = await _context.SchedulingProcedure.FindAsync(id);
+            var schedulingProcedure = await _schedulingProcedureService.GetById(id.Value);
+
             if (schedulingProcedure == null)
-            {
                 return NotFound();
-            }
+
             return View(schedulingProcedure);
         }
 
-        // POST: SchedulingProcedure/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("IdSchedulingProcedure")] SchedulingProcedure schedulingProcedure)
+        public async Task<IActionResult> Edit(long id, SchedulingProcedureDto schedulingProcedureDto)
         {
-            if (id != schedulingProcedure.IdSchedulingProcedure)
-            {
-                return NotFound();
-            }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return NotFound();
+            var schedulingProcedure = new SchedulingProcedure()
             {
-                try
-                {
-                    _context.Update(schedulingProcedure);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SchedulingProcedureExists(schedulingProcedure.IdSchedulingProcedure))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(schedulingProcedure);
+                IdSchedulingProcedure = schedulingProcedureDto.IdSchedulingProcedure,
+                IdScheduling = schedulingProcedureDto.IdSchedulingProcedure,
+                IdTypeProcedure = schedulingProcedureDto.IdTypeProcedure
+            };
+            await _schedulingProcedureService.UpdateSchedulingProcedure(schedulingProcedure);
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: SchedulingProcedure/Delete/5
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            var schedulingProcedure = await _schedulingProcedureService.GetById(id.Value);
 
-            var schedulingProcedure = await _context.SchedulingProcedure
-                .FirstOrDefaultAsync(m => m.IdSchedulingProcedure == id);
             if (schedulingProcedure == null)
-            {
                 return NotFound();
-            }
 
-            return View(schedulingProcedure);
+            return View(_mapper.Map<SchedulingProcedureDto>(schedulingProcedure));
         }
 
-        // POST: SchedulingProcedure/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var schedulingProcedure = await _context.SchedulingProcedure.FindAsync(id);
+            var schedulingProcedure = await _schedulingProcedureService.GetById(id);
+
             if (schedulingProcedure != null)
-            {
-                _context.SchedulingProcedure.Remove(schedulingProcedure);
-            }
+                await _schedulingProcedureService.DeleteSchedulingProcedure(id);
 
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool SchedulingProcedureExists(long id)
-        {
-            return _context.SchedulingProcedure.Any(e => e.IdSchedulingProcedure == id);
         }
     }
 }

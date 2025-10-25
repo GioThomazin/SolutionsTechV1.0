@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Data.Context;
@@ -31,25 +29,24 @@ namespace SolutionsTech.MVC.Controllers
 		public async Task<IActionResult> Details(long? id)
 		{
 			if (id == null)
-			{
 				return NotFound();
-			}
 
-			var brand = await _context.Brand
-				.FirstOrDefaultAsync(m => m.IdBrand == id);
+			var brand = await _brandService.GetById(id.Value);
+
 			if (brand == null)
-			{
 				return NotFound();
-			}
 
 			return View(brand);
 		}
 
-		public IActionResult Create()
+		public async Task<IActionResult> Create()
 		{
-			return View();
-		}
+			var brands = await _brandService.GetListIndex();
+			if (brands == null)
+				return NotFound();
 
+            return View();
+		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
@@ -67,91 +64,59 @@ namespace SolutionsTech.MVC.Controllers
 		public async Task<IActionResult> Edit(long? id)
 		{
 			if (id == null)
-			{
 				return NotFound();
-			}
 
-			var brand = await _context.Brand.FindAsync(id);
+
+			var brand = await _brandService.GetById(id.Value);
+			
 			if (brand == null)
-			{
 				return NotFound();
-			}
+			
 			return View(brand);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(long id, [Bind("IdBrand,Name,DtCreate,Active,Size")] Brand brand)
+		public async Task<IActionResult> Edit(long id, BrandDto brandDto)
 		{
-			if (id != brand.IdBrand)
-			{
-				return NotFound();
-			}
+			if (id != brandDto.IdBrand)	
+				return BadRequest();
 
-			if (ModelState.IsValid)
-			{
-				try
-				{
-					_context.Update(brand);
-					await _context.SaveChangesAsync();
-				}
-				catch (DbUpdateConcurrencyException)
-				{
-					if (!BrandExists(brand.IdBrand))
-					{
-						return NotFound();
-					}
-					else
-					{
-						throw;
-					}
-				}
-				return RedirectToAction(nameof(Index));
-			}
-			return View(brand);
+			if (!ModelState.IsValid)
+				return View(brandDto);
+
+			var existingBrand = await _brandService.GetById(id);
+			if (existingBrand == null)
+				return NotFound();
+
+			existingBrand.Name = brandDto.Name;
+			existingBrand.Active = brandDto.Active;
+
+			await _brandService.UpdateBrand(existingBrand);
+
+			return RedirectToAction(nameof(Index));
 		}
 
-		public async Task<IActionResult> Delete(long? id)
+        public async Task<IActionResult> Delete(long id)
 		{
-			if (id == null)
-			{
-				return NotFound();
-			}
+			var brandDelete = await _brandService.GetById(id);
 
-			var brand = await _context.Brand
-				.FirstOrDefaultAsync(m => m.IdBrand == id);
-			if (brand == null)
-			{
+			if (brandDelete == null)
 				return NotFound();
-			}
 
-			return View(brand);
+			return View(_mapper.Map<BrandDto>(brandDelete));
 		}
 
 		[HttpPost, ActionName("Delete")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> DeleteConfirmed(long id)
 		{
-			if (id == 0)
-			{
-				return NotFound();
-			}
-
-			var brand = await _context.Brand.FindAsync(id);
-			if (brand == null)
-			{
-				return NotFound();
-			}
-
-			_context.Brand.Remove(brand);
-			await _context.SaveChangesAsync();
+			var brand = await _brandService.GetById(id);
+            
+			if (brand != null)
+				await _brandService.DeleteBrand(id);
 
 			return RedirectToAction(nameof(Index));
-		}
-
-		private bool BrandExists(long id)
-		{
-			return _context.Brand.Any(e => e.IdBrand == id);
 		}
 	}
 }

@@ -29,19 +29,19 @@
 								<form asp-action="Delete" method="post" class="needs-validation">
 									<div class="mb-1">
 										<label asp-for="IdUser" class="control-label">Cliente</label>
-										<input class="form-control" asp-for="IdUser" />
+										<input class="form-control" asp-for="IdUser" disabled />
 									</div>
 									<div class="mb-1">
 										<label asp-for="IdFormPayment" class="control-label">Pagamento</label>
-										<input class="form-control" asp-for="IdFormPayment" />
+										<input class="form-control" asp-for="IdFormPayment" disabled />
 									</div>
 									<div class="mb-1">
 										<label asp-for="TotalValue" class="control-label">Valor Total</label>
-										<input class="form-control" asp-for="TotalValue" />
+										<input class="form-control" asp-for="TotalValue" disabled />
 									</div>
 									<div class="mb-1">
 										<label asp-for="Observation" class="control-label">Observação</label>
-										<input asp-for="Observation" class="form-control" />
+										<input asp-for="Observation" class="form-control" disabled />
 									</div>
 									<br />
 									<input type="hidden" asp-for="IdScheduling" />

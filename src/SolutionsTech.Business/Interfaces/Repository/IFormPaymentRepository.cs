@@ -5,5 +5,6 @@ namespace SolutionsTech.Business.Interfaces.Repository
     public interface IFormPaymentRepository : IRepositoryBase<FormPayment>
 	{
         Task<List<FormPayment>> GetListRepository(string properties);
-	}
+        Task<FormPayment?> GetById(long id);
+    }
 }

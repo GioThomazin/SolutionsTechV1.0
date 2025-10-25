@@ -26,6 +26,6 @@ namespace SolutionsTech.MVC.Dto
 
 		public SchedulingProductDto? SchedulingProduct { get; set; }
 		public List<SchedulingProductDto?> SchedulingProducts { get; set; } = new List<SchedulingProductDto?>();
-			public List<long> SelectedTypeProcedureIds { get; set; } = new List<long>(); // Adicione isso
+		public List<long> SelectedTypeProcedureIds { get; set; } = new List<long>();
 	}
 }

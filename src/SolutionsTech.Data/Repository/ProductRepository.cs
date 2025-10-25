@@ -8,7 +8,10 @@ namespace SolutionsTech.Data.Repository
 	{
 		public ProductRepository(ApplicationDbContext applicationDbContext)
 			: base(applicationDbContext) { }
-		public async Task<List<Product>> GetListRepository(string properties) =>
+		public async Task<Product?> GetById(long id) =>
+			await GetByIdAsync(id);
+
+        public async Task<List<Product>> GetListRepository(string properties) =>
 			await GetAllAsyncWithProperties(properties);
 	}
 }

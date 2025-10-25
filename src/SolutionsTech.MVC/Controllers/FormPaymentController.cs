@@ -1,152 +1,126 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Business.Services;
 using SolutionsTech.Data.Context;
-using SolutionsTech.Data.Repository;
 using SolutionsTech.MVC.Dto;
 
 namespace SolutionsTech.MVC.Controllers
 {
-	public class FormPaymentController : Controller
+    public class FormPaymentController : Controller
     {
         private readonly IFormPaymentService _formPaymentService;
-		private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
 
         public FormPaymentController(IFormPaymentService formPaymentService, ApplicationDbContext context, IMapper mapper)
         {
-			_formPaymentService = formPaymentService;
-			_context = context;
+            _formPaymentService = formPaymentService;
+            _context = context;
             _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             var listFormPayments = await _formPaymentService.GetListIndex();
-			return View(_mapper.Map<List<FormPaymentDto>>(listFormPayments));
+            return View(_mapper.Map<List<FormPaymentDto>>(listFormPayments));
         }
 
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var formPayment = await _context.FormPayment
-                .FirstOrDefaultAsync(m => m.IdFormPayment == id);
+            var formPayment = await _formPaymentService.GetById(id.Value);
+
             if (formPayment == null)
-            {
                 return NotFound();
-            }
 
             return View(formPayment);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var formPayment = await _formPaymentService.GetListIndex();
+            if(formPayment == null)
+                return NotFound();
+
+			return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdFormPayment,Name,DtCreate,Active")] FormPayment formPayment)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(formPayment);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(formPayment);
-        }
-
-        public async Task<IActionResult> Edit(long? id)
+        public async Task<IActionResult> Create(FormPaymentDto formPaymentDto)
+		{
+			if (ModelState.IsValid)
+			{
+				var formPayment = _mapper.Map<FormPayment>(formPaymentDto);
+				await _formPaymentService.CreateFormPayment(formPayment);
+				return RedirectToAction(nameof(Index));
+			}
+			return View(formPaymentDto);
+		}
+		public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var formPayment = await _context.FormPayment.FindAsync(id);
+            var formPayment = await _formPaymentService.GetById(id.Value);
+
             if (formPayment == null)
-            {
                 return NotFound();
-            }
+
             return View(formPayment);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("IdFormPayment,Name,DtCreate,Active")] FormPayment formPayment)
+        public async Task<IActionResult> Edit(long id, FormPaymentDto formPaymentDto)
         {
-            if (id != formPayment.IdFormPayment)
-            {
-                return NotFound();
-            }
+			if (id != formPaymentDto.IdFormPayment)
+				return BadRequest();
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(formPayment);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!FormPaymentExists(formPayment.IdFormPayment))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(formPayment);
+			if (!ModelState.IsValid)
+				return View(formPaymentDto);
+
+			var existingFormPayment = await _formPaymentService.GetById(id);
+			if (existingFormPayment == null)
+				return NotFound();
+
+            existingFormPayment.Name = formPaymentDto.Name;
+            existingFormPayment.Active = formPaymentDto.Active;
+
+            await _formPaymentService.UpdateFormPayment(existingFormPayment);
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(long? id)
         {
-            if (id == null)
-            {
+            if(id == null)
                 return NotFound();
-            }
-
-            var formPayment = await _context.FormPayment
-                .FirstOrDefaultAsync(m => m.IdFormPayment == id);
+            
+            var formPayment = await _formPaymentService.GetById(id.Value);
+            
             if (formPayment == null)
-            {
                 return NotFound();
-            }
 
-            return View(formPayment);
+            return View(_mapper.Map<FormPaymentDto>(formPayment));
+
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(long id)
         {
-            var formPayment = await _context.FormPayment.FindAsync(id);
-            if (formPayment == null)
-            {
-                return NotFound();
-            }
+            var formPaymentDelete = await _formPaymentService.GetById(id);
+            
+            if (formPaymentDelete != null)
+                await _formPaymentService.DeleteFormPayment(id);
 
-            _context.FormPayment.Remove(formPayment);
-            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool FormPaymentExists(long id)
-        {
-            return _context.FormPayment.Any(e => e.IdFormPayment == id);
         }
     }
 }

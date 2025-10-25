@@ -1,7 +1,4 @@
-﻿
-using FluentValidation;
-using System.ComponentModel.DataAnnotations;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace SolutionsTech.Business.Interfaces.Repository
 {

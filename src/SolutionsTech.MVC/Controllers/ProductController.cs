@@ -13,7 +13,10 @@ namespace SolutionsTech.MVC.Controllers
         private readonly IProductService _productService;
         private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
-        public ProductController(IProductService productService, ApplicationDbContext context, IMapper mapper)
+        public ProductController(
+            IProductService productService,
+            ApplicationDbContext context,
+            IMapper mapper)
         {
 			_productService = productService;
 			_context = context;
@@ -22,32 +25,19 @@ namespace SolutionsTech.MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-			var products = await _context.Product.Where(x => x.Active).ToListAsync();
-
-			if (products is not null && products.Any())
-			{
-				foreach (var item in products)
-				{
-					item.Brand = await _context.Brand.Where(x => x.IdBrand == item.IdBrand).FirstOrDefaultAsync();
-				}
-			}
-
-			return View(_mapper.Map<List<ProductDto>>(products));
+            var produtctList = await _productService.GetListIndex();
+			return View(_mapper.Map<List<ProductDto>>(produtctList));
 		}
 
         public async Task<IActionResult> Details(long? id)
         {
             if (id == null)
-            {
                 return NotFound();
-            }
 
-            var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.IdProduct == id);
+            var product = await _productService.GetById(id.Value);
+
             if (product == null)
-            {
                 return NotFound();
-            }
 
             return View(product);
         }

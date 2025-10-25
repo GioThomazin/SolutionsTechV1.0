@@ -10,5 +10,8 @@ namespace SolutionsTech.Data.Repository
 			: base(applicationDbContext) { }
 		public async Task<List<TypeProcedure>> GetListRepository(string properties) =>
 			await GetAllAsyncWithProperties(properties);
+		
+		public async Task<List<TypeProcedure>> GetByIdsAsync(List<long> ids) =>
+			await FindByAsyncList(tp => ids.Contains(tp.IdTypeProcedure));
     }
 }

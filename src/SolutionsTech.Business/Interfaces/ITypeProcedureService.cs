@@ -1,4 +1,5 @@
 ﻿using SolutionsTech.Business.Entity;
+using System;
 
 namespace SolutionsTech.Business.Interfaces
 {
@@ -6,5 +7,6 @@ namespace SolutionsTech.Business.Interfaces
     {
         Task CreateTypeProcedure(TypeProcedure typeProcedure);
 		Task<List<TypeProcedure>> GetListIndex();
-	}
+        Task<List<TypeProcedure>> GetByIdsAsync(List<long> ids);
+    }
 }

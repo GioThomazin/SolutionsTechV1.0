@@ -8,7 +8,10 @@ namespace SolutionsTech.Data.Repository
 	{
         public FormPaymentRepository(ApplicationDbContext applicationDbContext)
         : base(applicationDbContext){ }
-		public async Task<List<FormPayment>> GetListRepository(string properties) =>
+
+		public async Task<FormPayment>? GetById(long id) =>
+			await GetByIdAsync(id);
+        public async Task<List<FormPayment>> GetListRepository(string properties) =>
 			await GetAllAsyncWithProperties(properties);
 	}
 }

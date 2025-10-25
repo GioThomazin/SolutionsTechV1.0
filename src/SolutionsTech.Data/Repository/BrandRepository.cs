@@ -8,6 +8,10 @@ namespace SolutionsTech.Data.Repository
 	{
 		public BrandRepository(ApplicationDbContext applicationDbContext)
 			: base(applicationDbContext) { }
+		
+		public async Task<Brand?> GetById(long id) =>
+			await GetByIdAsync(id);
+		
 		public async Task<List<Brand>> GetListRepository(string properties) =>
 			await GetAllAsyncWithProperties(properties);
 	}

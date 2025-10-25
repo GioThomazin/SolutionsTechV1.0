@@ -7,23 +7,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Notes\**" />
     <Compile Remove="Repository\**" />
+    <Content Remove="Notes\**" />
     <Content Remove="Repository\**" />
+    <EmbeddedResource Remove="Notes\**" />
     <EmbeddedResource Remove="Repository\**" />
+    <None Remove="Notes\**" />
     <None Remove="Repository\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Notes\" />
+    <Folder Include="Validator\PermissionValidator\" />
+    <Folder Include="Validator\ProductValidator\" />
+    <Folder Include="Validator\SchedulingValidator\" />
+    <Folder Include="Validator\TypeProcedureValidator\" />
+    <Folder Include="Validator\UserValidator\" />
     <Folder Include="wwwroot\datatable\" />
     <Folder Include="wwwroot\theme\img\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
-    <PackageReference Include="FluentValidation" Version="11.11.0" />
-    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+    <PackageReference Include="FluentValidation" Version="12.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.11" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.11" />
