@@ -66,13 +66,18 @@ namespace SolutionsTech.MVC.Controllers
 			if (id == null)
 				return NotFound();
 
-
 			var brand = await _brandService.GetById(id.Value);
-			
 			if (brand == null)
 				return NotFound();
-			
-			return View(brand);
+
+			var brandnew = new BrandDto
+			{
+				IdBrand = brand.IdBrand,
+				Name = brand.Name,
+				Active = brand.Active
+			};
+
+			return View(brandnew);
 		}
 
 		[HttpPost]
@@ -81,9 +86,6 @@ namespace SolutionsTech.MVC.Controllers
 		{
 			if (id != brandDto.IdBrand)	
 				return BadRequest();
-
-			if (!ModelState.IsValid)
-				return View(brandDto);
 
 			var existingBrand = await _brandService.GetById(id);
 			if (existingBrand == null)
