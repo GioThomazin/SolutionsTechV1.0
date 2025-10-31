@@ -29,10 +29,5 @@ namespace SolutionsTech.Business.Services
 
         public async Task<List<FormPayment>> GetListIndex() =>
             await _formPaymentRepository.GetListRepository("");
-
-        public async Task<bool> ExistsByNameAsync(string name)
-        {
-            return await _formPaymentRepository.ExistsByNameAsync(name);
-        }
     }
 }

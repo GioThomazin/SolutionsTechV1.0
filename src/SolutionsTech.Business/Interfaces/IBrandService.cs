@@ -9,6 +9,5 @@ namespace SolutionsTech.Business.Interfaces
 		Task DeleteBrand(long id);
 		Task<Brand> GetById(long id);
         Task<List<Brand>> GetListIndex();
-        Task<bool> ExistsByNameAsync(string name);
     }
 }

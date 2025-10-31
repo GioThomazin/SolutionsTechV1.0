@@ -6,8 +6,5 @@ namespace SolutionsTech.Business.Interfaces.Repository
 	{
         Task<List<User>> GetListRepository(string properties);
 		Task<User?> GetById(long id);
-        Task<bool> ExistsByNameAsync(string name);
-        Task<bool> ExistsByEmailAsync(string email);
-        Task<bool> ExistsByPhoneAsync(string phone);
-    }
+	}
 }

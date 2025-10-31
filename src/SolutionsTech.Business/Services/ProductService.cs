@@ -28,9 +28,5 @@ namespace SolutionsTech.Business.Services
 
         public async Task<List<Product>> GetListIndex() =>
             await _productRepository.GetListRepository("");
-        public async Task<bool> ExistsByNameAsync(string name)
-        {
-           return await _productRepository.ExistsByNameAsync(name);
-        }
     }
 }

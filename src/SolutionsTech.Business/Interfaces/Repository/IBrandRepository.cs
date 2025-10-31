@@ -6,6 +6,5 @@ namespace SolutionsTech.Business.Interfaces.Repository
 	{
         Task<List<Brand>> GetListRepository(string properties);
 		Task<Brand?> GetById(long id);
-        Task<bool> ExistsByNameAsync(string name);
     }
 }

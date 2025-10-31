@@ -8,6 +8,5 @@ namespace SolutionsTech.Business.Interfaces
         Task CreateTypeProcedure(TypeProcedure typeProcedure);
 		Task<List<TypeProcedure>> GetListIndex();
         Task<List<TypeProcedure>> GetByIdsAsync(List<long> ids);
-        Task<bool> ExistsByNameAsync(string name);
     }
 }
