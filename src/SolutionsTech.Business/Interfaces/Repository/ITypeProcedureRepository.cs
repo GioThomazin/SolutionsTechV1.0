@@ -6,5 +6,6 @@ namespace SolutionsTech.Business.Interfaces.Repository
 	{
 		Task<List<TypeProcedure>> GetListRepository(string properties);
 		Task<List<TypeProcedure>> GetByIdsAsync(List<long> ids);
+		Task<bool> ExistsByNameAsync(string name);
     }
 }

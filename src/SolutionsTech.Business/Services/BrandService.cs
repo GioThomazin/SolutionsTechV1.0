@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SolutionsTech.Business.Entity;
+﻿using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Business.Interfaces.Repository;
 
@@ -30,5 +29,9 @@ namespace SolutionsTech.Business.Services
 				await _brandRepository.GetById(id);
         public async Task<List<Brand>> GetListIndex() =>
 				await _brandRepository.GetListRepository("");
+        public async Task<bool> ExistsByNameAsync(string name)
+        {
+            return await _brandRepository.ExistsByNameAsync(name);
+        }
     }
 }

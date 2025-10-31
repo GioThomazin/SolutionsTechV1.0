@@ -22,5 +22,9 @@ namespace SolutionsTech.Business.Services
 
         public async Task<List<TypeProcedure>> GetByIdsAsync(List<long> ids) =>
 			await _typeProcedureRepository.GetByIdsAsync(ids);
+		public async Task<bool> ExistsByNameAsync(string name)
+		{
+			return await _typeProcedureRepository.ExistsByNameAsync(name);
+        }
     }
 }

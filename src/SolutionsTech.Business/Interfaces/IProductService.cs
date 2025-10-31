@@ -9,5 +9,6 @@ public interface IProductService
 		Task DeleteFormPayment(long id);
 		Task <Product> GetById(long id);
 		Task<List<Product>> GetListIndex();
+		Task<bool> ExistsByNameAsync(string name);
     }
 }

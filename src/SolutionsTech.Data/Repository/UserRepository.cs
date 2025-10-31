@@ -22,5 +22,10 @@ namespace SolutionsTech.Data.Repository
 		}
 		public async Task<List<User>> GetListRepository(string properties) =>
 			await GetAllAsyncWithProperties(properties);
+		public async Task <bool> ExistsByEmailAsync(string email)
+		{
+			return await _context.Users
+				.AnyAsync(u => u.Email.ToLower() == email.ToLower());
+		}
 	}
 }
