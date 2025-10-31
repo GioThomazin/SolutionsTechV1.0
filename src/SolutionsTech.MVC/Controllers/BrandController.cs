@@ -15,8 +15,6 @@ namespace SolutionsTech.MVC.Controllers
 		public BrandController(ApplicationDbContext context, IMapper mapper, IBrandService brandService)
 		{
 			_context = context;
-
-
 			_mapper = mapper;
 			_brandService = brandService;
 		}
