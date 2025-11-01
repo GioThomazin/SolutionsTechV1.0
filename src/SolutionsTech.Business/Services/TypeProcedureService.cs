@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using SolutionsTech.Business.Entity;
+﻿using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Business.Interfaces.Repository;
 

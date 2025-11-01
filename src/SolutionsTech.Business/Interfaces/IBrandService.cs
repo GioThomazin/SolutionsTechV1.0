@@ -4,7 +4,7 @@ namespace SolutionsTech.Business.Interfaces
 {
    public interface IBrandService
     {
-		Task CreateBrand(Brand brand);
+		Task<string> CreateBrand(Brand brand);
 		Task UpdateBrand(Brand brand);
 		Task DeleteBrand(long id);
 		Task<Brand> GetById(long id);
