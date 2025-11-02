@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using DevIO.Business.Notificacoes;
+using Microsoft.Extensions.DependencyInjection;
 using SolutionsTech.Business.Entities;
 using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
@@ -19,39 +20,40 @@ namespace SolutionsTech.CrossCutting.Extensions
 
             services.AddScoped<IBrandRepository, BrandRepository>();
             services.AddScoped<IRepositoryBase<Brand>, RepositoryBase<Brand>>();
-			
-			services.AddScoped<IFormPaymentRepository, FormPaymentRepository>();
-			services.AddScoped<IRepositoryBase<FormPayment>, RepositoryBase<FormPayment>>();
+
+            services.AddScoped<IFormPaymentRepository, FormPaymentRepository>();
+            services.AddScoped<IRepositoryBase<FormPayment>, RepositoryBase<FormPayment>>();
 
             services.AddScoped<IInvoicingRepository, InvoicingRepository>();
             services.AddScoped<IRepositoryBase<Invoicing>, RepositoryBase<Invoicing>>();
 
             services.AddScoped<IProductRepository, ProductRepository>();
-			services.AddScoped<IRepositoryBase<Product>, RepositoryBase<Product>>();
+            services.AddScoped<IRepositoryBase<Product>, RepositoryBase<Product>>();
 
             services.AddScoped<ISchedulingProcedureRepository, SchedulingProcedureRepository>();
-			services.AddScoped<IRepositoryBase<SchedulingProcedure>, RepositoryBase<SchedulingProcedure>>();
+            services.AddScoped<IRepositoryBase<SchedulingProcedure>, RepositoryBase<SchedulingProcedure>>();
 
             services.AddScoped<ISchedulingProductRepository, SchedulingProductRepository>();
-			services.AddScoped<IRepositoryBase<SchedulingProduct>, RepositoryBase<SchedulingProduct>>();
+            services.AddScoped<IRepositoryBase<SchedulingProduct>, RepositoryBase<SchedulingProduct>>();
 
             services.AddScoped<ITypeProcedureRepository, TypeProcedureRepository>();
-			services.AddScoped<IRepositoryBase<TypeProcedure>, RepositoryBase<TypeProcedure>>();
-            
+            services.AddScoped<IRepositoryBase<TypeProcedure>, RepositoryBase<TypeProcedure>>();
+
             services.AddScoped<IUserRepository, UserRepository>();
-			services.AddScoped<IRepositoryBase<User>, RepositoryBase<User>>();
+            services.AddScoped<IRepositoryBase<User>, RepositoryBase<User>>();
 
-			//Service
+            //Service
 
-			services.AddScoped<ISchedulingService, SchedulingService>();
+            services.AddScoped<ISchedulingService, SchedulingService>();
             services.AddScoped<IBrandService, BrandService>();
-			services.AddScoped<IFormPaymentService, FormPaymentService>();
-		    services.AddScoped<IInvoicingService, InvoicingService>();
-			services.AddScoped<IProductService, ProductService>();
-		    services.AddScoped<ISchedulingProcedureService, SchedulingProcedureService>();
+            services.AddScoped<IFormPaymentService, FormPaymentService>();
+            services.AddScoped<IInvoicingService, InvoicingService>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ISchedulingProcedureService, SchedulingProcedureService>();
             services.AddScoped<ISchedulingProductService, SchedulingProductService>();
-			services.AddScoped<ITypeProcedureService, TypeProcedureService>();
-			services.AddScoped<IUserService, UserService>();
-		}
+            services.AddScoped<ITypeProcedureService, TypeProcedureService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<INotificador, Notificador>();
+        }
     }
 }

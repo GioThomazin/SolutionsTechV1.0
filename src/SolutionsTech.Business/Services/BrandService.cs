@@ -1,27 +1,31 @@
 ﻿using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Business.Interfaces.Repository;
+using SolutionsTech.Business.Validations;
 
 namespace SolutionsTech.Business.Services;
 
-public class BrandService : IBrandService
+public class BrandService : BaseService, IBrandService
 {
     private readonly IBrandRepository _brandRepository;
 
-    public BrandService(IBrandRepository brandRepository) => _brandRepository = brandRepository;
+    public BrandService(IBrandRepository brandRepository, INotificador notificador) : base(notificador) => _brandRepository = brandRepository;
 
-    public async Task<string> CreateBrand(Brand brand)
+    public async Task CreateBrand(Brand brand)
     {
+        if (!ExecutarValidacao(new BrandValidation(), brand))
+            return;
+
         var existingBrand = await _brandRepository.GetByName(brand.Name);
 
         if (existingBrand is not null)
         {
-            return $"Já existe uma marca com o mesmo nome '{brand.Name}'";
+            Notificar($"Já existe uma marca com o mesmo nome '{brand.Name}'");
+            return;
         }
 
         await _brandRepository.AddAsync(brand);
-
-        return string.Empty;
+        return;
     }
 
     public async Task UpdateBrand(Brand brand)
@@ -34,8 +38,9 @@ public class BrandService : IBrandService
     {
         await _brandRepository.DeleteAsync(id);
     }
-    public async Task<Brand> GetById(long id) =>
-        await _brandRepository.GetById(id);
+    public async Task<Brand> GetById(long id) => await _brandRepository.GetById(id);
+
     public async Task<List<Brand>> GetListIndex() =>
             await _brandRepository.GetListRepository("");
+
 }
