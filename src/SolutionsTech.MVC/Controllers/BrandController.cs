@@ -24,6 +24,9 @@ namespace SolutionsTech.MVC.Controllers
         public async Task<IActionResult> Index()
         {
             var listBrands = await _brandService.GetListIndex();
+
+
+
             return View(_mapper.Map<List<BrandDto>>(listBrands));
         }
         public async Task<IActionResult> Details(long? id)
@@ -59,11 +62,15 @@ namespace SolutionsTech.MVC.Controllers
 
             if (!string.IsNullOrEmpty(result))
             {
-                return RedirectToAction(nameof(Create));
+                TempData["Aviso"] = result;
+                return View();
             }
 
-            return View();
+            TempData["Sucesso"] = "Marca criada com sucesso !";
+
+            return RedirectToAction(nameof(Index));
         }
+
         public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)

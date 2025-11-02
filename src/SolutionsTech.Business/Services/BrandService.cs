@@ -16,7 +16,7 @@ public class BrandService : IBrandService
 
         if (existingBrand is not null)
         {
-            return "Já existe uma marca com o mesmo nome";
+            return $"Já existe uma marca com o mesmo nome '{brand.Name}'";
         }
 
         await _brandRepository.AddAsync(brand);
