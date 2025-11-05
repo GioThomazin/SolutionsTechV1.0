@@ -1,9 +1,8 @@
-﻿
-@if (ViewData.ModelState.ErrorCount > 0)
+﻿@if (ViewData.ModelState.ErrorCount > 0)
 {
     <div style="padding-top: 15px;"></div>
 
-    <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
+    <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" id="modelState" role="alert">
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
         <strong>Erro </strong> <div style="padding-top: 20px" asp-validation-summary="ModelOnly" class="text-bg-danger"></div>
     </div>
@@ -24,7 +23,7 @@
 {
     <div style="padding-top: 15px"></div>
 
-    <div class="alert alert-success alert-dismissible text-bg-success border-0 fade show" role="alert">
+    <div class="alert alert-success alert-dismissible text-bg-success border-0 fade show" id="modelState" role="alert">
         <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
         <strong></strong> @Html.Raw(TempData["Sucesso"].ToString())
     </div>
@@ -40,5 +39,8 @@
     </div>
 }
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
 
-
+<script>
+    $("#modelState").delay(3000).hide("slow");
+</script>
