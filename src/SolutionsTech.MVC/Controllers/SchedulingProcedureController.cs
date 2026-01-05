@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
-using SolutionsTech.Data.Context;
 using SolutionsTech.MVC.Dto;
 
 namespace SolutionsTech.MVC.Controllers
@@ -11,13 +9,11 @@ namespace SolutionsTech.MVC.Controllers
     public class SchedulingProcedureController : Controller
     {
         private readonly ISchedulingProcedureService _schedulingProcedureService;
-        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
-        public SchedulingProcedureController(ISchedulingProcedureService schedulingProcedureService, ApplicationDbContext context, IMapper mapper)
+        public SchedulingProcedureController(ISchedulingProcedureService schedulingProcedureService, IMapper mapper)
         {
             _schedulingProcedureService = schedulingProcedureService;
-            _context = context;
             _mapper = mapper;
         }
 

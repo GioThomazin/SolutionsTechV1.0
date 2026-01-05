@@ -80,10 +80,6 @@ namespace SolutionsTech.MVC.Controllers
 				return View(schedulingDto);
 			}
 
-			var selectedProcedures = await _typeProcedureService.GetByIdsAsync(schedulingDto.SelectedTypeProcedureIds);
-
-			schedulingDto.TypeProcedures = _mapper.Map<List<TypeProcedureDto>>(selectedProcedures);
-
 			await _schedulingService.CreateScheduling(_mapper.Map<Scheduling>(schedulingDto));
 
 			return RedirectToAction(nameof(Index));

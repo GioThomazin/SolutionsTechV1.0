@@ -8,154 +8,127 @@ using SolutionsTech.MVC.Dto;
 
 namespace SolutionsTech.MVC.Controllers
 {
-	public class ProductController : Controller
-    {
-        private readonly IProductService _productService;
-        private readonly ApplicationDbContext _context;
-        private readonly IMapper _mapper;
-        public ProductController(
-            IProductService productService,
-            ApplicationDbContext context,
-            IMapper mapper)
-        {
+	public class ProductController : BaseController
+	{
+		private readonly IProductService _productService;
+		private readonly IBrandService _brandService;
+		private readonly IMapper _mapper;
+		public ProductController(IMapper mapper, IProductService productService, IBrandService brandService, INotificador notificador) : base(notificador)
+		{
+			_mapper = mapper;
 			_productService = productService;
-			_context = context;
-            _mapper = mapper;
-        }
+			_brandService = brandService;
+		}
 
-        public async Task<IActionResult> Index()
-        {
-            var produtctList = await _productService.GetListIndex();
+		public async Task<IActionResult> Index()
+		{
+			var produtctList = await _productService.GetListIndex();
 			return View(_mapper.Map<List<ProductDto>>(produtctList));
 		}
 
-        public async Task<IActionResult> Details(long? id)
-        {
-            if (id == null)
-                return NotFound();
+		public async Task<IActionResult> Details(long? id)
+		{
+			if (id == null)
+				return NotFound();
 
-            var product = await _productService.GetById(id.Value);
+			var product = await _productService.GetById(id.Value);
 
-            if (product == null)
-                return NotFound();
+			if (product == null)
+				return NotFound();
 
-            return View(product);
-        }
+			return View(product);
+		}
 
 		public async Task<IActionResult> Create()
 		{
-			var productDto = new ProductDto();
+			var products = await _productService.GetListIndex();
 
-			var brands = await _context.Brand.ToListAsync();
-			var brandsDto = _mapper.Map<List<BrandDto>>(brands);
+			if (products == null)
+				return NotFound();
 
-			productDto.Brands = brandsDto;
-
-			return View(productDto);
+			var productDto = new ProductDto
+			{
+				Brands = _mapper.Map<IEnumerable<BrandDto>>(await _brandService.GetListIndex())
+			};
+			ModelState.Clear();
+			return View(products);
 		}
 
 		[HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProductDto productDto)
-        {
-            if (ModelState.IsValid)
-            {
-				_context.Add(_mapper.Map<Product>(productDto));
-				await _context.SaveChangesAsync();
-				return RedirectToAction(nameof(Index));
-			}
-			var brands = await _context.Brand.ToListAsync();
-			productDto.Brands = _mapper.Map<List<BrandDto>>(brands);
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create(ProductDto productDto)
+		{
+			await _productService.CreateProduct(_mapper.Map<Product>(productDto));
 
-			return View(productDto);
-        }
+			if (!OperacaoValida()) return View(productDto);
 
-        public async Task<IActionResult> Edit(long? id)
-        {
-			if (id == null)
-			{
-				return NotFound();
-			}
+			TempData["Sucesso"] = "Produto criado com sucesso!";
 
-			var user = _mapper.Map<ProductDto>(await _context.Product.FindAsync(id));
-
-			if (user == null)
-			{
-				return NotFound();
-			}
-
-			var brands = _mapper.Map<List<BrandDto>>(await _context.Brand.ToListAsync());
-			user.Brands = brands;
-
-			return View(user);
+			return RedirectToAction(nameof(Index));
 		}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, ProductDto productDto)
-        {
-            if (id != productDto.IdProduct)
-            {
-                return NotFound();
-            }
+		public async Task<IActionResult> Edit(long? id)
+		{
+			if (id == null)
+				return NotFound();
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-					_context.Update(_mapper.Map<Product>(productDto));
-					await _context.SaveChangesAsync();
-				}
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductExists(productDto.IdProduct))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(productDto);
-        }
-        public async Task<IActionResult> Delete(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+			var product = await _productService.GetById(id.Value);
 
-            var product = await _context.Product
-                .FirstOrDefaultAsync(m => m.IdProduct == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+			if (product == null)
+				return NotFound();
 
-            return View(product);
-        }
+			var productnew = new ProductDto
+			{
+				IdProduct = product.IdProduct,
+				Name = product.Name,
+				Size = product.Size,
+				Active = product.Active,
+				IdBrand = product.IdBrand,
+				DtCreate = product.DtCreate,
+			};
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
-        {
-            var product = await _context.Product.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+			return View(productnew);
+		}
 
-            _context.Product.Remove(product);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(long id, ProductDto productDto)
+		{
+			if (id != productDto.IdProduct)
+				return NotFound();
 
-        private bool ProductExists(long id)
-        {
-            return _context.Product.Any(e => e.IdProduct == id);
-        }
-    }
+			var existingProduct = await _productService.GetById(id);
+			if (existingProduct == null)
+				return NotFound();
+
+			existingProduct.Name = productDto.Name;
+			existingProduct.Size = productDto.Size;
+			existingProduct.Active = productDto.Active;
+
+			await _productService.UpdateProduct(existingProduct);
+
+			return RedirectToAction(nameof(Index));
+		}
+		public async Task<IActionResult> Delete(long id)
+		{
+			var productDelete = await _productService.GetById(id);
+
+			if (id == null)
+				return NotFound();
+
+			return View(_mapper.Map<ProductDto>(productDelete));
+		}
+
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteConfirmed(long id)
+		{
+			var product = await _productService.GetById(id);
+
+			if (product != null)
+				await _productService.DeleteProduct(id);
+
+			return RedirectToAction(nameof(Index));
+		}
+	}
 }

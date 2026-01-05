@@ -5,6 +5,9 @@ namespace SolutionsTech.Business.Interfaces
     public interface ISchedulingProductService
     {
 		Task CreateSchedulingProduct(SchedulingProduct schedulingProduct);
-		Task<List<SchedulingProduct>> GetListByScheduling();
+		Task UpdateSchedulingProduct(SchedulingProduct schedulingProduct);
+		Task DeleteSchedulingProduct(long id);
+		Task<SchedulingProduct> GetById(long id);
+		Task<List<SchedulingProduct>> GetListIndex();
 	}
 }

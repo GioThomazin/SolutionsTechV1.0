@@ -16,10 +16,18 @@ namespace SolutionsTech.Business.Services
 			typeProcedure.CreateTypeProcedure(typeProcedure);
 			await _typeProcedureRepository.AddAsync(typeProcedure);
 		}
+
+		public async Task UpdateTypeProcedure(TypeProcedure typeProcedure)
+		{
+			var schedulingConsulting = await GetById(typeProcedure.IdTypeProcedure);
+			await _typeProcedureRepository.UpdateAsync(schedulingConsulting);
+		}
+		public async Task DeleteTypeProcedure(long id) =>
+			await _typeProcedureRepository.DeleteAsync(id);
+
+        public async Task<TypeProcedure> GetById(long id) => await _typeProcedureRepository.GetById(id);
+
 		public async Task<List<TypeProcedure>> GetListIndex() =>
 			await _typeProcedureRepository.GetListRepository("");
-
-        public async Task<List<TypeProcedure>> GetByIdsAsync(List<long> ids) =>
-			await _typeProcedureRepository.GetByIdsAsync(ids);
     }
 }

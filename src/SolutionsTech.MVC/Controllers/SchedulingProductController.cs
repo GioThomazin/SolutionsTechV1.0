@@ -9,151 +9,101 @@ using SolutionsTech.MVC.Dto;
 namespace SolutionsTech.MVC.Controllers
 {
 	public class SchedulingProductController : Controller
-    {
-        private readonly ApplicationDbContext _context;
-        private readonly ISchedulingProductService _schedulingProductService;
-        private readonly IMapper _mapper;
-		public SchedulingProductController(ApplicationDbContext context, ISchedulingProductService schedulingProductService, IMapper mapper)
-        {
+	{
+		private readonly ISchedulingProductService _schedulingProductService;
+		private readonly IMapper _mapper;
+		public SchedulingProductController(ISchedulingProductService schedulingProductService, IMapper mapper)
+		{
 			_schedulingProductService = schedulingProductService;
-			_context = context;
 			_mapper = mapper;
 		}
 
-        // GET: SchedulingProduct
-        public async Task<IActionResult> Index()
-        {
-            var list = await _schedulingProductService.GetListByScheduling();
+		public async Task<IActionResult> Index()
+		{
+			var list = await _schedulingProductService.GetListIndex();
 			return View(_mapper.Map<List<SchedulingProductDto>>(list));
 		}
 
-        // GET: SchedulingProduct/Details/5
-        public async Task<IActionResult> Details(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		public async Task<IActionResult> Details(long? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-            var schedulingProduct = await _context.SchedulingProduct
-                .FirstOrDefaultAsync(m => m.IdSchedulingProduct == id);
-            if (schedulingProduct == null)
-            {
-                return NotFound();
-            }
+			var schedulingProduct = await _schedulingProductService.GetById(id.Value);
 
-            return View(schedulingProduct);
-        }
+			if (schedulingProduct == null)
+				return NotFound();
 
-        // GET: SchedulingProduct/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+			return View(schedulingProduct);
+		}
 
-        // POST: SchedulingProduct/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdSchedulingProduct")] SchedulingProduct schedulingProduct)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(schedulingProduct);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(schedulingProduct);
-        }
+		public IActionResult Create()
+		{
+			return View();
+		}
 
-        // GET: SchedulingProduct/Edit/5
-        public async Task<IActionResult> Edit(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create(SchedulingProductDto schedulingProductDto)
+		{
+			if (ModelState.IsValid)
+			{
+				var schedulingProduct = await _schedulingProductService.GetListIndex();
+				return View(schedulingProduct);
+			}
+			return RedirectToAction(nameof(Index));
+		}
+		public async Task<IActionResult> Edit(long? id)
+		{
+			if (id == null)
+				return NotFound();
 
-            var schedulingProduct = await _context.SchedulingProduct.FindAsync(id);
-            if (schedulingProduct == null)
-            {
-                return NotFound();
-            }
-            return View(schedulingProduct);
-        }
+			var schedulingProduct = await _schedulingProductService.GetById(id.Value);
 
-        // POST: SchedulingProduct/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("IdSchedulingProduct")] SchedulingProduct schedulingProduct)
-        {
-            if (id != schedulingProduct.IdSchedulingProduct)
-            {
-                return NotFound();
-            }
+			if (schedulingProduct == null)
+				return NotFound();
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(schedulingProduct);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SchedulingProductExists(schedulingProduct.IdSchedulingProduct))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(schedulingProduct);
-        }
+			return View(schedulingProduct);
+		}
 
-        // GET: SchedulingProduct/Delete/5
-        public async Task<IActionResult> Delete(long? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(long id, SchedulingProductDto schedulingProductDto)
+		{
+			if (ModelState.IsValid)
+				return NotFound();
+			var schedulingProduct = new SchedulingProduct()
+			{
+				IdSchedulingProduct = schedulingProductDto.IdSchedulingProduct,
+				IdScheduling = schedulingProductDto.IdScheduling,
+				IdProduct = schedulingProductDto.IdProduct
+			};
 
-            var schedulingProduct = await _context.SchedulingProduct
-                .FirstOrDefaultAsync(m => m.IdSchedulingProduct == id);
-            if (schedulingProduct == null)
-            {
-                return NotFound();
-            }
+			return View(schedulingProduct);
+		}
 
-            return View(schedulingProduct);
-        }
+		public async Task<IActionResult> Delete(long? id)
+		{
+			var schedulingProduct = await _schedulingProductService.GetById(id.Value);
 
-        // POST: SchedulingProduct/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(long id)
-        {
-            var schedulingProduct = await _context.SchedulingProduct.FindAsync(id);
-            if (schedulingProduct != null)
-            {
-                _context.SchedulingProduct.Remove(schedulingProduct);
-            }
+			if (id == null)
+				return NotFound();
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+			return View(_mapper.Map<SchedulingProductDto>(schedulingProduct));
+		}
 
-        private bool SchedulingProductExists(long id)
-        {
-            return _context.SchedulingProduct.Any(e => e.IdSchedulingProduct == id);
-        }
-    }
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteConfirmed(long id)
+		{
+			var schedulingProduct = await _schedulingProductService.GetById(id);
+
+			if (schedulingProduct != null)
+				_schedulingProductService.DeleteSchedulingProduct(id);
+
+			return RedirectToAction(nameof(Index));
+		}
+	}
 }

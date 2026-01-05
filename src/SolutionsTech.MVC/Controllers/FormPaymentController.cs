@@ -2,24 +2,20 @@
 using Microsoft.AspNetCore.Mvc;
 using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
-using SolutionsTech.Business.Services;
-using SolutionsTech.Data.Context;
 using SolutionsTech.MVC.Dto;
 
 namespace SolutionsTech.MVC.Controllers
 {
-    public class FormPaymentController : Controller
+    public class FormPaymentController : BaseController
     {
         private readonly IFormPaymentService _formPaymentService;
-        private readonly ApplicationDbContext _context;
         private readonly IMapper _mapper;
 
 
-        public FormPaymentController(IFormPaymentService formPaymentService, ApplicationDbContext context, IMapper mapper)
-        {
-            _formPaymentService = formPaymentService;
-            _context = context;
+        public FormPaymentController(IMapper mapper, IFormPaymentService formPaymentService, INotificador notificador) : base(notificador)
+		{
             _mapper = mapper;
+            _formPaymentService = formPaymentService;
         }
 
         public async Task<IActionResult> Index()
@@ -47,21 +43,23 @@ namespace SolutionsTech.MVC.Controllers
             if(formPayment == null)
                 return NotFound();
 
-			return View();
+			return View(formPayment);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FormPaymentDto formPaymentDto)
 		{
-			if (ModelState.IsValid)
-			{
-				var formPayment = _mapper.Map<FormPayment>(formPaymentDto);
-				await _formPaymentService.CreateFormPayment(formPayment);
-				return RedirectToAction(nameof(Index));
-			}
-			return View(formPaymentDto);
+            await _formPaymentService.CreateFormPayment(_mapper.Map<FormPayment>(formPaymentDto));
+            
+            if(!OperacaoValida())
+                return View(formPaymentDto);
+
+            TempData["Sucesso"] = "Forma de pagamento criada com sucesso!";
+			
+            return RedirectToAction(nameof(Index));
 		}
+
 		public async Task<IActionResult> Edit(long? id)
         {
             if (id == null)

@@ -1,17 +1,29 @@
 ﻿using SolutionsTech.Business.Entity;
 using SolutionsTech.Business.Interfaces;
 using SolutionsTech.Business.Interfaces.Repository;
+using SolutionsTech.Business.Validations;
 
 namespace SolutionsTech.Business.Services
 {
-    public class FormPaymentService : IFormPaymentService
+    public class FormPaymentService : BaseService, IFormPaymentService
     {
         private readonly IFormPaymentRepository _formPaymentRepository;
-        public FormPaymentService(IFormPaymentRepository formPaymentRepository) => _formPaymentRepository = formPaymentRepository;
+        public FormPaymentService(IFormPaymentRepository formPaymentRepository, INotificador notificador) : base(notificador) => _formPaymentRepository = formPaymentRepository;
+       
         public async Task CreateFormPayment(FormPayment formPayment)
         {
-            formPayment.CreateFormPayment(formPayment);
+            if(!ExecutarValidacao(new FormPaymentValidation(), formPayment))
+                return;
+
+            var existsFormPayment = await _formPaymentRepository.GetByName(formPayment.Name);
+            
+            if (existsFormPayment is not null)
+            {
+                Notificar($"Já existe uma forma de pagamento com este nome '{formPayment.Name}'");
+                return;
+			}
             await _formPaymentRepository.AddAsync(formPayment);
+            return;
         }
 
         public async Task UpdateFormPayment(FormPayment formPayment)

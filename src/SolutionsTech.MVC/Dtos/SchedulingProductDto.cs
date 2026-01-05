@@ -5,7 +5,7 @@ namespace SolutionsTech.MVC.Dto
 	public class SchedulingProductDto
 	{
 		public long IdSchedulingProduct { get; set; }
-		public SchedulingDto Scheduling { get; set; }
-		public ProductDto Product { get; set; }
+		public long IdScheduling { get; set; }
+		public long IdProduct { get; set; }
 	}
 }

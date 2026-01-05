@@ -42,5 +42,4 @@ public class BrandService : BaseService, IBrandService
 
     public async Task<List<Brand>> GetListIndex() =>
             await _brandRepository.GetListRepository("");
-
 }

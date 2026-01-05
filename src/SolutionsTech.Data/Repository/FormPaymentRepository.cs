@@ -11,6 +11,7 @@ namespace SolutionsTech.Data.Repository
 
 		public async Task<FormPayment>? GetById(long id) =>
 			await GetByIdAsync(id);
+		public async Task<FormPayment?> GetByName(string name) => await FindByAsyncSingle(x => x.Name.ToUpper() == name.Trim().ToUpper());
         public async Task<List<FormPayment>> GetListRepository(string properties) =>
 			await GetAllAsyncWithProperties(properties);
 	}

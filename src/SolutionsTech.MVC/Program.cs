@@ -1,10 +1,9 @@
 using FluentValidation;
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SolutionsTech.Business.Validator.BrandValidator;
+using SolutionsTech.Business.Validations;
 using SolutionsTech.CrossCutting.Extensions;
 using SolutionsTech.Data.Context;
 using SolutionsTech.MVC.AutoMapper;
@@ -30,7 +29,6 @@ builder.Services.AddControllersWithViews(options =>
 });
 
 builder.Services.RegisterServices();
-builder.Services.AddValidatorsFromAssemblyContaining<BrandValidator>();
 
 var app = builder.Build();
 

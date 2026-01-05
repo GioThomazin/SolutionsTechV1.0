@@ -9,21 +9,19 @@
   <ItemGroup>
     <Compile Remove="Notes\**" />
     <Compile Remove="Repository\**" />
+    <Compile Remove="Services\**" />
     <Content Remove="Notes\**" />
     <Content Remove="Repository\**" />
+    <Content Remove="Services\**" />
     <EmbeddedResource Remove="Notes\**" />
     <EmbeddedResource Remove="Repository\**" />
+    <EmbeddedResource Remove="Services\**" />
     <None Remove="Notes\**" />
     <None Remove="Repository\**" />
+    <None Remove="Services\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-    <Folder Include="Validator\PermissionValidator\" />
-    <Folder Include="Validator\ProductValidator\" />
-    <Folder Include="Validator\SchedulingValidator\" />
-    <Folder Include="Validator\TypeProcedureValidator\" />
-    <Folder Include="Validator\UserValidator\" />
     <Folder Include="wwwroot\datatable\" />
     <Folder Include="wwwroot\theme\img\" />
   </ItemGroup>

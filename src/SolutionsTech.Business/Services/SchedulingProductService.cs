@@ -7,7 +7,6 @@ namespace SolutionsTech.Business.Services
 	public class SchedulingProductService : ISchedulingProductService
 	{
 		private readonly ISchedulingProductRepository _schedulingProductRepository;
-
 		public SchedulingProductService(ISchedulingProductRepository schedulingProductRepository)
 			=> _schedulingProductRepository = schedulingProductRepository;
 
@@ -16,7 +15,16 @@ namespace SolutionsTech.Business.Services
 			schedulingProduct.CreateSchedulingProduct(schedulingProduct);
 			await _schedulingProductRepository.AddAsync(schedulingProduct);
 		}
-		public async Task<List<SchedulingProduct>> GetListByScheduling() =>
+		public async Task UpdateSchedulingProduct(SchedulingProduct schedulingProduct)
+		{
+			var schedulingProductDb = await _schedulingProductRepository.GetByid(schedulingProduct.IdSchedulingProduct);
+		}
+
+		public async Task DeleteSchedulingProduct(long id) =>
+			await _schedulingProductRepository.DeleteAsync(id);
+		public async Task<SchedulingProduct> GetById(long id) =>
+	await _schedulingProductRepository.GetByid(id);
+		public async Task<List<SchedulingProduct>> GetListIndex() =>
 			await _schedulingProductRepository.GetListScheduling("");
 	}
 }
