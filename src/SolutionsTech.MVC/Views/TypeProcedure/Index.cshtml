@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SolutionsTech.Business.Entity.TypeProcedure>
+﻿@model IEnumerable<SolutionsTech.MVC.Dto.TypeProcedureDto>
 
 @{
 	ViewData["Title"] = "Index";
@@ -52,6 +52,8 @@
 		</div>
 	</div>
 </div>
+
+@await Component.InvokeAsync("Summary")
 
 <div class="row">
 	<div class="col-12">

@@ -7,103 +7,105 @@ using SolutionsTech.MVC.Dto;
 
 namespace SolutionsTech.MVC.Controllers
 {
-	public class TypeProcedureController : Controller
-	{
-		private readonly ITypeProcedureService _typeProcedureService;
-		private readonly IMapper _mapper;
-		public TypeProcedureController(ITypeProcedureService typeProcedureService, IMapper mapper)
-		{
-			_typeProcedureService = typeProcedureService;
-			_mapper = mapper;
-		}
+    public class TypeProcedureController : BaseController
+    {
+        private readonly ITypeProcedureService _typeProcedureService;
+        private readonly IMapper _mapper;
+        private readonly INotificador _notificador;
 
-		public async Task<IActionResult> Index()
-		{
-			var typeProcedures = await _typeProcedureService.GetListIndex();
-			return View(_mapper.Map<List<TypeProcedureDto>>(typeProcedures));
-		}
+        public TypeProcedureController(ITypeProcedureService typeProcedureService,
+            IMapper mapper, INotificador notificador) : base(notificador)
+        {
+            _typeProcedureService = typeProcedureService;
+            _mapper = mapper;
+        }
 
-		public async Task<IActionResult> Details(long? id)
-		{
-			if (id == null)
-				return NotFound();
+        public async Task<IActionResult> Index()
+        {
+            var typeProcedures = await _typeProcedureService.GetListIndex();
+            return View(_mapper.Map<List<TypeProcedureDto>>(typeProcedures));
+        }
 
-			var typeProcedure = await _typeProcedureService.GetById(id.Value);
+        public async Task<IActionResult> Details(long? id)
+        {
+            if (id == null)
+                return NotFound();
 
-			if (typeProcedure == null)
-				return NotFound();
+            var typeProcedure = await _typeProcedureService.GetById(id.Value);
 
-			return View(typeProcedure);
-		}
+            if (typeProcedure == null)
+                return NotFound();
 
-		public IActionResult Create()
-		{
-			var schedulingProcedures = _typeProcedureService.GetListIndex();
-			return View();
-		}
+            return View(typeProcedure);
+        }
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Create(TypeProcedureDto typeProcedureDto)
-		{
-			if (ModelState.IsValid)
-			{
-				var typeProcedure = await _typeProcedureService.GetListIndex();
-				return View(typeProcedure);
-			}
-			return RedirectToAction(nameof(Index));
-		}
+        public IActionResult Create()
+        {
+            return View(new TypeProcedureDto());
+        }
 
-		public async Task<IActionResult> Edit(long? id)
-		{
-			if (id == null)
-				return NotFound();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(TypeProcedureDto typeProcedureDto)
+        {
+            await _typeProcedureService.CreateTypeProcedure(_mapper.Map<TypeProcedure>(typeProcedureDto));
 
-			var typeProcedure = await _typeProcedureService.GetById(id.Value);
+            if (!OperacaoValida()) return View(typeProcedureDto);
 
-			if (typeProcedure == null)
-				return NotFound();
+            TempData["Sucesso"] = "Tipo de procedimento criado com sucesso !";
 
-			return View(typeProcedure);
-		}
+            return RedirectToAction(nameof(Index));
+        }
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> Edit(long id, TypeProcedureDto typeProcedureDto)
-		{
-			if (ModelState.IsValid)
-				return NotFound();
-			var typeProcedure = new TypeProcedure()
-			{
-				IdTypeProcedure = typeProcedureDto.IdTypeProcedure,
-				Name = typeProcedureDto.Name,
-				Value = typeProcedureDto.Value,
-				Duration = typeProcedureDto.Duration
-			};
+        public async Task<IActionResult> Edit(long? id)
+        {
+            if (id == null)
+                return NotFound();
 
-			await _typeProcedureService.UpdateTypeProcedure(typeProcedure);
-			return RedirectToAction(nameof(Index));
-		}
+            var typeProcedure = await _typeProcedureService.GetById(id.Value);
 
-		public async Task<IActionResult> Delete(long? id)
-		{
-			var typeProcedure = await _typeProcedureService.GetById(id.Value);
+            if (typeProcedure == null)
+                return NotFound();
 
-			if (typeProcedure == null)
-				return NotFound();
+            return View(_mapper.Map<TypeProcedureDto>(typeProcedure));
+        }
 
-			return View(typeProcedure);
-		}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(long id, TypeProcedureDto typeProcedureDto)
+        {
+            var typeProcedure = new TypeProcedure()
+            {
+                IdTypeProcedure = typeProcedureDto.IdTypeProcedure,
+                Name = typeProcedureDto.Name,
+                Value = typeProcedureDto.Value,
+                Duration = typeProcedureDto.Duration
+            };
 
-		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> DeleteConfirmed(long id)
-		{
-			var typeProcedure = await _typeProcedureService.GetById(id);
+            await _typeProcedureService.UpdateTypeProcedure(typeProcedure);
 
-			if (typeProcedure != null)
-				await _typeProcedureService.DeleteTypeProcedure(id);
-			return RedirectToAction(nameof(Index));
-		}
-	}
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Delete(long? id)
+        {
+            var typeProcedure = await _typeProcedureService.GetById(id.Value);
+
+            if (typeProcedure == null)
+                return NotFound();
+
+            return View(typeProcedure);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(long id)
+        {
+            var typeProcedure = await _typeProcedureService.GetById(id);
+
+            if (typeProcedure != null)
+                await _typeProcedureService.DeleteTypeProcedure(id);
+            return RedirectToAction(nameof(Index));
+        }
+    }
 }
